@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from stdimage import StdImageField
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -56,6 +56,7 @@ class User(AbstractUser):
     allgEingaben_eingegeben = models.BooleanField(default=False)
     verlaengerung_notwendig = models.BooleanField(default=False)
     is_free = models.BooleanField('Free User', default=False)
+    logo_kopfzeile = StdImageField(upload_to='bilder/', blank=True, variations={'small': (160, 124),})
     objects = UserManager()
 
 

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'lastaufstellung_app',
     'satteldach_schnee_app',
     'kehldach_schnee_app',
+    'gesamtgebaeude_app'
 
 
 

@@ -101,11 +101,11 @@ class flachdaecherForm(forms.ModelForm):
 
             'breite_x': forms.NumberInput(attrs={'class': 'form-control',
                                                  'step': 0.01,
-                                                 'placeholder': 'bx in [m]', 'type': 'number', }),
+                                                 'placeholder': 'lwest in [m]', 'type': 'number', }),
 
             'breite_y': forms.NumberInput(attrs={'class': 'form-control',
                                                  'step': 0.01,
-                                                 'placeholder': 'by in [m]', 'type': 'number', }),
+                                                 'placeholder': 'lsüd in [m]', 'type': 'number', }),
 
             'innendruck_cpi': forms.NumberInput(attrs={'class': 'form-control',
                                                        'step': 0.01,
