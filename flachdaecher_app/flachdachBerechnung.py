@@ -1,5 +1,4 @@
-
-
+from scipy.interpolate import interp1d,Rbf
 import numpy as np
 from allg_berechnungen_app.qp_berechnen import qp_berechnen
 from waende_app.winddruck_waende_berechnung_ablauf import winddruck_waende_berechnung_ablauf
@@ -120,14 +119,12 @@ def flachdach_berechnung_ablauf(self):
 
 
 	#Darf reibung vernachlässigt werden
+	reibung_vernachlaessigen_nord_sued=reibung_vernachlaessigen(self,b_sued,b_west,hoehe)
+	reibung_vernachlaessigen_ost_west=reibung_vernachlaessigen(self,b_west,b_sued,hoehe)
 	if reibung_beruecksichtigen==True:
-		reibung_vernachlaessigen_nord_sued=reibung_vernachlaessigen(self,b_sued,b_west,hoehe)
-		reibung_vernachlaessigen_ost_west=reibung_vernachlaessigen(self,b_west,b_sued,hoehe)
 		w_cfr_dach=reibung(self,qp,reibbeiwert_dach)
 	else:
 		w_cfr_dach=False
-		reibung_vernachlaessigen_nord_sued="die Reibung wird nicht berücksichtigt"
-		reibung_vernachlaessigen_ost_west="die Reibung wird nicht berücksichtigt"
 	reibung_vernachlaessigt=[reibung_vernachlaessigen_nord_sued,reibung_vernachlaessigen_ost_west]
 
 	ergebnisse_flachdach={

@@ -58,7 +58,7 @@ def geometrische_angaben_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'$\alpha$ &  Winkel Mansarde  ')
             fd.write("\n"+r'\\')
         if oeffnungen_beruecksichtigen==True:
-            fd.write("\n"+r'$Öff$ &  Öffnungsfläche an der jeweiligen Wandseite ')
+            fd.write("\n"+r'$A_{Ö}$ &  Öffnungsfläche an der jeweiligen Wandseite ')
             fd.write("\n"+r'\\')
         fd.write("\n"+r'\end{tabular}')
         fd.write("\n"+r'\switchcolumn')
@@ -97,7 +97,7 @@ def geometrische_angaben_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'	&')
             fd.write("\n"+r'		$\begin{aligned}[t]')
             for ind, element in enumerate(oeffnungen_flaeche):
-                fd.write("\n"+r'  Öff_{'+ windrichtung[ind]+r'}&=\SI{'+ str(element)+r'}{\square\meter}  \\ ')
+                fd.write("\n"+r'  A_{Ö,'+ windrichtung[ind]+r'}&=\SI{'+ str(element)+r'}{\square\meter}  \\ ')
             fd.write("\n"+r'		\end{aligned}$')
 
         fd.write("\n"+r'\end{tabularx}')
@@ -366,7 +366,7 @@ def nur_aussendruckergebnisse_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'\end{tabular}')
         fd.write("\n"+r'\vspace{3 mm}')
         fd.write("\n"+r'\\')
-        reibung_margin_vernachlaessigen(self,reibung_beruecksichtigen,reibung_vernachlaessigt,fd)
+        reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
         if anteil_f_und_g_x < 0.2 and anteil_f_und_g_y >= 0.2:
             fd.write("\n"+r'Bei der Windrichtung aus Westen dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x >= 0.2 and anteil_f_und_g_y < 0.2:
@@ -427,9 +427,9 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'\\')
         fd.write("\n"+r' $i$ & Innen')
         fd.write("\n"+r'\\')
-        fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost West Richtung')
+        fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost/West- Richtung')
         fd.write("\n"+r'\\')
-        fd.write("\n"+r' $\updownarrow$ & Wind aus Nord Süd Richtung')
+        fd.write("\n"+r' $\updownarrow$ & Wind aus Nord/Süd- Richtung')
         fd.write("\n"+r'\\')
         fd.write("\n"+r' $\NSOWarrow$ & Ergebnisse für alle Windrichtungen')
         fd.write("\n"+r'\\')
@@ -446,7 +446,7 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'\end{tabular}')
         fd.write("\n"+r'\vspace{3 mm}')
         fd.write("\n"+r'\\')
-        reibung_margin_vernachlaessigen(self,reibung_beruecksichtigen,reibung_vernachlaessigt,fd)
+        reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
         if anteil_f_und_g_x < 0.2 and anteil_f_und_g_y >= 0.2:
             fd.write("\n"+r'Bei der Windrichtung aus Norden und Süden dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x >= 0.2 and anteil_f_und_g_y < 0.2:
@@ -539,7 +539,7 @@ def nur_aussendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filename):
         fd.write("\n"+r'\end{tabular}')
         fd.write("\n"+r'\vspace{3 mm}')
         fd.write("\n"+r'\\')
-        reibung_margin_vernachlaessigen(self,reibung_beruecksichtigen,reibung_vernachlaessigt,fd)
+        reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
         if anteil_f_und_g_x < 0.2 and anteil_f_und_g_y >= 0.2:
             fd.write("\n"+r'Bei der Windrichtung aus Westen dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x >= 0.2 and anteil_f_und_g_y < 0.2:
@@ -592,9 +592,9 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
         fd.write("\n"+r'\\')
         fd.write("\n"+r' $i$ & Innen')
         fd.write("\n"+r'\\')
-        fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost West Richtung')
+        fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost/West- Richtung')
         fd.write("\n"+r'\\')
-        fd.write("\n"+r' $\updownarrow$ & Wind aus Nord Süd Richtung')
+        fd.write("\n"+r' $\updownarrow$ & Wind aus Nord/Süd- Richtung')
         fd.write("\n"+r'\\')
         fd.write("\n"+r' $\NSOWarrow$ & Ergebnisse für alle Windrichtungen')
         fd.write("\n"+r'\\')
@@ -611,7 +611,7 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
         fd.write("\n"+r'\end{tabular}')
         fd.write("\n"+r'\vspace{3 mm}')
         fd.write("\n"+r'\\')
-        reibung_margin_vernachlaessigen(self,reibung_beruecksichtigen,reibung_vernachlaessigt,fd)
+        reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
         if anteil_f_und_g_x < 0.2 and anteil_f_und_g_y >= 0.2:
             fd.write("\n"+r'Bei der Windrichtung aus Norden und Süden dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x >= 0.2 and anteil_f_und_g_y < 0.2:

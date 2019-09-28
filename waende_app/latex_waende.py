@@ -167,9 +167,9 @@ def margin_ergebnisse_waende(self,arg_latex,latex_waende_list,fd):
     fd.write("\n"+r'\\')
     fd.write("\n"+r' $i$ & Innen')
     fd.write("\n"+r'\\')
-    fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost West Richtung')
+    fd.write("\n"+r' $\leftrightarrow$ & Wind aus Ost/West- Richtung')
     fd.write("\n"+r'\\')
-    fd.write("\n"+r' $\updownarrow$ & Wind aus Nord Süd Richtung')
+    fd.write("\n"+r' $\updownarrow$ & Wind aus Nord/Süd- Richtung')
     fd.write("\n"+r'\\')
     fd.write("\n"+r' $\NSOWarrow$ & Ergebnisse für alle Windrichtungen')
     fd.write("\n"+r'\\')
@@ -185,7 +185,7 @@ def margin_ergebnisse_waende(self,arg_latex,latex_waende_list,fd):
     fd.write("\n"+r'\vspace{3 mm}')
     fd.write("\n"+r'\\')
 
-    reibung_margin_vernachlaessigen(self,reibung_beruecksichtigen,reibung_vernachlaessigt,fd)
+    reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
     if fehlende_korrelation_beruecksichtigen == True:
         fd.write("\n"+r'\\')
         fd.write("\n"+r' Die Korrelation zwischen der Luv und Lee Seite wird, bei den Wänden, berücksichtigt.')
@@ -263,25 +263,45 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
         #Umrandungslinien
         fd.write("\n"+r'\draw[line width=0.25mm] (ra) -- (rb) -- (rc) -- (rd) -- cycle;')
         #Flächenbezeichnung
-        fd.write("\n"+r'\node[between=ra and rd, right ]  {\Large{D}};')
-        fd.write("\n"+r'\node[between=rb and rc, left ]  {\Large{E}};')
-        fd.write("\n"+r'\node[between=ra and nabu, above ]  {\Large{A}};')
-        fd.write("\n"+r'\node[between=nabu and nbcu, above ]  {\Large{B}};')
+        fd.write("\n"+r'\node[between=ra and rd, right ]  {\large{D}};')
+        fd.write("\n"+r'\node[between=rb and rc, left ]  {\large{E}};')
+        #unten
+        fd.write("\n"+r'\draw[line width=0.25mm,dotted] ($(ra)+(0,0.05)$) -- ($(nabu)+(0,0.05)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nabu) --+ (0,0.1);')
+        fd.write("\n"+r'\node[between=ra and nabu, above ]  {\large{A}};')
 
-        fd.write("\n"+r'\node[between=rd and nabo, below ]  {\Large{A}};')
-        fd.write("\n"+r'\node[between=nabo and nbco, below ]  {\Large{B}};')
+        fd.write("\n"+r'\draw[line width=0.25mm,dashed] ($(nabu)+(0,0.05)$) -- ($(nbcu)+(0,0.05)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nbcu) --+ (0,0.1);')
+        fd.write("\n"+r'\node[between=nabu and nbcu, above ]  {\large{B}};')
+
+        #oben
+        fd.write("\n"+r'\draw[line width=0.25mm,dotted] ($(rd)+(0,-0.05)$) -- ($(nabo)+(0,-0.05)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nabo) --+ (0,-0.1);')
+        fd.write("\n"+r'\node[between=rd and nabo, below ]  {\large{A}};')
+
+        fd.write("\n"+r'\draw[line width=0.25mm,dashed] ($(nabo)+(0,-0.05)$) -- ($(nbco)+(0,-0.05)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nbco) --+ (0,-0.1);')
+        fd.write("\n"+r'\node[between=nabo and nbco, below ]  {\large{B}};')
+
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=rd and rc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=rb and rc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=ra and rb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=ra and rd, above ,rotate=90]  {Westen};')
 
 
         #Bemaßungslinien
-        fd.write("\n"+r'\DimlineH[ra][nabu][-0.5][\num{'+ str(laenge_a_w)+r'}] ')
-        fd.write("\n"+r'\DimlineH[nabu][nbcu][-0.5][\num{'+ str(laenge_b_w)+r'}] ')
+        fd.write("\n"+r'\DimlineH[rd][nabo][0.5][\num{'+ str(laenge_a_w)+r'}] ')
+        fd.write("\n"+r'\DimlineH[nabo][nbco][0.5][\num{'+ str(laenge_b_w)+r'}] ')
 
-        fd.write("\n"+r'\DimlineH[ra][rb][-1][\num{'+ str(breite_west)+r'}] ')
-        fd.write("\n"+r'\DimlineV[rb][rc][0.5][\num{'+ str(breite_sued)+r'}] ')
+        fd.write("\n"+r'\DimlineH[rd][rc][1][\num{'+ str(breite_west)+r'}] ')
+        fd.write("\n"+r'\DimlineV[rb][rc][0.9][\num{'+ str(breite_sued)+r'}] ')
         if laenge_c_w > 0:
-            fd.write("\n"+r'\node[between=nbcu and rb, above ]  {\Large{C}};')
-            fd.write("\n"+r'\node[between=nbco and rc, below ]  {\Large{C}};')
-            fd.write("\n"+r'\DimlineH[nbcu][rb][-0.5][\num{'+ str(laenge_c_w)+r'}] ')
+            fd.write("\n"+r'\draw[line width=0.25mm,dashdotted] ($(nbcu)+(0,0.05)$) -- ($(rb)+(0,0.05)$);')
+            fd.write("\n"+r'\node[between=nbcu and rb, above ]  {\large{C}};')
+            fd.write("\n"+r'\draw[line width=0.25mm,dashdotted] ($(nbco)+(0,-0.05)$) -- ($(rc)+(0,-0.05)$);')
+            fd.write("\n"+r'\node[between=nbco and rc, below ]  {\large{C}};')
+            fd.write("\n"+r'\DimlineH[nbco][rc][0.5][\num{'+ str(laenge_c_w)+r'}] ')
 
         #Pfeile für die Windrichtung
         fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.5,'+ str(ls/2)+r') {windrichtung};')
@@ -313,33 +333,51 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
         #Umrandungslinien
         fd.write("\n"+r'\draw[line width=0.25mm] (ra) -- (rb) -- (rc) -- (rd) -- cycle;')
         #Flächenbezeichnung
-        fd.write("\n"+r'\node[between=ra and rb, above ]  {\Large{D}};')
-        fd.write("\n"+r'\node[between=rd and rc, below ]  {\Large{E}};')
-        fd.write("\n"+r'\node[between=ra and nabu, right ]  {\Large{A}};')
-        fd.write("\n"+r'\node[between=nabu and nbcu, right ]  {\Large{B}};')
+        fd.write("\n"+r'\node[between=ra and rb, above ]  {\large{D}};')
+        fd.write("\n"+r'\node[between=rd and rc, below ]  {\large{E}};')
+        #links
+        fd.write("\n"+r'\draw[line width=0.25mm,dotted] ($(ra)+(0.05,0)$) -- ($(nabu)+(0.05,0)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nabu) --+ (0.1,0);')
+        fd.write("\n"+r'\node[between=ra and nabu, right ]  {\large{A}};')
+        fd.write("\n"+r'\draw[line width=0.25mm,dashed] ($(nabu)+(0.05,0)$) -- ($(nbcu)+(0.05,0)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nbcu) --+ (0.1,0);')
+        fd.write("\n"+r'\node[between=nabu and nbcu, right ]  {\large{B}};')
+        #rechts
+        fd.write("\n"+r'\draw[line width=0.25mm,dotted] ($(rb)+(-0.05,0)$) -- ($(nabo)+(-0.05,0)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nabo) --+ (-0.1,0);')
+        fd.write("\n"+r'\node[between=rb and nabo, left ]  {\large{A}};')
+        fd.write("\n"+r'\draw[line width=0.25mm,dashed] ($(nabo)+(-0.05,0)$) -- ($(nbco)+(-0.05,0)$);')
+        fd.write("\n"+r'\draw[line width=0.13mm] (nbco) --+ (-0.1,0);')
+        fd.write("\n"+r'\node[between=nabo and nbco, left ]  {\large{B}};')
 
-        fd.write("\n"+r'\node[between=rb and nabo, left ]  {\Large{A}};')
-        fd.write("\n"+r'\node[between=nabo and nbco, left ]  {\Large{B}};')
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=rd and rc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=rb and rc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=ra and rb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=ra and rd, above ,rotate=90]  {Westen};')
+
 
 
         #Bemaßungslinien
-        fd.write("\n"+r'\DimlineV[rb][nabo][0.5][\num{'+ str(laenge_a_s)+r'}] ')
-        fd.write("\n"+r'\DimlineV[nabo][nbco][0.5][\num{'+ str(laenge_b_s)+r'}] ')
+        fd.write("\n"+r'\DimlineV[ra][nabu][-0.5][\num{'+ str(laenge_a_s)+r'}] ')
+        fd.write("\n"+r'\DimlineV[nabu][nbcu][-0.5][\num{'+ str(laenge_b_s)+r'}] ')
 
-        fd.write("\n"+r'\DimlineH[rd][rc][0.3][\num{'+ str(breite_west)+r'}] ')
-        fd.write("\n"+r'\DimlineV[rb][rc][1][\num{'+ str(breite_sued)+r'}] ')
+        fd.write("\n"+r'\DimlineH[rd][rc][0.5][\num{'+ str(breite_west)+r'}] ')
+        fd.write("\n"+r'\DimlineV[ra][rd][-1.0][\num{'+ str(breite_sued)+r'}] ')
         if laenge_c_s > 0:
-            fd.write("\n"+r'\node[between=nbcu and rd, right ]  {\Large{C}};')
-            fd.write("\n"+r'\node[between=nbco and rc, left]  {\Large{C}};')
-            fd.write("\n"+r'\DimlineV[nbco][rc][0.5][\num{'+ str(laenge_c_s)+r'}] ')
+            fd.write("\n"+r'\draw[line width=0.25mm,dashdotted] ($(nbcu)+(0.05,0)$) -- ($(rd)+(0.05,0)$);')
+            fd.write("\n"+r'\node[between=nbcu and rd, right ]  {\large{C}};')
+            fd.write("\n"+r'\draw[line width=0.25mm,dashdotted] ($(nbco)+(-0.05,0)$) -- ($(rc)+(-0.05,0)$);')
+            fd.write("\n"+r'\node[between=nbco and rc, left]  {\large{C}};')
+            fd.write("\n"+r'\DimlineV[nbcu][rd][-0.5][\num{'+ str(laenge_c_s)+r'}] ')
 
         #Pfeile für die Windrichtung
-        fd.write("\n"+r'\pic at ('+ str(lw/2)+r',-0.5) {windrichtung};')
+        fd.write("\n"+r'\pic at ('+ str(lw/2)+r',-0.7) {windrichtung};')
 
         #Schnitt
         fd.write("\n"+r'\pic[rotate=90,,transform shape] at (-0.5,-0.5) {schnittsymbol};')
         fd.write("\n"+r'\begin{scope}[yscale=1,xscale=-1]')
-        fd.write("\n"+r'\pic[rotate=90,,transform shape] at ($(rb)+(-0.5,-0.5)$) {schnittsymbol};')
+        fd.write("\n"+r'\pic[rotate=90,transform shape] at ($(rb)+(-0.5,-0.5)$) {schnittsymbol};')
         fd.write("\n"+r'\end{scope}')
 
         fd.write("\n"+r'}}')
@@ -413,7 +451,7 @@ def ansicht_waende(self, z_hoehe, anzahl_streifen,breite, breite_latex,himmelsri
 
     #Beschriftung und Bemaßung
     for ind in range(0,len(z_hoehe)):
-        fd.write("\n"+r'\node[between=n'+ str(ind)+r'l and n'+ str(ind+1)+r'r]  {\Large{$D_{'+ str(ind+1)+r'}$}};')
+        fd.write("\n"+r'\node[between=n'+ str(ind)+r'l and n'+ str(ind+1)+r'r]  {\large{$D_{'+ str(ind+1)+r'}$}};')
         fd.write("\n"+r'\DimlineV[n'+ str(ind)+r'l][n'+ str(ind+1)+r'l][-0.5][\num{'+ str(hoehendifferenz[ind])+r'}] ')
 
     fd.write("\n"+r'\DimlineV[n'+ str(0)+r'l][n'+ str(len(z_hoehe))+r'l][-1][\num{'+ str(z_hoehe[-1])+r'}] ')
