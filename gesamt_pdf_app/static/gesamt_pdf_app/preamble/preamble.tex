@@ -136,24 +136,23 @@ node[above,rotate=90]{\footnotesize{Wind}} -- (0,0) ;%
 %ab hier beginnt der dynamische teil der nicht im mft format enthalten ist
 \csname endofdump\endcsname
 
-\fancyhead[L]{\begin{tabular}{l r | l r}%
-	\textbf{Projekt}%
- &  &%
-\textbf{Seite} & \thepage%
-\\[-4pt]%
-\textbf{Bauteil}   & Wand%
-&%
-\textbf{Datum} & \today%
-\\[-4pt]%
-\textbf{Bauteilart} & Freistehende Wand%
-&%
-\textbf{Firma} & Musterman GMBH%
-\\[-4pt]%
-&  &%
-\textbf{Bearbeiter} & James Smith%
-\end{tabular}}%
+\fancyhead[L]{\begin{tabular}{l r | l r}
+		\textbf{Windlasten Flachdächer} & 
+		&
+		\textbf{Seite} & \thepage
+		\\[-4pt]
+		\textbf{Projekt}
+		& Mein Projekt 1 &
+		\textbf{Datum} & \today
+		\\[-4pt]
+		\textbf{Bauteil}   & wand
+		&
+		\textbf{Firma} & 
+	\end{tabular}}
+\fancyhead[R]{\includegraphics[width=5cm, height=0.5cm]{logo}}
 %
 \begin{document}%
+	\AddToShipoutPicture{\BackgroundStructure}
 Das ist die Statische preamble wenn ich in der preamble etwas ändern will muss ich es hier hinzufügen aund dann eine .fmt datei erzeugen
 
 https://web.archive.org/web/20160712215709/http://www.howtotex.com:80/tips-tricks/faster-latex-part-iv-use-a-precompiled-preamble/

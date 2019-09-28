@@ -44,9 +44,14 @@ def gesamt_pdf_erzeugen(self, arg_latex):
 
         #Kopfzeile eingaben
         user = get_object_or_404(User,email=self.request.user)
-        kopfzeile_eingeben_list={'projekt': self.projekt,
+        logo_kopfzeile = None
+        if user.logo_kopfzeile:
+            logo_kopfzeile = user.logo_kopfzeile.small.url
+
+
+        kopfzeile_eingeben_list={'projekt': eingaben_pdfbearbeiten_object.projekt.projekt_name,
                         'company':user.company,
-                        'logo_kopfzeile':user.logo_kopfzeile.small.url
+                        'logo_kopfzeile':logo_kopfzeile
                             }
 
         kopfundfusszeile_gesamt(fd,kopfzeile_eingeben_list,arg_latex)
