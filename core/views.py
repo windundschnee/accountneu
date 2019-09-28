@@ -138,7 +138,7 @@ class WindbemessungCreateView(LoginRequiredMixin, CreateView):
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Kehldächer':
             return reverse_lazy('kehldach_schnee_app:kehldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
         elif self.object.bemessungsart_wind_schnee ==  'Windlasten Gesamtgebaeude':
-            return reverse_lazy('gesamtgebaeude_app:gesamtgebauede_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+            return reverse_lazy('gesamtgebaeude_app:gesamtgebaeude_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Satteldächer':
             print('jhkjhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
             return reverse_lazy('satteldach_schnee_app:satteldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
