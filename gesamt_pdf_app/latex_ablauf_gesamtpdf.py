@@ -8,6 +8,8 @@ from anzeigetafeln_app.models import AnzeigetafelnModel
 import os.path as path
 from .models import GesamtPdf
 from gesamt_pdf_app.kopfzeile import *
+from account_app.models import User
+from django.shortcuts import get_object_or_404
 
 
 def gesamt_pdf_erzeugen(self, arg_latex):
@@ -39,7 +41,16 @@ def gesamt_pdf_erzeugen(self, arg_latex):
         preamble_static_latex(self,fd)
         if user_has_free_account:
             latexwasserzeichen(fd)
-        kopfundfusszeile(fd,arg_latex)
+
+        #Kopfzeile eingaben
+        user = get_object_or_404(User,email=self.request.user)
+        kopfzeile_eingeben_list={'projekt': self.projekt,
+                        'company':user.company,
+                        'logo_kopfzeile':user.logo_kopfzeile.small.url
+                            }
+
+        kopfundfusszeile_gesamt(fd,kopfzeile_eingeben_list,arg_latex)
+
 
         fd.write("\n"+r'\begin{document}')
         beginn_latex_format(fd)
