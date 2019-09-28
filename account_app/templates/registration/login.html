@@ -1,0 +1,98 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+
+
+
+
+
+<form action="" method="post">
+      {% csrf_token %}
+  <div class="row">
+               <div class="col-md-3"></div>
+               <div class="col-md-6">
+                   <h3>Login</h3>
+                   <hr>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-3"></div>
+               <div class="col-md-4">
+                   <div class="form-group has-danger">
+                        <label for="id_username">E-Mail:</label>
+                       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                           <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                             <input type="text" name="username" autofocus required id="id_username"
+                               placeholder="hans.mustermann@beispiel.com" class="form-control">
+
+                       </div>
+
+                   </div>
+               </div>
+               <div class="col-md-3">
+
+                   <div class="form-control-feedback">
+                       <span class="text-danger align-middle">
+                         {% if form.errors %}
+                 <p>Ungültige E-Mail oder Passwort! Bitte versuche es erneut.</p>
+               {% endif %}
+
+                       </span>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-3"></div>
+               <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="id_password">Passwort:</label>
+                       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                           <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+
+                           <input type="password" name="password" class="form-control" id="password"
+                                  placeholder="Passwort" required>
+                       </div>
+
+                   </div>
+
+               </div>
+               <div class="col-md-3">
+                   <div class="form-control-feedback">
+                       <span class="text-danger align-middle">
+
+                       </span>
+                   </div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-3"></div>
+
+           </div>
+           <div class="row" style="padding-top: 1rem">
+               <div class="col-md-3"></div>
+               <div class="col-md-6">
+                   <p> <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button></p>
+                   <p><a href="{% url 'account_app:signup' %}">Neu auf unserer Seite? Registrieren Sie sich!</a></p>
+                   <p><a href="{% url 'account_app:password_reset' %}">Passwort vergessen?</a></p>
+
+
+               </div>
+
+
+           </div>
+</form>
+
+    <br>
+
+
+
+{% endblock %}

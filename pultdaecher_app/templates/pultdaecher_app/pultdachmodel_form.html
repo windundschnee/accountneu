@@ -1,0 +1,318 @@
+{% extends "base_app/base.html" %}
+{% block title %}Pultdächer{% endblock %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'pultdaecher_app/bildpultdach.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'flachdaecher_app/info_buttonflachdach.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Pultdach</li>
+  </ol>
+</nav>
+<div class="card">
+  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/pultdach.JPG' %}" alt="icon Satteldach"> Pultdächer</h3>
+  <div class="card-body">
+
+    <form id="pultdaecher_form" method="post">
+      {% csrf_token %}
+
+      {{ form.non_field_errors }}
+      {% if form.errors %}
+      {% for field in form %}
+      {% for error in field.errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {{ form.non_field_errors }}
+      <div class="row">
+        <div class="col-md-6">
+
+
+
+          <div class="row">
+            <div class="col">
+
+              <div class="form-group">
+                {{ form.verfahren_wahl.errors }}
+                <label for="{{ form.verfahren_wahl.id_for_label }}">{{ form.verfahren_wahl.label_tag }}</label>
+                <div class="form-inline" style="margin-left:20px">
+
+                  <div class="radio">{{ form.verfahren_wahl.0 }} </div>
+                  <a style="margin-left:20px" id="info_button1" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                </div>
+                <div class="form-inline" style="margin-left:20px">
+                  <div class="radio">
+                    {{ form.verfahren_wahl.1 }}
+                  </div>
+                  <a style="margin-left:20px" id="info_button3" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+
+
+
+
+
+              <div class="form-group">
+                {{ form.hoehe.errors }}
+                <label for="{{ form.hoehe.id_for_label }}">{{ form.hoehe.label_tag }}</label>
+                <div class="" style="margin-left:20px">
+                  {{ form.hoehe }}
+                </div>
+              </div>
+
+              <div id="label_dachneigung" class="form-group">
+                {{ form.dachneigung.errors }}
+                <label for="{{ form.dachneigung.id_for_label }}">{{ form.dachneigung.label_tag }}</label>
+                <div class="" style="margin-left:20px">
+                  {{ form.dachneigung }}
+                </div>
+              </div>
+
+
+
+              <br>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.breite_x.errors }}
+                <label for="{{ form.breite_x.id_for_label }}">{{ form.breite_x.label_tag }}</label>
+                <div class="" style="margin-left:20px">
+                  {{ form.breite_x }}
+                </div>
+              </div>
+              <div class="form-group">
+                {{ form.breite_y.errors }}
+                <label for="{{ form.breite_y.id_for_label }}">{{ form.breite_y.label_tag }}</label>
+                <div class="" style="margin-left:20px">
+                  {{ form.breite_y }}
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col">
+              <label>Optional:</label>
+
+
+
+              <div class="form-group">
+                <div class="custom-control custom-checkbox" style="margin-left:20px">
+                  {{ form.innendruck.errors }}
+                  {{ form.innendruck }}
+                  <label class="custom-control-label" for="{{ form.innendruck.id_for_label }}">Innendruck</label>
+                </div>
+              </div>
+
+
+              <div id="inndendruck_bereich" class="innendruckClass">
+
+
+                <div class="form-group">
+                  {{ form.innendruck_verfahren_wahl.errors }}
+                  <label for="{{ form.innendruck_verfahren_wahl.id_for_label }}">{{ form.innendruck_verfahren_wahl.label_tag }}</label>
+                  <div class="form-inline" style="margin-left:20px">
+                    <div class="radio">{{ form.innendruck_verfahren_wahl.2 }} </div>
+                    <a style="margin-left:20px" id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                  </div>
+                </div>
+
+                <div class="form-group">
+
+                  <div class="form-inline" style="margin-left:20px">
+                    <div class="radio">{{ form.innendruck_verfahren_wahl.0 }} </div>
+                    <a style="margin-left:20px" id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+
+
+
+                    <div class="form-group">
+                      {{ form.innendruck_cpi.errors }}
+                      <label for="{{ form.innendruck_cpi.id_for_label }}">{{ form.innendruck_cpi.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.innendruck_cpi }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-inline" style="margin-left:20px">
+                    <div class="radio">{{ form.innendruck_verfahren_wahl.1 }} </div>
+                    <a style="margin-left:20px" id="info_button_flaechenparameter" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{ form.flaechenparameter_mue.errors }}
+                      <label for="{{ form.flaechenparameter_mue.id_for_label }}">{{ form.flaechenparameter_mue.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.flaechenparameter_mue }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <button type="submit" value="Submit" id="myDiv" class="btn btn-success" name="button">Bestätigen <i class="fas fa-check square"></i></button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-3">
+          <img src="{% static 'core/img/bild1.JPG' %}" id=myImg alt="Pultdächer nach EN/B 1991-1-4">
+
+
+        </div>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="myModal_pultdaecher" class="modal1">
+  <!-- Modal content -->
+
+  <div class="card-body_modal1">
+    <div class="modal-header-close">
+      <button type="button" id=close1 class=close data-dismiss="modal1" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="img01">
+
+    <div id="caption">
+    </div>
+  </div>
+
+</div>
+
+<div id="myModal1" class="modal2">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal2">
+    <div class="modal-header-close">
+      <button type="button" id="close2" class=close data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_vereifacht_image" src="{% static 'pultdaecher_app/img/verfahren_vereinfacht.JPG' %}" width="100%" height="100%" alt="Verfahren nach EN">
+
+
+  </div>
+</div>
+
+<div id="myModal3" class="modal3">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal2">
+    <div class="modal-header-close">
+      <button type="button" id="close3" class=close data-dismiss="modal3" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'pultdaecher_app/img/verfahren_nach_oenormEN.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+<div id="myModal4" class="modal4">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal4">
+    <div class="modal-header-close">
+      <button type="button" id="close4" class=close data-dismiss="modal4" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/dominante_flaeche_info.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+<div id="myModal5" class="modal5">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal5">
+    <div class="modal-header-close">
+      <button type="button" id="close5" class=close data-dismiss="modal4" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/flaechenparameter.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+<div id="myModal6" class="modal6">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal6">
+    <div class="modal-header-close">
+      <button type="button" id="close6" class=close data-dismiss="modal4" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/empfohleneWerte.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% include "js_pultdaecher_edit.html" %}
+
+
+
+{% endblock %}

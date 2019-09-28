@@ -1,0 +1,26 @@
+{% block pro_user %}
+{% load static %}
+
+<div class="cover-container d-flex mx-auto flex-column text-center">
+  <h1 class="cover-heading">Willkommen {{ user.email }}!</h1>
+  <p class="lead">Vielen Dank, dass Sie die Pro-Version nutzen!</p>
+  {% if user.verlaengerung_notwendig %}
+  <p class="isa_warning" id="verlaengerung_noetig">
+    <a id="verlaengern_link" href="{% url 'base_app:getpro' %}"><i class="fa fa-warning"></i>
+      Ihre Lizenz läuft bald aus! &rarr; Lizenz verlängern!</a>
+  </p>
+
+  {% endif %}
+  <p class="lead">
+    <a href="{% url 'logout' %}" class="btn btn-lg btn-success">Logout</a>
+  </p>
+
+
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+{% include "js_slidebar.html" %}
+{% endblock %}

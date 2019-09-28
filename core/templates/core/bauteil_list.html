@@ -1,0 +1,184 @@
+{% extends "base_app/base.html" %}
+{% block title %}Projekt Übersicht{% endblock %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/bauteil_list.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'core/icon_custom.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">Bauteile</li>
+  </ol>
+</nav>
+<div class="card" id="bauteil_list_card">
+  <h3 class="card-header"><i class="fas fa-folder-open" aria-hidden="true"></i> Projekt - {{projekt_name}}</h3>
+  <div class="card-body">
+    <div class="neues_bauteil_button" >
+      <a href="{% url 'core:windbemessung_create' slug_mein pk %}"><button type="button" id="clickMe" class="btn btn-success"> Neues Bautteil hinzufügen <i class="fas fa-plus" aria-hidden="true"></i>
+        </button>
+      </a>
+
+    </div>
+    <h3>Meine Bauteile:</h3>
+    <br>
+    <div class="scrolling-wrapper">
+    {% if character_series_list %}
+
+    <table class="table" id="myTable2">
+      <thead class="thead-light">
+        <tr>
+
+          <th onclick="sortTable(0)">
+            Bauteilname <i class="fas fa-sort" aria-hidden="true"></i>
+          </th>
+
+          <th onclick="sortTable(1)">Bemessungsart <i class="fas fa-sort" aria-hidden="true"></i></th>
+
+          <th></th>
+          <th></th>
+          <th></th>
+          <th onclick="sortTable(6);">Bearbeitet am <i class="fas fa-sort" aria-hidden="true"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for element in character_series_list %}
+        <tr>
+
+          <td>
+            <a class="list-group-item list-group-item-action" id="projekt_name_button" href="{{ element.bautteil_name.get_absolute_url }}">
+              <h4 id="Titel_projekt_name">{{ element.bautteil_name.bautteil_name }}</h4>
+            </a>
+          </td>
+          <td style="padding-left:5%" class="text-left">
+
+
+
+
+              {% if element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Freistehende Wände' %}
+              <img class="icon" src="{% static 'core/img/icon.JPG' %}" alt="icon Freistehende Wand">
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Anzeigetafeln' %}
+              <img class="icon" src="{% static 'core/img/anzeigetafel.JPG' %}" alt="icon Anzeigetafel">
+
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Schneelasten Pultdächer' %}
+              <img class="icon" src="{% static 'core/img/pultdach_schnee.JPG' %}" alt="icon Pultdach Schnee">
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Schneelasten Satteldächer' %}
+              <img class="icon" src="{% static 'core/img/satteldach_schnee.JPG' %}" alt="icon Satteldach Schnee">
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Schneelasten Kehldächer' %}
+              <img class="icon" src="{% static 'core/img/kehldach_schnee.JPG' %}" alt="icon Kehldach Schnee">
+
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Pultdächer' %}
+              <img class="icon" src="{% static 'core/img/pultdach.JPG' %}" alt="icon Pultdach">
+
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Flachdächer' %}
+              <img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdach">
+
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Freistehende Dächer' %}
+              <img class="icon" src="{% static 'core/img/iconfreistehendesdach.JPG' %}" alt="icon Freistehende Dächer">
+
+              {% endif %}
+              {{ element.bautteil_name.bemessungsart_wind_schnee}}
+
+          </td>
+
+          <td>
+            <a href="{{ element.get_absolute_url3}}" class="btn btn-outline-success">
+              Ergebnisse
+            </a>
+          </td>
+          <td>
+            <a href="{{element.get_absolute_url2}}" class="btn btn-outline-secondary">
+              Bearbeiten
+            </a>
+          </td>
+          <td>
+            <a href="{{ element.bautteil_name.get_absolute_url_delete }}" class="btn btn-outline-danger">
+              Löschen
+            </a>
+          </td>
+
+
+          <td>
+            <div class="date">
+              {{ element.edited_date }} Uhr
+            </div>
+          </td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+      <li class="page-item active">
+        <a class="page-link"> <span>{{ i }} <span class="sr-only">(current)</span></span></a>
+
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+
+      {% endif %}
+    </ul>
+    {% endif %}
+
+
+
+    {% else %}
+    <p>Sie haben noch keine Bauteile.</p>
+    {% endif %}
+</div>
+
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% include "js_sorting.html" %}
+
+{% endblock %}

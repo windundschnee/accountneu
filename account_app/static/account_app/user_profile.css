@@ -1,0 +1,58 @@
+#user_symbol {
+  font-size: 60px;
+  float: center;
+  color: rgb(50, 205, 50, 0.8);
+}
+
+#user_symbol_text {
+  text-align: right;
+  color: rgb(50, 205, 50, 1);
+}
+#avatar {
+
+  float: right;
+  max-width: 250px;
+
+
+
+}
+#verlaengern_link{
+text-decoration: none;
+color: #D8000C;
+
+}
+#verlaengerung_noetig{
+
+
+  background-color: #FFD2D2;
+
+  padding:12px;
+}
+#profile_card{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+
+}
+#avatar_image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 250px;
+  border-radius: 100%
+
+
+}
+#titelversion {
+  font-family: "Times New Roman", Times, serif;
+  margin: 20px 20px 0px 0px;
+}
+#linke_spalte{
+
+  text-align: right;
+}
+#bilder_zeile{
+align-items: center;
+
+}

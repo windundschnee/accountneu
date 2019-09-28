@@ -1,0 +1,334 @@
+{% block js %}
+<script language="javascript">
+  //alert('funcionou');
+  $("#id_schneelast_benutzerdefiniert").change(function() {
+
+    change_checkbox_schneelast();
+    if ($("#id_schneelast_benutzerdefiniert").text() == false) {
+        get_schneelast();
+
+    }
+
+  });
+
+
+
+  function change_checkbox_schneelast() {
+    // Get the checkbox
+    var checkBox = document.getElementById("id_schneelast_benutzerdefiniert");
+    // Get the output text
+    var schneelast = document.getElementById("id_schneelast");
+
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true) {
+      schneelast.readOnly = false;
+    } else {
+      schneelast.readOnly = true;
+    }
+  };
+  $("#id_ort").change(function() {
+
+    get_schneelast();
+
+  });
+  $("#id_bundesland").change(function() {
+
+    get_schneelast();
+
+  });
+
+  function get_schneelast() {
+    ort = $("#id_ort option:selected").text();
+    liste = {
+      "01.Innere Stadt": 1.37,
+      "02.Leopoldstadt": 1.36,
+      "03.Landstraße": 1.36,
+      "04.Wieden": 1.39,
+      "05.Margareten": 191.0,
+      "06.Mariahilf": 184.0,
+      "07.Neubau": 201.0,
+      "08.Josefstadt": 201.0,
+      "09.Alsergrund": 162.0,
+      "10.Favoriten": 210.0,
+      "11.Simmering": 169.0,
+      "12.Meidling": 184.0,
+      "13.Hietzing": 191.0,
+      "14.Penzing": 223.0,
+      "15.Fünfhaus": 203.0,
+      "16.Ottakring": 213.0,
+      "17.Hernals": 213.0,
+      "18.Währing": 192.0,
+      "19.Döbling": 185.0,
+      "20.Brigittenau": 161.0,
+      "21.Floridsdorf": 162.0,
+      "22.Donaustadt": 159.0,
+      "23.Liesing": 202.0,
+      "Neuwaldegg": 2.2,
+      "Sievering": 1.8,
+      "Andau": 1.05,
+      "Bad Tatzmannsdorf": 1.6,
+      "Eisenstadt": 1.1,
+      "Güssing": 1.75,
+      "Jennersdorf": 2.15,
+      "Mattersburg": 1.3,
+      "Neusiedl am See": 1.05,
+      "Oberpullendorf": 1.30,
+      "Oberwart": 1.55,
+      "Pinkafeld": 1.7,
+      "Rust am Neusiedler See": 1.05,
+      "St.Michael im Burgenland": 1.8,
+      "Arnoldstein": 3.95,
+      "Bad Kleinkirchheim": 5.1,
+      "Bleiburg": 3.45,
+      "Eisenkappel": 4.6,
+      "Feldkirchen in Kärnten": 2.55,
+      "Ferlach": 3.4,
+      "Friesach": 2.3,
+      "Gmünd an der Lieser": 3.25,
+      "Gurk": 2.4,
+      "Heiligenblut": 5.35,
+      "Hermagor": 4.05,
+      "Klagenfurt": 2.65,
+      "Kötschach": 5.6,
+      "Lavamünd": 2.35,
+      "Mallnitz": 5.95,
+      "Millstatt": 3.25,
+      "Naßfeld": 9.9,
+      "Oberdrauburg": 4.2,
+      "Obervellach": 3.05,
+      "Radenthein": 3.75,
+      "Rennweg": 4.95,
+      "St. Andrä im Lavanttal": 1.75,
+      "St. Lorenzen im Lesachtal": 9.85,
+      "St. Veit an der Glan": 2.3,
+      "Spittal an der Drau": 3.05,
+      "Velden": 2.65,
+      "Villach": 3,
+      "Völkermarkt": 2.7,
+      "Wolfsberg": 1.8,
+      "Amstetten": 1.5,
+      "Bad Vöslau": 1.5,
+      "Baden bei Wien": 1.4,
+      "Deutsch-Wagram": 1.1,
+      "Fischamend": 1.1,
+      "Gänserndorf": 1.2,
+      "Gmünd in Niederösterreich": 2.85,
+      "Gross-Enzersdorf": 1.1,
+      "Gumpoldskirchen": 1.45,
+      "Hainburg": 1.25,
+      "Hollabrunn": 1.45,
+      "Horn": 1.55,
+      "Klosterneuburg": 1.7,
+      "Korneuburg": 1.7,
+      "Krems an der Donau": 1.4,
+      "Langenlois": 1.4,
+      "Lilienfeld": 3.1,
+      "Marchegg": 1.2,
+      "Melk an der Donau": 1.4,
+      "Mistelbach": 1.4,
+      "Mödling": 1.45,
+      "Mönichkirchen": 3.65,
+      "Neunkirchen": 1.6,
+      "Perchtoldsdorf": 1.8,
+      "Pottenstein": 1.55,
+      "Poysdorf": 1.4,
+      "Puchberg am Schneeberg": 2.1,
+      "Purkersdorf": 2.15,
+      "Reichenau an der Rax": 1.85,
+      "Retz": 1.45,
+      "Scheibbs": 1.95,
+      "Schwechat": 1.1,
+      "Semmering": 4.65,
+      "Sollenau": 1.45,
+      "St.Pölten": 1.45,
+      "Stockerau": 1.35,
+      "Ternitz": 1.7,
+      "Traiskirchen": 1.25,
+      "Tulln": 1.35,
+      "Waidhofen an der Thaya": 2.95,
+      "Waidhofen an der Ybbs": 2.4,
+      "Wilhelmsburg": 1.95,
+      "Wolkersdorf": 1.35,
+      "Wr.Neustadt": 1.45,
+      "Zistersdorf": 1.4,
+      "Zwettl": 2.9,
+      "Aigen im Mühlkreis": 3.25,
+      "Bad Goisern": 4.25,
+      "Bad Ischl": 4.1,
+      "Bad Leonfelden": 4.95,
+      "Braunau am Inn": 1.6,
+      "Ebensee": 3.9,
+      "Eferding": 1.45,
+      "Enns": 1.5,
+      "Freistadt": 3.1,
+      "Gmunden": 2.15,
+      "Gosau": 6.2,
+      "Grein": 1.45,
+      "Grieskirchen": 1.55,
+      "Grünau im Almtal": 3.7,
+      "Hallstatt": 4.4,
+      "Hinterstoder": 4,
+      "Kremsmünster": 2.05,
+      "Linz": 1.45,
+      "Mattighofen": 2.25,
+      "Mondsee": 2.8,
+      "Obertraun": 4.25,
+      "Reichersberg am Inn": 1.55,
+      "Ried im Innkreis": 2.25,
+      "Rohrbach im Mühlviertel": 3.15,
+      "St.Wolfgang am Wolfgangssee": 3.8,
+      "Schärding": 1.55,
+      "Schwanenstadt": 1.65,
+      "Spital am Pyhrn": 4.3,
+      "Steyr": 1.9,
+      "Traun": 1.45,
+      "Vöcklabruck": 2.2,
+      "Wels": 1.55,
+      "Weyer": 3.2,
+      "Windischgarsten": 4.15,
+      "Abtenau": 5.65,
+      "Bad Gastein": 3.1,
+      "Bad Hofgastein": 4.15,
+      "Bischofshofen": 3.05,
+      "Fuschl am See": 4.45,
+      "Golling": 4.2,
+      "Hallein": 3.35,
+      "Kaprun": 2.8,
+      "Krimml": 3.75,
+      "Lofer": 5.15,
+      "Mattsee": 2.4,
+      "Mauterndorf": 4.35,
+      "Mittersill": 2.8,
+      "Mühlbach am Hochkönig": 4.65,
+      "Oberndorf bei Salzburg": 1.65,
+      "Obertauern": 9.9,
+      "Radstadt": 4.6,
+      "Rauris": 3.5,
+      "Saalbach": 5.6,
+      "Saalfelden": 4.95,
+      "Salzburg(Zentrum)": 1.75,
+      "St.Johann im Pongau": 2.75,
+      "St.Michael im Lungau": 4.1,
+      "Strobl": 3.75,
+      "Tamsweg": 3.85,
+      "Unken": 4.45,
+      "Wagrain": 4.5,
+      "Werfen": 3.8,
+      "Zell am See": 3.4,
+      "Admont": 3.45,
+      "Bad Aussee": 5.25,
+      "Bad Gleichenberg": 2.25,
+      "Bad Mitterndorf": 4.35,
+      "Bad Radkersburg": 2.1,
+      "Birkfeld": 2.25,
+      "Bruck an der Mus": 1.85,
+      "Deutschlandsberg": 3.05,
+      "Eibiswald": 3.6,
+      "Eisenerz": 3.9,
+      "Feldbach": 2.25,
+      "Fohnsdorf": 2.6,
+      "Friedberg": 2.15,
+      "Frohnleiten": 1.75,
+      "Fürstenfeld": 1.85,
+      "Gleisdorf": 2,
+      "Graz(Zentrum)": 1.65,
+      "Gröbming": 4.15,
+      "Hartberg": 1.6,
+      "Hieflau": 2.8,
+      "Judenburg": 2.6,
+      "Kapfenberg": 1.9,
+      "Knittelfeld": 2.3,
+      "Köflach": 1.75,
+      "Leibnitz": 2.75,
+      "Leoben": 2,
+      "Liezen": 3.5,
+      "Mariazell": 5.85,
+      "Murau": 2.9,
+      "Mureck": 2.15,
+      "Mürzzuschlag": 2.95,
+      "Schladming": 3.95,
+      "Seckau": 3.05,
+      "St.Nikolai im Sölktal": 6.55,
+      "Stainz": 2.3,
+      "Trieben": 3.15,
+      "Voitsberg": 1.65,
+      "Wald am Schoberpass": 3.8,
+      "Weiz": 1.85,
+      "Wildon": 2.3,
+      "Zeltweg": 2.4,
+      "Ehrwald": 5.7,
+      "Fulpmes": 3.45,
+      "Hall in Tirol": 2.05,
+      "Hintertux": 6.7,
+      "Holzgau": 6.45,
+      "Imst": 2.75,
+      "Innsbruck": 2.1,
+      "Ischgl": 5.9,
+      "Jenbach": 2.6,
+      "Kitzbühel": 5.05,
+      "Kufstein": 4.3,
+      "Landeck": 2.9,
+      "Lienz": 3.6,
+      "Matrei in Osttirol": 3.6,
+      "Mayrhofen": 2.8,
+      "Obergurgl": 7,
+      "Pertisau": 5.1,
+      "Reutte in Tirol": 4.5,
+      "St. Anton am Arlberg": 6.65,
+      "St.Christoph am Arlberg": 13.5,
+      "St.Jakob in Defereggen": 6,
+      "St.Johann in Tirol": 5.85,
+      "St.Leonhard im Pitztal": 5.3,
+      "Schwaz in Tirol": 2.5,
+      "Seefeld in Tirol": 5.85,
+      "Serfaus": 6.25,
+      "Sillian": 6.35,
+      "Sölden": 5.9,
+      "Steinach": 3.95,
+      "Tannheim": 7.9,
+      "Telfs": 2.3,
+      "Virgen": 4.75,
+      "Wörgl": 3.6,
+      "Zell am Ziller": 3.15,
+      "Bezau": 5.2,
+      "Bludenz": 3.2,
+      "Bregenz": 2.1,
+      "Dornbirn": 2.15,
+      "Egg bei Andelsbuch": 4.25,
+      "Feldkirch": 2.25,
+      "Gargellen": 9.4,
+      "Götzis": 2.15,
+      "Hohenems": 2.2,
+      "Langen am Arlberg": 9.75,
+      "Lech": 9.6,
+      "Lustenau": 1.7,
+      "Mittelberg": 10.95,
+      "Partenen": 5.95,
+      "Schruns": 3.65,
+      "Warth": 12.7,
+      "Zürs": 12.75,
+
+
+
+    };
+
+
+
+    var schneelast = document.getElementById("id_schneelast");
+    var schneelast_hidden = document.getElementById("id_schneelast_hidden");
+
+
+    for (var key in liste) {
+      //key will be -> 'id'
+      //dictionary[key] -> 'value'
+
+      schneelast.value = liste[ort];
+      schneelast_hidden.value = liste[ort];
+    }
+
+
+
+
+  }
+</script>
+{% endblock %}

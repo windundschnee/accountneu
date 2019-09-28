@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiformset Demo</title>
+
+    <script type="text/javascript">
+        $(function() {
+
+            $(".inline.{{ instruction_form.prefix }}").formset({
+                prefix: "{{ instruction_form.prefix }}",
+            })
+        })
+    </script>
+</head>
+
+<body>
+  {% load static %}
+    <div>
+        <h1>Add Recipe</h1>
+        <form action="." method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+            </div>
+
+            <fieldset>
+                <legend>Recipe instruction</legend>
+                {{ instruction_form.management_form }}
+                {{ instruction_form.non_form_errors }}
+                {% for form in instruction_form %}
+                    {{ form.id }}
+                    <div class="inline {{ instruction_form.prefix }}">
+                        {{ form.number.errors }}
+                        {{ form.number.label_tag }}
+                        {{ form.number }}
+                        {{ form.description.errors }}
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <input type="submit" value="Add recipe" class="submit" />
+        </form>
+    </div>
+</body>
+<script src="{% static 'waende_app/js/jquery.formset.js' %}"></script>
+</html>

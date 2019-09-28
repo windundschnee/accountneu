@@ -1,0 +1,14 @@
+{% block free_user %}
+<div class="cover-container d-flex mx-auto flex-column text-center">
+
+    <h1 class="cover-heading">Willkommen {{ user.email }}!</h1>
+    <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+    <p class="lead">
+      <a href="{% url 'base_app:getpro' %}" class="btn btn-lg btn-secondary">Lizenz kaufen!</a>
+    </p>
+
+
+</div>
+
+
+{% endblock %}

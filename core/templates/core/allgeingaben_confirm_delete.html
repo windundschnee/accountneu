@@ -1,0 +1,27 @@
+{% extends "base_app/base.html" %}
+{% block title %}{{ object.projekt_name }} löschen{% endblock %}
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Projekt Löschen</li>
+  </ol>
+</nav>
+<form method="post">
+    {% csrf_token %}
+  <h1>Projekt: {{ object.projekt_name }}</h1>
+  <h2>Sind Sie sicher, dass Sie '{{ object.projekt_name }}' löschen wollen? </h2>
+  <br>
+  <button class="btn btn-outline-danger"type="submit" name="button">Ja, löschen</button>
+    <a class="btn btn-outline-secondary" href="{% url 'core:allgEingaben_list'%}">Nein, Zurück</a>
+</form>
+{% endblock %}
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,178 @@
+<!-- templates/home.html-->
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block title %}Kehl/Sheddächer Schnee{% endblock %}
+
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/editbutton.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="loader-container">
+  <div class="loader"></div>
+</div>
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' object.projekt.slug object.projekt.pk %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Kehl/Sheddächer Schnee</li>
+  </ol>
+</nav>
+<div class="row">
+
+  <div class="col">
+
+
+    <div class="card">
+      <h3 class="card-header" >{{ object.projekt.projekt_name }} - Standortparameter </h3>
+      <div class="card-body">
+        {% block allgemeineEingaben %}
+        {% include "core/allgeingaben_detail_schnee.html" %}
+        {% endblock %}
+        <a href="{{object.projekt.get_absolute_url}}?next={% url 'kehldach_schnee_app:kehldach_schnee_detail' object.projekt.slug object.projekt.pk object.pk %}" class="btn btn-primary">Bearbeiten <i class="fas fa-edit"></i></a>
+        <a href="{% url 'core:allgEingaben_list' %}" class="btn btn-outline-success">Zurück zur Projektübersicht <i class="fas fa-arrow-left"></i></a>
+
+
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <br>
+  <div class="col">
+    <div class="card">
+      <h3 class="card-header form-inline" ><img class="icon" src="{% static 'core/img/kehldach_schnee.JPG' %}" alt="icon kehldach"> Schneelasten Kehl/Sheddächer</h3>
+      <div class="card-body">
+
+        <table class="table table-hover">
+
+          <tbody>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col text-right">
+                    Bauteil:
+                  </div>
+                  <div class="col">
+                    {{ object.bautteil_name.bautteil_name }}
+                  </div>
+
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col text-right">
+                    Dachneigung &alpha;<sub>1</sub>:
+                  </div>
+                  <div class="col">
+                    {{ object.neigung_alpha1 }}°
+                  </div>
+
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col text-right">
+                    Dachneigung &alpha;<sub>2</sub>:
+                  </div>
+                  <div class="col">
+                    {{ object.neigung_alpha2 }}°
+                  </div>
+
+                </div>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col text-right">
+                    Bearbeitet am:
+                  </div>
+                  <div class="col">
+
+                    <div class="date">
+                      {{ object.edited_date }} Uhr
+                    </div>
+
+                  </div>
+
+                </div>
+              </td>
+
+            </tr>
+
+
+
+          </tbody>
+        </table>
+
+        <a href="{{object.get_absolute_url2}}" class="btn btn-primary">Bearbeiten <i class="fas fa-edit"></i></a>
+        <a href="{% url 'core:windbemessung_list' object.projekt.slug object.projekt.pk %}" class="btn btn-outline-success">Zurück zur Bauteilübersicht <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+
+
+
+  <div class="btn-group" role="group" aria-label="Third group" style="text-align:right">
+    {% if pdf_bearbeitet %}
+    <a href="{% url 'gesamt_pdf_app:gesamt_pdf_update' object.projekt.slug object.projekt.pk pdf.id %}?next={% url 'kehldach_schnee_app:kehldach_schnee_detail' object.projekt.slug object.projekt.pk object.pk %}"><button type="button" class="btn btn-secondary">PDF Formatieren <i class="far fa-file-pdf"></i></button>
+    </a>
+    {% else %}
+    <a href="{% url 'gesamt_pdf_app:gesamt_pdf_create' object.projekt.slug object.projekt.pk  %}?next={% url 'kehldach_schnee_app:kehldach_schnee_detail' object.projekt.slug object.projekt.pk object.pk %}"><button type="button" class="btn btn-secondary">PDF Formatieren <i class="far fa-file-pdf"></i></button>
+    </a>
+    {% endif %}
+
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Third group">
+    <a href="{% static 'kehldach_schnee_app/rechenweg/Rechenweg_Anzeigetafeln.pdf' %}" target="_blank"><button type="button" class="btn btn-secondary">Beschreibung herunterladen <i class="fas fa-download"></i></button>
+    </a>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Third group">
+    <a href="{{ filename_pdf_anzeigen }}" target="_blank"><button type="button" class="btn btn-success">PDF herunterladen <i class="fas fa-download"></i></button>
+    </a>
+  </div>
+
+
+
+</div>
+<br>
+
+<div class="row"id="pdfausdruck">
+
+
+<object data="{{ filename_pdf_anzeigen }}" type="application/pdf" width="100%" height="900px">
+  <p>Zum Ausdruckprotokoll: <a href="{{ filename_pdf_anzeigen }}">PDF herunterladen!</a></p>
+</object>
+</div>
+
+
+
+
+{% endblock %}
+{% block js %}
+
+
+
+{% endblock %}

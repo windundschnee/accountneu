@@ -1,0 +1,42 @@
+
+
+{% block js %}
+    <script language="javascript">
+      setForm()
+      $(document).ready(function() {setForm()});
+      $(document).ready(function() {setForm2()});
+      $("#id_abschattung").on("change", function() {setForm()});
+        //alert('funcionou');
+        function setForm() {
+
+            if(document.getElementById('id_abschattung').value == 'Ja'){
+                        document.getElementById('id_abstand_abschattendewand').disabled = false;
+                        document.getElementById('id_hoehe_abschattende_wand').disabled = false;
+                        document.getElementById('id_abstand_abschattendewand').required = "required";
+
+                    }
+                    else {
+
+                          document.getElementById('id_abstand_abschattendewand').disabled = true;
+                          document.getElementById('id_hoehe_abschattende_wand').disabled = true;
+                          document.getElementById('id_abstand_abschattendewand').required = "";
+                    }
+
+        }
+
+        $("#id_wandverlauf").on("change", function() {setForm2()});
+          //alert('funcionou');
+          function setForm2() {
+
+              if(document.getElementById('id_wandverlauf').value == 'Abgewinkelte Wand'){
+                          document.getElementById('id_schenkellaenge').disabled = false;
+
+                      }
+                      else {
+
+                            document.getElementById('id_schenkellaenge').disabled = true;
+                      }
+
+          }
+    </script>
+{% endblock %}

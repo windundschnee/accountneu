@@ -1,0 +1,21 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block title %}Ungültiger Link{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+{% endblock %}
+{% block content %}
+
+<br>
+<div class="card">
+  <h3 class="card-header">Bestätigungslink ist ungültig</h3>
+  <div class="card-body">
+
+    <ul class="list-group">
+      <p>Der Bestätigungslink war ungültig, möglicherweise weil er bereits verwendet wurde.</p>
+    </ul>
+  </div>
+</div>
+{% endblock %}

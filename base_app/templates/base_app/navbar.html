@@ -1,0 +1,62 @@
+{% load static %}
+{% block navbar %}
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'base_app:home' %}"><img src="{% static 'base_app/img/favicon.ico' %}" width="30" height="30" class="d-inline-block align-top" alt="">Wind & Schneelasten nach EN</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'base_app:home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'core:allgEingaben_list' %}">Meine Projekte</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'lastaufstellung_app:bauteil_list' %}">Lastannahmen</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact_app:contact' %}">Kontakt</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      {% if request.user.is_authenticated %}
+
+
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ user.email }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'account_app:profile' %}">Profil</a>
+          <a class="dropdown-item" href="{% url 'account_app:edit_profile' %}">Profil ändern</a>
+          <a class="dropdown-item" href="{% url 'account_app:change_password' %}">Passwort ändern</a>
+          <a class="dropdown-item" href="{% url 'logout' %}">Abmelden</a>
+
+        </div>
+      </div>
+      <a href="{% url 'logout' %}">
+          <span style="color: white;">Logout
+            <i class="fas fa-sign-out-alt"></i>
+          </span>
+        </a>
+        {% else %}
+      <a href="{% url 'login' %}">
+              <span style="color: white;">Login
+                <i class="fas fa-sign-in-alt"></i>
+              </span>
+            </a>
+
+          {% endif %}
+    </form>
+    <br>
+  </div>
+</nav>
+
+{% endblock %}

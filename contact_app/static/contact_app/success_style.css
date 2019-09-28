@@ -1,0 +1,13 @@
+.Nachricht{
+  color:white;
+  text-align: center;
+}
+
+body {
+
+
+  background-image: url('img/home.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}

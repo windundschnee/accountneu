@@ -1,0 +1,147 @@
+{% extends "base_app/base.html" %}
+{% block title %}Satteldach Schnee{% endblock %}
+{% load static %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'satteldach_schnee_app/infobuttonmodal.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Pult/Flachdächer Schnee</li>
+  </ol>
+</nav>
+<div class="card" style="max-width:1000px">
+  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/satteldach_schnee.JPG' %}" alt="icon SatteldachSchnee"> Satteldach Schnee {% if object.projekt.projekt_name %} - {{ object.projekt.projekt_name }}{% endif %}</h3>
+  <div class="card-body">
+
+
+
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <form id="anzeigetafeln_form" method="post">
+          {% csrf_token %}
+          <div class="loader-container">
+            <div class="loader"></div>
+          </div>
+
+
+          {% if form.errors %}
+          {% for field in form %}
+          {% for error in field.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          {{ form.non_field_errors }}
+          <div class="form-group">
+            {{ form.neigung_alpha1.errors }}
+
+            {{ form.neigung_alpha1.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.neigung_alpha1 }}
+
+            </div>
+
+
+          </div>
+          <div class="form-group">
+            {{ form.neigung_alpha2.errors }}
+
+            {{ form.neigung_alpha2.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.neigung_alpha2 }}
+
+            </div>
+
+
+          </div>
+          <div class="form-group">
+            {{ form.abrutschen_verhindert.errors }}
+
+
+            <div class="" style="margin-left:20px">
+              <div class="checkbox-class">
+                {{ form.abrutschen_verhindert }} Das Abrutschen des Schnees wird verhindert <a style="margin-left:10px" id="info_button1" type="button" onclick="#" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+              </div>
+
+            </div>
+
+
+          </div>
+
+          <br>
+          <button type="submit" class="btn btn-success" name="button">Bestätigen <i class="fas fa-check square"></i></button>
+        </form>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+
+        <img id="myImg" src="{% static 'satteldach_schnee_app/img/satteldach_schnee.JPG' %}" width="100%" height="auto" alt="Bild Satteldach">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="myModal1" class="modal1">
+  <div class="card-body_modal1">
+
+    <div class="modal-header-close">
+      <button type="button" id=close1 class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+      <img class="modal-content" id="verfahren_vereifacht_image" src="{% static 'satteldach_schnee_app/img/info_abruschen.JPG' %}" width="100%" height="100%" alt="Verfahren nach EN">
+
+    </div>
+
+
+
+
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+  </div>
+</div>
+
+
+<div id="myModalpult" class="modal1">
+  <!-- Modal content -->
+  <div class="card-body_modal1">
+    <div class="modal-header-close">
+      <button type="button" id=close2 class=close data-dismiss="modal1" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="img01">
+
+    <div id="caption">
+    </div>
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% include "js_info_button_modals.html" %}
+
+{% endblock %}

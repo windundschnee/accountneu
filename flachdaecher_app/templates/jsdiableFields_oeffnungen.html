@@ -1,0 +1,53 @@
+{% block js %}
+<script language="javascript">
+  var id_oeffnungen_beruecksichtigen = document.getElementById("id_oeffnungen_beruecksichtigen");
+  id_oeffnungen_beruecksichtigen.onclick = ausblende_winddruck_oeffnungen;
+
+
+
+  var id_oeffnung_nord_flaeche = document.getElementById("id_oeffnung_nord_flaeche");
+  var id_oeffnung_ost_flaeche = document.getElementById("id_oeffnung_ost_flaeche");
+  var id_oeffnung_sued_flaeche = document.getElementById("id_oeffnung_sued_flaeche");
+  var id_oeffnung_west_flaeche = document.getElementById("id_oeffnung_west_flaeche");
+
+  var innendruck_dominante_flaeche = document.getElementById("id_some_field_radio2_0");
+  var innendruck_empfohlene_werte = document.getElementById("id_some_field_radio2_1");
+
+  function ausblende_winddruck_oeffnungen() {
+
+
+
+
+
+    if (id_oeffnungen_beruecksichtigen.checked == true) {
+
+
+
+      id_oeffnung_nord_flaeche.disabled = false;
+      id_oeffnung_nord_flaeche.required = true;
+      id_oeffnung_ost_flaeche.disabled = false;
+      id_oeffnung_ost_flaeche.required = true;
+      id_oeffnung_sued_flaeche.disabled = false;
+      id_oeffnung_sued_flaeche.required = true;
+      id_oeffnung_west_flaeche.disabled = false;
+      id_oeffnung_west_flaeche.required = true;
+      innendruck_dominante_flaeche.disabled = false;
+
+
+
+
+    } else {
+      innendruck_empfohlene_werte.checked = true;
+      innendruck_dominante_flaeche.disabled = true;
+
+
+
+      id_oeffnung_nord_flaeche.disabled = true;
+      id_oeffnung_ost_flaeche.disabled = true;
+      id_oeffnung_sued_flaeche.disabled = true;
+      id_oeffnung_west_flaeche.disabled = true;
+
+    }
+  };
+</script>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends "base_app/base.html" %}
+{% block title %}Freistehende Wände{% endblock %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/info_buttonFW.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/bildFW.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/style_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Freistehende Wand</li>
+  </ol>
+</nav>
+
+
+<div class="card">
+  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/icon.JPG' %}" alt="icon Freistehende Wände"> Freistehende Wände {% if object.projekt.projekt_name %} - {{ object.projekt.projekt_name }}{% endif %}</h3>
+  <div class="card-body">
+
+
+    <form id="needs-validation" method="post">
+      {% csrf_token %}
+      {% if form.errors %}
+      {% for field in form %}
+      {% for error in field.errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {{ form.non_field_errors }}
+
+      <div class="row">
+        <div class="col-xs-12 col-md-3">
+          <div class="form-group">
+            {{ form.hoehe_ueber_GOK.errors }}
+            {{ form.hoehe_ueber_GOK.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.hoehe_ueber_GOK }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.wandhoehe.errors }}
+            {{ form.wandhoehe.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.wandhoehe }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.wandlaenge.errors }}
+            {{ form.wandlaenge.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.wandlaenge }}
+            </div>
+
+          </div>
+          <div class="form-group">
+            {{ form.voelligkeitsgrad.errors }}
+            {{ form.voelligkeitsgrad.label_tag }}
+            <div class="form-inline" style="margin-left:20px">
+
+                {{ form.voelligkeitsgrad }}
+
+              <a style="margin-left:20px" id="info_button1" type="button" onclick="#" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-3">
+          <div class="form-group">
+            {{ form.abschattung.errors }}
+            {{ form.abschattung.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.abschattung }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.hoehe_abschattende_wand.errors }}
+            {{ form.hoehe_abschattende_wand.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.hoehe_abschattende_wand }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.abstand_abschattendewand.errors }}
+            {{ form.abstand_abschattendewand.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.abstand_abschattendewand }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.wandverlauf.errors }}
+            {{ form.wandverlauf.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.wandverlauf }}
+            </div>
+          </div>
+          <div class="form-group">
+            {{ form.schenkellaenge.errors }}
+            {{ form.schenkellaenge.label_tag }}
+            <div class="" style="margin-left:20px">
+              {{ form.schenkellaenge }}
+            </div>
+          </div>
+          <br>
+          <div style="margin-left:20px">
+            <button type="submit" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+          <img src="" id=myImg width="100%" height="auto" alt="Freistehende Wände gemäß EN/B 1991-1-4">
+        </div>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+<div id="myModal_FW" class="modal1">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal1">
+    <div class="modal-header-close">
+      <button type="button" id=close1 class=close data-dismiss="modal1" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="img01">
+
+    <div id="caption">
+    </div>
+  </div>
+
+</div>
+<div id="myModal" class="modal2">
+  <!-- Modal content -->
+  <div class="card-body_modal2">
+    <div class="modal-header-close">
+      <button type="button" id="close2" class=close data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="voelligkeitsgrad_image" src="{% static 'freistehende_waende_app/img/voelligkeit_info.jpg' %}" width="100%" height="100%" alt="voelligkeitsgrad">
+
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% include "js3.html" %}
+{% include "js_fw_edit.html" %}
+{% include "js_loader_fw_form.html" %}
+
+{% endblock %}

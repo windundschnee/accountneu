@@ -1,0 +1,5 @@
+
+
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_Av9l3aVDDxg5kVHkAeT6EAvy'
+STRIPE_SECRET_KEY = 'sk_test_wZe4FM6jc99vdKOVsevhaENI'

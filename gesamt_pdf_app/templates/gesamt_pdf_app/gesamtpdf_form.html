@@ -1,0 +1,259 @@
+{% extends "base_app/base.html" %}
+{% block title %}GesamtPDF{% endblock %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'gesamt_pdf_app/gesamtpdf.css' %}">
+{% endblock %}
+
+{% block content %}
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">PDF Bearbeiten</li>
+  </ol>
+</nav>
+<input type="hidden" name="next" value="{{next_url}}" />
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+
+    <div class="card">
+      <h3 class="card-header"><i class="far fa-file-pdf"></i> Gesamt-PDF erzeugen</h3>
+      <div class="card-body">
+        <div class="loader-container">
+          <div class="loader"></div>
+        </div>
+
+        <form method="post" id="gesamt_pdf_form" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col">
+
+              {% if flachdach_app_wahl_exists == True %}
+              <div class="form-group">
+                {{ form.flachdach_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdach"> {{ form.flachdach_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.flachdach_app_wahl }}
+
+                </div>
+              </div>
+              {% endif %}
+              {% if anzeigetafeln_app_wahl_exists == True %}
+
+              <div class="form-group">
+                {{ form.anzeigetafeln_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/anzeigetafel.JPG' %}" alt="icon Anzeigetafel"> {{ form.anzeigetafeln_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.anzeigetafeln_app_wahl }}
+
+                </div>
+              </div>
+              {% endif %}
+              {% if freistehendewaende_app_wahl_exists == True %}
+
+              <div class="form-group">
+                {{ form.freistehendewaende_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/icon.JPG' %}" alt="icon Freistehende Wand"> {{ form.freistehendewaende_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.freistehendewaende_app_wahl }}
+
+                </div>
+              </div>
+              {% endif %}
+              {% if freistehendedaecher_app_wahl_exists == True %}
+              <div class="form-group">
+                {{ form.freistehendedaecher_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/iconfreistehendesdach.JPG' %}" alt="icon Freistehende Dächer"> {{ form.freistehendedaecher_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.freistehendedaecher_app_wahl }}
+
+                </div>
+              </div>
+              {% endif %}
+              {% if pultdach_app_wahl_exists == True %}
+
+
+              <div class="form-group">
+                {{ form.pultdach_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/pultdach.JPG' %}" alt="icon Pultdach"> {{ form.pultdach_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.pultdach_app_wahl }}
+
+                </div>
+              </div>
+              {% endif %}
+
+              {% if pultdach_schnee_app_wahl_exists == True %}
+
+
+              <div class="form-group">
+                {{ form.pultdach_schnee_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/pultdach_schnee.JPG' %}" alt="icon Pultdach Schnee"> {{ form.pultdach_schnee_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.pultdach_schnee_app_wahl }}
+                </div>
+
+              </div>
+              {% endif %}
+              {% if satteldach_schnee_app_wahl_exists == True %}
+
+
+              <div class="form-group">
+                {{ form.satteldach_schnee_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/satteldach_schnee.JPG' %}" alt="icon Satteldach Schnee"> {{ form.satteldach_schnee_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.satteldach_schnee_app_wahl }}
+                </div>
+
+              </div>
+              {% endif %}
+              {% if kehldach_schnee_app_wahl_exists == True %}
+
+
+              <div class="form-group">
+                {{ form.kehldach_schnee_app_wahl.errors }}
+
+                <img class="icon" src="{% static 'core/img/kehldach_schnee.JPG' %}" alt="icon Kehldach Schnee"> {{ form.satteldach_schnee_app_wahl.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.kehldach_schnee_app_wahl }}
+                </div>
+
+              </div>
+              {% endif %}
+            </div>
+            <div class="col">
+              <div class="form-group">
+                {{ form.kurz_lang_version.errors }}
+
+                {{ form.kurz_lang_version.label_tag }}
+                <div class="" style="margin-left:50px">
+                  {{ form.kurz_lang_version }}
+                </div>
+
+
+
+              </div>
+
+              <div class="form-group">
+                {{ form.kopfzeilen_art_wahl.errors }}
+                <div class="col-md-10 mb-3">
+                  {{ form.kopfzeilen_art_wahl.label_tag }}
+                  <br>
+
+
+                  {{ form.kopfzeilen_art_wahl.0 }}<br><a id="header1" href="#"><img src="{% static 'gesamt_pdf_app/header1a.JPG' %}" alt="header1"></a>
+
+                  {{ form.kopfzeilen_art_wahl.1 }}<br><a id="header2" href="#"><img src="{% static 'gesamt_pdf_app/header1a.JPG' %}" alt="header2"></a>
+
+                  {{ form.kopfzeilen_art_wahl.2 }}<br><a id="header3" href="#"><img src="{% static 'gesamt_pdf_app/header1a.JPG' %}" alt="header3"></a>
+
+                </div>
+                <div class="form-group">
+                  {{ form.logo_kopfzeile.errors }}
+
+                  {{ form.logo_kopfzeile.label_tag }}
+                  <div class="" style="margin-left:50px">
+                    {{ form.logo_kopfzeile }}
+                  </div>
+
+                </div>
+                <br>
+
+                <button type="submit" class="btn btn-success" name="button">Vorschau <i class="fa fa-check square"></i></button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </form>
+
+
+
+
+
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <div class="col-xs-12 col-md-6">
+    <div class="card">
+      <h3 class="card-header">Vorschau</h3>
+      <div class="card-body">
+
+        <object data="{{ filename_pdf_anzeigen }}" type="application/pdf" width="100%" height="800px">
+          <iframe src="{{ filename_pdf_anzeigen }}" style="border: none;" width="100%" height="800px">
+            This browser does not support PDFs. Please download the PDF to view it:
+            <a href="{{ filename_pdf_anzeigen }}">PDF herunterladen!</a>
+          </iframe>
+        </object>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Trigger/Open The Modal -->
+
+
+
+<div id="myModal" class="modal">
+  <div class="card_body_modal">
+
+    <div class="modal-header-close">
+      <button id=close type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="abminderungsfaktor_image" src="{% static 'gesamt_pdf_app/header1a.JPG' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+<div id="myModal2" class="modal">
+  <div class="card_body_modal">
+
+    <div class="modal-header-close">
+      <button id=close2 type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="abminderungsfaktor_image" src="{% static 'gesamt_pdf_app/header1a.JPG' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+<div id="myModal3" class="modal">
+  <div class="card_body_modal">
+
+    <div class="modal-header-close">
+      <button id=close3 type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="abminderungsfaktor_image" src="{% static 'gesamt_pdf_app/header1a.JPG' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+{% include "js_loader_gesamt_pdf.html" %}
+{% include "js_modal_pictures.html" %}
+{% endblock %}

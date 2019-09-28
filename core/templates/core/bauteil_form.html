@@ -1,0 +1,141 @@
+{% extends "base_app/base.html" %}
+{% block title %}Windbemessung{% endblock %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/form.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/icon_custom.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug_neu pk_neu %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{% if bin_im_updateview == True %}{{ bauteil_name }}{% else %}Neues Bauteil{% endif %}</li>
+  </ol>
+</nav>
+<input type="hidden" id="binichimupdateview" value="{{bin_im_updateview}}">
+<div class="row">
+
+
+  <div class="col">
+    <form id="needs-validation" method="post">
+      {% csrf_token %}
+    <div class="card">
+      <h3 class="card-header">Bauteil{% if bin_im_updateview == True %} - {{ projekt_name }}{% endif %}</h3>
+      <div class="card-body">
+
+
+          {% if form.errors %}
+          {% for field in form %}
+          {% for error in field.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          {{ form.non_field_errors }}
+          <div class="form-row">
+            <div class="col-md-8 mb-3">
+              {{ form.bautteil_name.errors }}
+              <label for="{{ form.bautteil_name.id_for_label }}">Bauteilname:</label>
+
+                {{ form.bautteil_name }}
+
+            </div>
+
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              {{ form.bemessungsart_wind_schnee.errors }}
+              <h2><i class="fas fa-wind" aria-hidden="true"></i> Windlasten:</h2>
+              <div class="" style="margin-left:20px">
+                <div class="radio">
+                  <a class="popover_me" href="{% static 'freistehende_waende_app/img/freistehendewaende_gesamt.JPG' %}" data-toggle="popover-hover" data-img="{% static 'freistehende_waende_app/img/freistehendewaende_gesamt.JPG' %}">
+                    <img class="icon" src="{% static 'core/img/icon.JPG' %}" alt="icon Freistehende Wand">
+                    </a>
+                  {{ form.bemessungsart_wind_schnee.0 }}
+                </div>
+
+                <div class="radio"><img class="icon" src="{% static 'core/img/iconfreistehendesdach.JPG' %}" alt="icon Freistehende Dächer">
+                  {{ form.bemessungsart_wind_schnee.1 }}
+                 </div>
+
+                <div class="radio"><img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Gesamtgebäude">
+                  {{ form.bemessungsart_wind_schnee.2 }}
+                </div>
+                <div class="radio"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdach">
+                  {{ form.bemessungsart_wind_schnee.3 }}
+                </div>
+                <div class="radio"><img class="icon" src="{% static 'core/img/pultdach.JPG' %}" alt="icon Pultdach">
+                  {{ form.bemessungsart_wind_schnee.4 }}
+                </div>
+                <div class="radio"><img class="icon" src="{% static 'core/img/anzeigetafel.JPG' %}" alt="icon Anzeigetafel">
+                  {{ form.bemessungsart_wind_schnee.5 }}
+                </div>
+
+
+
+
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-3">
+              {{ form.bemessungsart_schnee.errors }}
+              <h2 ><i class="far fa-snowflake"></i> Schneelasten:</h2>
+              <div class="" style="margin-left:20px">
+                <div class="radio"><img class="icon" src="{% static 'core/img/pultdach_schnee.JPG' %}" alt="icon Pultdach Schnee">
+                  {{ form.bemessungsart_wind_schnee.6 }}
+                </div>
+
+                <div class="radio"><img class="icon" src="{% static 'core/img/satteldach_schnee.JPG' %}" alt="icon Satteldach Schnee">
+                  {{ form.bemessungsart_wind_schnee.7 }}
+                </div>
+                <div class="radio"><img class="icon" src="{% static 'core/img/kehldach_schnee.JPG' %}" alt="icon Satteldach Schnee">
+                  {{ form.bemessungsart_wind_schnee.8 }}
+                </div>
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+          <button type="submit" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
+          <div class="loader-container">
+            <div class="loader"></div>
+          </div>
+        </div>
+      </div>
+        </form>
+
+
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+{% include "js_hover_icon.html" %}
+{% include "js_loader.html" %}
+{% include "js_updateview.html" %}
+
+{% endblock %}

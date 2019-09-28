@@ -1,0 +1,26 @@
+/* The Modal (background) */
+/* abstand bei den Radiobuttons zum text */
+
+
+#info_symbol.fa {
+  font-size: 30px;
+  color: #007399;
+  vertical-align: middle;
+
+
+
+}
+#info_symbol.fa:hover {
+  color: #00ace6;
+  font-size: 30px;
+
+  cursor: pointer;
+
+}
+
+
+
+.custom-control2 {
+
+    padding-left: 0rem;
+}

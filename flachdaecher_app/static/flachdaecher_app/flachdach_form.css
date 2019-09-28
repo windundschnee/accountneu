@@ -1,0 +1,29 @@
+#textkoerper{
+
+  margin-left: 20px;
+}
+#bereich_vereinfachtesverfahren{
+  margin-left: 0;
+}
+
+.card-title{
+
+  vertical-align: middle;
+  margin-bottom: 0rem;
+  margin-left: 0.7rem;
+
+}
+
+.form-inline .form-control {
+
+    display: inline-block;
+    width: 80%;
+    vertical-align: middle;
+
+}
+
+.table thead th {
+    vertical-align: bottom;
+    text-align: center;
+
+}

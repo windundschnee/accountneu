@@ -1,0 +1,96 @@
+{% block allgemeineEingaben %}
+
+<table class="table table-hover">
+
+  <tbody>
+    <tr>
+
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Bundesland:
+          </div>
+          <div class="col">
+            {{ object.projekt.bundesland }}
+          </div>
+
+        </div>
+      </td>
+
+    </tr>
+    <tr>
+
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Ort:
+          </div>
+          <div class="col">
+            {{ object.projekt.ort }}
+
+          </div>
+
+        </div>
+      </td>
+
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Geländekategorie:
+          </div>
+          <div class="col">
+            {{ object.projekt.gelaendekategorie }}
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Basiswinddruck:
+          </div>
+          <div class="col">
+            {{ object.projekt.basiswinddruck }} kN/m²
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Seehöhe:
+          </div>
+          <div class="col">
+            {{ object.projekt.seehoehe }} m
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Abminderungsfaktor f<sub>s</sub>:
+          </div>
+          <div class="col">
+            {{ object.projekt.abminderungsfaktor }}
+          </div>
+
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

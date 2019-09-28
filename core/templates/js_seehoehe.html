@@ -1,0 +1,334 @@
+{% block js %}
+<script language="javascript">
+  //alert('funcionou');
+  $("#id_seehoehe_benutzerdefiniert").change(function() {
+
+    change_checkbox_seehoehe();
+    if ($("#id_seehoehe_benutzerdefiniert").text() == false) {
+        get_seehoehe();
+
+    }
+
+  });
+
+
+
+  function change_checkbox_seehoehe() {
+    // Get the checkbox
+    var checkBox = document.getElementById("id_seehoehe_benutzerdefiniert");
+    // Get the output text
+    var seehoehe = document.getElementById("id_seehoehe");
+
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true) {
+      seehoehe.readOnly = false;
+    } else {
+      seehoehe.readOnly = true;
+    }
+  };
+  $("#id_ort").change(function() {
+
+    get_seehoehe();
+
+  });
+  $("#id_bundesland").change(function() {
+
+    get_seehoehe();
+
+  });
+
+  function get_seehoehe() {
+    ort = $("#id_ort option:selected").text();
+    liste = {
+      "01.Innere Stadt": 171.0,
+      "02.Leopoldstadt": 160.0,
+      "03.Landstraße": 169.0,
+      "04.Wieden": 174.0,
+      "05.Margareten": 191.0,
+      "06.Mariahilf": 184.0,
+      "07.Neubau": 201.0,
+      "08.Josefstadt": 201.0,
+      "09.Alsergrund": 162.0,
+      "10.Favoriten": 210.0,
+      "11.Simmering": 169.0,
+      "12.Meidling": 184.0,
+      "13.Hietzing": 191.0,
+      "14.Penzing": 223.0,
+      "15.Fünfhaus": 203.0,
+      "16.Ottakring": 213.0,
+      "17.Hernals": 213.0,
+      "18.Währing": 192.0,
+      "19.Döbling": 185.0,
+      "20.Brigittenau": 161.0,
+      "21.Floridsdorf": 162.0,
+      "22.Donaustadt": 159.0,
+      "23.Liesing": 202.0,
+      "Neuwaldegg": 271.0,
+      "Sievering": 251.0,
+      "Andau": 118.0,
+      "Bad Tatzmannsdorf": 350.0,
+      "Eisenstadt": 196.0,
+      "Güssing": 225.0,
+      "Jennersdorf": 241.0,
+      "Mattersburg": 256.0,
+      "Neusiedl am See": 140.0,
+      "Oberpullendorf": 230.0,
+      "Oberwart": 318.0,
+      "Pinkafeld": 400.0,
+      "Rust am Neusiedler See": 121.0,
+      "St.Michael im Burgenland": 253.0,
+      "Arnoldstein": 581.0,
+      "Bad Kleinkirchheim": 1073.0,
+      "Bleiburg": 474.0,
+      "Eisenkappel": 554.0,
+      "Feldkirchen in Kärnten": 556.0,
+      "Ferlach": 466.0,
+      "Friesach": 637.0,
+      "Gmünd an der Lieser": 732.0,
+      "Gurk": 671.0,
+      "Heiligenblut": 1288.0,
+      "Hermagor": 603.0,
+      "Klagenfurt": 448.0,
+      "Kötschach": 706.0,
+      "Lavamünd": 344.0,
+      "Mallnitz": 1193.0,
+      "Millstatt": 600.0,
+      "Naßfeld": 1530.0,
+      "Oberdrauburg": 625.0,
+      "Obervellach": 686.0,
+      "Radenthein": 708.0,
+      "Rennweg": 1221.0,
+      "St. Andrä im Lavanttal": 432.0,
+      "St. Lorenzen im Lesachtal": 1127.0,
+      "St. Veit an der Glan": 476.0,
+      "Spittal an der Drau": 556.0,
+      "Velden": 443.0,
+      "Villach": 535.0,
+      "Völkermarkt": 461.0,
+      "Wolfsberg": 460.0,
+      "Amstetten": 277.0,
+      "Bad Vöslau": 277.0,
+      "Baden bei Wien": 233.0,
+      "Deutsch-Wagram": 160.0,
+      "Fischamend": 154.0,
+      "Gänserndorf": 165.0,
+      "Gmünd in Niederösterreich": 495.0,
+      "Gross-Enzersdorf": 152.0,
+      "Gumpoldskirchen": 240.0,
+      "Hainburg": 200.0,
+      "Hollabrunn": 245.0,
+      "Horn": 309.0,
+      "Klosterneuburg": 183.0,
+      "Korneuburg": 164.0,
+      "Krems an der Donau": 232.0,
+      "Langenlois": 217.0,
+      "Lilienfeld": 383.0,
+      "Marchegg": 148.0,
+      "Melk an der Donau": 215.0,
+      "Mistelbach": 218.0,
+      "Mödling": 234.0,
+      "Mönichkirchen": 980.0,
+      "Neunkirchen": 365.0,
+      "Perchtoldsdorf": 260.0,
+      "Pottenstein": 321.0,
+      "Poysdorf": 203.0,
+      "Puchberg am Schneeberg": 580.0,
+      "Purkersdorf": 246.0,
+      "Reichenau an der Rax": 486.0,
+      "Retz": 263.0,
+      "Scheibbs": 324.0,
+      "Schwechat": 161.0,
+      "Semmering": 1000.0,
+      "Sollenau": 270.0,
+      "St.Pölten": 265.0,
+      "Stockerau": 167.0,
+      "Ternitz": 398.0,
+      "Traiskirchen": 200.0,
+      "Tulln": 177.0,
+      "Waidhofen an der Thaya": 529.0,
+      "Waidhofen an der Ybbs": 358.0,
+      "Wilhelmsburg": 321.0,
+      "Wolkersdorf": 176.0,
+      "Wr.Neustadt": 265.0,
+      "Zistersdorf": 198.0,
+      "Zwettl": 520.0,
+      "Aigen im Mühlkreis": 596.0,
+      "Bad Goisern": 500.0,
+      "Bad Ischl": 467.0,
+      "Bad Leonfelden": 749.0,
+      "Braunau am Inn": 351.0,
+      "Ebensee": 426.0,
+      "Eferding": 271.0,
+      "Enns": 280.0,
+      "Freistadt": 566.0,
+      "Gmunden": 424.0,
+      "Gosau": 779.0,
+      "Grein": 250.0,
+      "Grieskirchen": 335.0,
+      "Grünau im Almtal": 527.0,
+      "Hallstatt": 525.0,
+      "Hinterstoder": 585.0,
+      "Kremsmünster": 384.0,
+      "Linz": 260.0,
+      "Mattighofen": 451.0,
+      "Mondsee": 482.0,
+      "Obertraun": 500.0,
+      "Reichersberg am Inn": 335.0,
+      "Ried im Innkreis": 452.0,
+      "Rohrbach im Mühlviertel": 580.0,
+      "St.Wolfgang am Wolfgangssee": 549.0,
+      "Schärding": 313.0,
+      "Schwanenstadt": 389.0,
+      "Spital am Pyhrn": 647.0,
+      "Steyr": 310.0,
+      "Traun": 273.0,
+      "Vöcklabruck": 435.0,
+      "Wels": 317.0,
+      "Weyer": 410.0,
+      "Windischgarsten": 617.0,
+      "Abtenau": 712.0,
+      "Bad Gastein": 1083.0,
+      "Bad Hofgastein": 858.0,
+      "Bischofshofen": 550.0,
+      "Fuschl am See": 669.0,
+      "Golling": 487.0,
+      "Hallein": 449.0,
+      "Kaprun": 786.0,
+      "Krimml": 1000.0,
+      "Lofer": 639.0,
+      "Mattsee": 501.0,
+      "Mauterndorf": 1121.0,
+      "Mittersill": 789.0,
+      "Mühlbach am Hochkönig": 859.0,
+      "Oberndorf bei Salzburg": 394.0,
+      "Obertauern": 1649.0,
+      "Radstadt": 856.0,
+      "Rauris": 948.0,
+      "Saalbach": 1003.0,
+      "Saalfelden": 744.0,
+      "Salzburg(Zentrum)": 436.0,
+      "St.Johann im Pongau": 606.0,
+      "St.Michael im Lungau": 1075.0,
+      "Strobl": 542.0,
+      "Tamsweg": 1024.0,
+      "Unken": 530.0,
+      "Wagrain": 838.0,
+      "Werfen": 547.0,
+      "Zell am See": 763.0,
+      "Admont": 647.0,
+      "Bad Aussee": 657.0,
+      "Bad Gleichenberg": 297.0,
+      "Bad Mitterndorf": 812.0,
+      "Bad Radkersburg": 206.0,
+      "Birkfeld": 625.0,
+      "Bruck an der Mus": 485.0,
+      "Deutschlandsberg": 380.0,
+      "Eibiswald": 362.0,
+      "Eisenerz": 737.0,
+      "Feldbach": 282.0,
+      "Fohnsdorf": 735.0,
+      "Friedberg": 601.0,
+      "Frohnleiten": 434.0,
+      "Fürstenfeld": 276.0,
+      "Gleisdorf": 365.0,
+      "Graz(Zentrum)": 369.0,
+      "Gröbming": 776.0,
+      "Hartberg": 360.0,
+      "Hieflau": 492.0,
+      "Judenburg": 734.0,
+      "Kapfenberg": 508.0,
+      "Knittelfeld": 645.0,
+      "Köflach": 442.0,
+      "Leibnitz": 275.0,
+      "Leoben": 547.0,
+      "Liezen": 659.0,
+      "Mariazell": 868.0,
+      "Murau": 814.0,
+      "Mureck": 236.0,
+      "Mürzzuschlag": 660.0,
+      "Schladming": 740.0,
+      "Seckau": 843.0,
+      "St.Nikolai im Sölktal": 1127.0,
+      "Stainz": 325.0,
+      "Trieben": 708.0,
+      "Voitsberg": 394.0,
+      "Wald am Schoberpass": 847.0,
+      "Weiz": 480.0,
+      "Wildon": 315.0,
+      "Zeltweg": 670.0,
+      "Ehrwald": 1015.0,
+      "Fulpmes": 937.0,
+      "Hall in Tirol": 560.0,
+      "Hintertux": 1488.0,
+      "Holzgau": 1114.0,
+      "Imst": 779.0,
+      "Innsbruck": 573.0,
+      "Ischgl": 1376.0,
+      "Jenbach": 562.0,
+      "Kitzbühel": 761.0,
+      "Kufstein": 505.0,
+      "Landeck": 813.0,
+      "Lienz": 680.0,
+      "Matrei in Osttirol": 977.0,
+      "Mayrhofen": 630.0,
+      "Obergurgl": 1910.0,
+      "Pertisau": 930.0,
+      "Reutte in Tirol": 835.0,
+      "St. Anton am Arlberg": 1284.0,
+      "St.Christoph am Arlberg": 1780.0,
+      "St.Jakob in Defereggen": 1389.0,
+      "St.Johann in Tirol": 665.0,
+      "St.Leonhard im Pitztal": 1366.0,
+      "Schwaz in Tirol": 535.0,
+      "Seefeld in Tirol": 1181.0,
+      "Serfaus": 1427.0,
+      "Sillian": 1100.0,
+      "Sölden": 1377.0,
+      "Steinach": 1048.0,
+      "Tannheim": 1097.0,
+      "Telfs": 638.0,
+      "Virgen": 1194.0,
+      "Wörgl": 511.0,
+      "Zell am Ziller": 575.0,
+      "Bezau": 651.0,
+      "Bludenz": 585.0,
+      "Bregenz": 398.0,
+      "Dornbirn": 429.0,
+      "Egg bei Andelsbuch": 630.0,
+      "Feldkirch": 459.0,
+      "Gargellen": 1423.0,
+      "Götzis": 425.0,
+      "Hohenems": 430.0,
+      "Langen am Arlberg": 1270.0,
+      "Lech": 1447.0,
+      "Lustenau": 409.0,
+      "Mittelberg": 1215.0,
+      "Partenen": 1051.0,
+      "Schruns": 689.0,
+      "Warth": 1500.0,
+      "Zürs": 1720.0,
+
+
+
+    };
+
+
+
+    var seehoehe = document.getElementById("id_seehoehe");
+    var seehoehe_hidden = document.getElementById("id_seehoehe_hidden");
+
+
+    for (var key in liste) {
+      //key will be -> 'id'
+      //dictionary[key] -> 'value'
+
+      seehoehe.value = liste[ort];
+      seehoehe_hidden.value = liste[ort];
+    }
+
+
+
+
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% block js %}
+<script language="javascript">
+  var id_reibung_beruecksichtigen = document.getElementById("id_reibung_beruecksichtigen");
+  id_reibung_beruecksichtigen.onclick = ausblende_winddruck_reibung;
+  var reibungs_bereich = document.getElementById("reibungs_bereich");
+  var id_reibbeiwert_dach = document.getElementById("id_reibbeiwert_dach");
+  var id_reibbeiwert_waende = document.getElementById("id_reibbeiwert_waende");
+  var checkBox_waende = document.getElementById("id_waende_beruecksichtigen");
+  function ausblende_winddruck_reibung() {
+
+
+
+
+
+    if (id_reibung_beruecksichtigen.checked == true) {
+      reibungs_bereich.style.display = 'block';
+      id_reibbeiwert_dach.required = true;
+
+
+      if (checkBox_waende.checked == true){
+        id_reibbeiwert_waende.required = true;
+        id_reibbeiwert_waende.disabled = false;
+      } else {
+        id_reibbeiwert_waende.required = false;
+        id_reibbeiwert_waende.disabled = true;
+
+}
+
+
+
+    } else {
+      reibungs_bereich.style.display = 'none';
+      id_reibbeiwert_dach.required = false;
+      id_reibbeiwert_waende.required = false;
+
+    }
+  };
+</script>
+{% endblock %}

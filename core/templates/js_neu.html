@@ -1,0 +1,355 @@
+{% block js %}
+<script language="javascript">
+  //alert('funcionou');
+  $("#id_bundesland").change(function() {
+    update_ort(this)
+  });
+  $("#id_ort").change(function() {
+    test(this)
+  });
+
+
+
+
+  function update_ort(event) {
+    bundesland = $("#id_bundesland option:selected").text();
+    selectValues = {}
+
+
+
+
+    vorarlberg = {
+      "Bezau": "Bezau",
+      "Bludenz": "Bludenz",
+      "Bregenz": "Bregenz",
+      "Dornbirn": "Dornbirn",
+      "Egg bei Andelsbuch": "Egg bei Andelsbuch",
+      "Feldkirch": "Feldkirch",
+      "Gargellen": "Gargellen",
+      "Götzis": "Götzis",
+      "Hohenems": "Hohenems",
+      "Langen am Arlberg": "Langen am Arlberg",
+      "Lech": "Lech",
+      "Lustenau": "Lustenau",
+      "Mittelberg": "Mittelberg",
+      "Partenen": "Partenen",
+      "Schruns": "Schruns",
+      "Warth": "Warth",
+      "Zürs": "Zürs",
+    };
+    burgenland = {
+      "Andau": "Andau",
+      "Bad Tatzmannsdorf": "Bad Tatzmannsdorf",
+      "Eisenstadt": "Eisenstadt",
+      "Güssing": "Güssing",
+      "Jennersdorf": "Jennersdorf",
+      "Mattersburg": "Mattersburg",
+      "Neusiedl am See": "Neusiedl am See",
+      "Oberpullendorf": "Oberpullendorf",
+      "Oberwart": "Oberwart",
+      "Pinkafeld": "Pinkafeld",
+      "Rust am Neusiedler See": "Rust am Neusiedler See",
+      "St.Michael im Burgenland": "St.Michael im Burgenland",
+    };
+    kaernten = {
+      "Arnoldstein": "Arnoldstein",
+      "Bad Kleinkirchheim": "Bad Kleinkirchheim",
+      "Bleiburg": "Bleiburg",
+      "Eisenkappel": "Eisenkappel",
+      "Feldkirchen in Kärnten": "Feldkirchen in Kärnten",
+      "Ferlach": "Ferlach",
+      "Friesach": "Friesach",
+      "Gmünd an der Lieser": "Gmünd an der Lieser",
+      "Gurk": "Gurk",
+      "Heiligenblut": "Heiligenblut",
+      "Hermagor": "Hermagor",
+      "Klagenfurt": "Klagenfurt",
+      "Kötschach": "Kötschach",
+      "Lavamünd": "Lavamünd",
+      "Mallnitz": "Mallnitz",
+      "Millstatt": "Millstatt",
+      "Naßfeld": "Naßfeld",
+      "Oberdrauburg": "Oberdrauburg",
+      "Obervellach": "Obervellach",
+      "Radenthein": "Radenthein",
+      "Rennweg": "Rennweg",
+      "St. Andrä im Lavanttal": "St. Andrä im Lavanttal",
+      "St. Lorenzen im Lesachtal": "St. Lorenzen im Lesachtal",
+      "St. Veit an der Glan": "St. Veit an der Glan",
+      "Spittal an der Drau": "Spittal an der Drau",
+      "Velden": "Velden",
+      "Villach": "Villach",
+      "Völkermarkt": "Völkermarkt",
+      "Wolfsberg": "Wolfsberg",
+    };
+    niederösterreich = {
+      "Amstetten": "Amstetten",
+      "Bad Vöslau": "Bad Vöslau",
+      "Baden bei Wien": "Baden bei Wien",
+      "Deutsch-Wagram": "Deutsch-Wagram",
+      "Fischamend": "Fischamend",
+      "Gänserndorf": "Gänserndorf",
+      "Gmünd in Niederösterreich": "Gmünd in Niederösterreich",
+      "Gross-Enzersdorf": "Gross-Enzersdorf",
+      "Gumpoldskirchen": "Gumpoldskirchen",
+      "Hainburg": "Hainburg",
+      "Hollabrunn": "Hollabrunn",
+      "Horn": "Horn",
+      "Klosterneuburg": "Klosterneuburg",
+      "Korneuburg": "Korneuburg",
+      "Krems an der Donau": "Krems an der Donau",
+      "Langenlois": "Langenlois",
+      "Lilienfeld": "Lilienfeld",
+      "Marchegg": "Marchegg",
+      "Melk an der Donau": "Melk an der Donau",
+      "Mistelbach": "Mistelbach",
+      "Mödling": "Mödling",
+      "Mönichkirchen": "Mönichkirchen",
+      "Neunkirchen": "Neunkirchen",
+      "Perchtoldsdorf": "Perchtoldsdorf",
+      "Pottenstein": "Pottenstein",
+      "Poysdorf": "Poysdorf",
+      "Puchberg am Schneeberg": "Puchberg am Schneeberg",
+      "Purkersdorf": "Purkersdorf",
+      "Reichenau an der Rax": "Reichenau an der Rax",
+      "Retz": "Retz",
+      "Scheibbs": "Scheibbs",
+      "Schwechat": "Schwechat",
+      "Semmering": "Semmering",
+      "Sollenau": "Sollenau",
+      "St.Pölten": "St.Pölten",
+      "Stockerau": "Stockerau",
+      "Ternitz": "Ternitz",
+      "Traiskirchen": "Traiskirchen",
+      "Tulln": "Tulln",
+      "Waidhofen an der Thaya": "Waidhofen an der Thaya",
+      "Waidhofen an der Ybbs": "Waidhofen an der Ybbs",
+      "Wilhelmsburg": "Wilhelmsburg",
+      "Wolkersdorf": "Wolkersdorf",
+      "Wr.Neustadt": "Wr.Neustadt",
+      "Zistersdorf": "Zistersdorf",
+      "Zwettl": "Zwettl",
+    };
+    oberösterreich = {
+      "Aigen im Mühlkreis": "Aigen im Mühlkreis",
+      "Bad Goisern": "Bad Goisern",
+      "Bad Ischl": "Bad Ischl",
+      "Bad Leonfelden": "Bad Leonfelden",
+      "Braunau am Inn": "Braunau am Inn",
+      "Ebensee": "Ebensee",
+      "Eferding": "Eferding",
+      "Enns": "Enns",
+      "Freistadt": "Freistadt",
+      "Gmunden": "Gmunden",
+      "Gosau": "Gosau",
+      "Grein": "Grein",
+      "Grieskirchen": "Grieskirchen",
+      "Grünau im Almtal": "Grünau im Almtal",
+      "Hallstatt": "Hallstatt",
+      "Hinterstoder": "Hinterstoder",
+      "Kremsmünster": "Kremsmünster",
+      "Linz": "Linz",
+      "Mattighofen": "Mattighofen",
+      "Mondsee": "Mondsee",
+      "Obertraun": "Obertraun",
+      "Reichersberg am Inn": "Reichersberg am Inn",
+      "Ried im Innkreis": "Ried im Innkreis",
+      "Rohrbach im Mühlviertel": "Rohrbach im Mühlviertel",
+      "St.Wolfgang am Wolfgangssee": "St.Wolfgang am Wolfgangssee",
+      "Schärding": "Schärding",
+      "Schwanenstadt": "Schwanenstadt",
+      "Spital am Pyhrn": "Spital am Pyhrn",
+      "Steyr": "Steyr",
+      "Traun": "Traun",
+      "Vöcklabruck": "Vöcklabruck",
+      "Wels": "Wels",
+      "Weyer": "Weyer",
+      "Windischgarsten": "Windischgarsten",
+    };
+    salzburg = {
+      "Abtenau": "Abtenau",
+      "Bad Gastein": "Bad Gastein",
+      "Bad Hofgastein": "Bad Hofgastein",
+      "Bischofshofen": "Bischofshofen",
+      "Fuschl am See": "Fuschl am See",
+      "Golling": "Golling",
+      "Hallein": "Hallein",
+      "Kaprun": "Kaprun",
+      "Krimml": "Krimml",
+      "Lofer": "Lofer",
+      "Mattsee": "Mattsee",
+      "Mauterndorf": "Mauterndorf",
+      "Mittersill": "Mittersill",
+      "Mühlbach am Hochkönig": "Mühlbach am Hochkönig",
+      "Oberndorf bei Salzburg": "Oberndorf bei Salzburg",
+      "Obertauern": "Obertauern",
+      "Radstadt": "Radstadt",
+      "Rauris": "Rauris",
+      "Saalbach": "Saalbach",
+      "Saalfelden": "Saalfelden",
+      "Salzburg(Zentrum)": "Salzburg(Zentrum)",
+      "St.Johann im Pongau": "St.Johann im Pongau",
+      "St.Michael im Lungau": "St.Michael im Lungau",
+      "Strobl": "Strobl",
+      "Tamsweg": "Tamsweg",
+      "Unken": "Unken",
+      "Wagrain": "Wagrain",
+      "Werfen": "Werfen",
+      "Zell am See": "Zell am See",
+    };
+    steiermark = {
+      "Admont": "Admont",
+      "Bad Aussee": "Bad Aussee",
+      "Bad Gleichenberg": "Bad Gleichenberg",
+      "Bad Mitterndorf": "Bad Mitterndorf",
+      "Bad Radkersburg": "Bad Radkersburg",
+      "Birkfeld": "Birkfeld",
+      "Bruck an der Mus": "Bruck an der Mus",
+      "Deutschlandsberg": "Deutschlandsberg",
+      "Eibiswald": "Eibiswald",
+      "Eisenerz": "Eisenerz",
+      "Feldbach": "Feldbach",
+      "Fohnsdorf": "Fohnsdorf",
+      "Friedberg": "Friedberg",
+      "Frohnleiten": "Frohnleiten",
+      "Fürstenfeld": "Fürstenfeld",
+      "Gleisdorf": "Gleisdorf",
+      "Graz(Zentrum)": "Graz(Zentrum)",
+      "Gröbming": "Gröbming",
+      "Hartberg": "Hartberg",
+      "Hieflau": "Hieflau",
+      "Judenburg": "Judenburg",
+      "Kapfenberg": "Kapfenberg",
+      "Knittelfeld": "Knittelfeld",
+      "Köflach": "Köflach",
+      "Leibnitz": "Leibnitz",
+      "Leoben": "Leoben",
+      "Liezen": "Liezen",
+      "Mariazell": "Mariazell",
+      "Murau": "Murau",
+      "Mureck": "Mureck",
+      "Mürzzuschlag": "Mürzzuschlag",
+      "Schladming": "Schladming",
+      "Seckau": "Seckau",
+      "St.Nikolai im Sölktal": "St.Nikolai im Sölktal",
+      "Stainz": "Stainz",
+      "Trieben": "Trieben",
+      "Voitsberg": "Voitsberg",
+      "Wald am Schoberpass": "Wald am Schoberpass",
+      "Weiz": "Weiz",
+      "Wildon": "Wildon",
+      "Zeltweg": "Zeltweg",
+    };
+    tirol = {
+      "Ehrwald": "Ehrwald",
+      "Fulpmes": "Fulpmes",
+      "Hall in Tirol": "Hall in Tirol",
+      "Hintertux": "Hintertux",
+      "Holzgau": "Holzgau",
+      "Imst": "Imst",
+      "Innsbruck": "Innsbruck",
+      "Ischgl": "Ischgl",
+      "Jenbach": "Jenbach",
+      "Kitzbühel": "Kitzbühel",
+      "Kufstein": "Kufstein",
+      "Landeck": "Landeck",
+      "Lienz": "Lienz",
+      "Matrei in Osttirol": "Matrei in Osttirol",
+      "Mayrhofen": "Mayrhofen",
+      "Obergurgl": "Obergurgl",
+      "Pertisau": "Pertisau",
+      "Reutte in Tirol": "Reutte in Tirol",
+      "St. Anton am Arlberg": "St. Anton am Arlberg",
+      "St.Christoph am Arlberg": "St.Christoph am Arlberg",
+      "St.Jakob in Defereggen": "St.Jakob in Defereggen",
+      "St.Johann in Tirol": "St.Johann in Tirol",
+      "St.Leonhard im Pitztal": "St.Leonhard im Pitztal",
+      "Schwaz in Tirol": "Schwaz in Tirol",
+      "Seefeld in Tirol": "Seefeld in Tirol",
+      "Serfaus": "Serfaus",
+      "Sillian": "Sillian",
+      "Sölden": "Sölden",
+      "Steinach": "Steinach",
+      "Tannheim": "Tannheim",
+      "Telfs": "Telfs",
+      "Virgen": "Virgen",
+      "Wörgl": "Wörgl",
+      "Zell am Ziller": "Zell am Ziller",
+    };
+    wien = {
+      "01.Innere Stadt": "01.Innere Stadt",
+      "02.Leopoldstadt": "02.Leopoldstadt",
+      "03.Landstraße": "03.Landstraße",
+      "04.Wieden": "04.Wieden",
+      "05.Margareten": "05.Margareten",
+      "06.Mariahilf": "06.Mariahilf",
+      "07.Neubau": "07.Neubau",
+      "08.Josefstadt": "08.Josefstadt",
+      "09.Alsergrund": "09.Alsergrund",
+      "10.Favoriten": "10.Favoriten",
+      "11.Simmering": "11.Simmering",
+      "12.Meidling": "12.Meidling",
+      "13.Hietzing": "13.Hietzing",
+      "14.Penzing": "14.Penzing",
+      "15.Fünfhaus": "15.Fünfhaus",
+      "16.Ottakring": "16.Ottakring",
+      "17.Hernals": "17.Hernals",
+      "18.Währing": "18.Währing",
+      "19.Döbling": "19.Döbling",
+      "20.Brigittenau": "20.Brigittenau",
+      "21.Floridsdorf": "21.Floridsdorf",
+      "22.Donaustadt": "22.Donaustadt",
+      "23.Liesing": "23.Liesing",
+      "Neuwaldegg": "Neuwaldegg",
+      "Sievering": "Sievering",
+    };
+
+
+    $("#id_ort").empty();
+    if (bundesland == 'Vorarlberg') {
+      selectValues = vorarlberg;
+    };
+    if (bundesland == 'Burgenland') {
+      selectValues = burgenland;
+
+    };
+    if (bundesland == 'Kärnten') {
+      selectValues = kaernten;
+
+    };
+    if (bundesland == 'Niederösterreich') {
+      selectValues = niederösterreich;
+
+    };
+    if (bundesland == 'Oberösterreich') {
+      selectValues = oberösterreich;
+
+    };
+    if (bundesland == 'Salzburg') {
+      selectValues = salzburg;
+
+    };
+    if (bundesland == 'Steiermark') {
+      selectValues = steiermark;
+
+    };
+    if (bundesland == 'Tirol') {
+      selectValues = tirol;
+
+    };
+    if (bundesland == 'Wien') {
+      selectValues = wien;
+
+    };
+
+
+    $.each(selectValues, function(key, value) {
+      $('#id_ort')
+        .append($('<option>', {
+            value: key
+          })
+          .text(value));
+    });
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% block no_registered_user %}
+
+
+<div class="cover-container d-flex mx-auto flex-column text-center">
+  <h1 class="cover-heading">Willkommen!</h1>
+  <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+  <p class="lead">
+    <a href="{% url 'login' %}" class="btn btn-lg btn-success">Login</a>
+    <a href="{% url 'account_app:signup' %}" class="btn btn-lg btn-outline-success">Registrieren</a>
+  </p>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% block allgemeineEingaben %}
+
+<table class="table table-hover">
+
+  <tbody>
+    <tr>
+
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Bundesland:
+          </div>
+          <div class="col">
+            {{ object.projekt.bundesland }}
+          </div>
+
+        </div>
+      </td>
+
+    </tr>
+    <tr>
+
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Ort:
+          </div>
+          <div class="col">
+            {{ object.projekt.ort }}
+
+          </div>
+
+        </div>
+      </td>
+
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Schneelastzone:
+          </div>
+          <div class="col">
+            {{ object.projekt.schneelastzone }}
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Schneeregellast:
+          </div>
+          <div class="col">
+            {{ object.projekt.schneelast }} kN/m²
+          </div>
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col text-right">
+            Seehöhe:
+          </div>
+          <div class="col">
+            {{ object.projekt.seehoehe }} m
+          </div>
+
+        </div>
+      </td>
+    </tr>
+
+
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

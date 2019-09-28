@@ -1,0 +1,10 @@
+{% block js %}
+<script language="javascript">
+  window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#reloaded';
+        window.location.reload();
+    }
+};
+</script>
+{% endblock %}

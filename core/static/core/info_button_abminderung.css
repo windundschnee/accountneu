@@ -1,0 +1,134 @@
+
+
+
+/* Modal für info Abminderungsfaktor */
+.modal1{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+.modal2{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+.modal-content {
+   animation-name: zoom;
+   animation-duration: 0.6s;
+}
+
+#myModal_three{
+  padding-top: 70px;
+}
+#myModal_one{
+  padding-top: 70px;
+}
+/* Add Animation */
+/* Add Animation */
+/* Add Animation */
+
+
+/* The Close Button */
+#close5 {
+
+
+
+    z-index:100;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#close3 {
+
+
+
+    z-index:100;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+#close1 {
+
+
+
+    z-index:100;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#close2:hover,
+#close2:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#close1:hover,
+#close1:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+#abminderungsfaktor_image{
+  width: auto ;
+  max-width: 100% ;
+  height: auto ;
+  margin-bottom: 100px;
+  border-radius: 8px;
+
+
+
+}
+#seehoehe_image{
+  width: auto ;
+  max-width: 100% ;
+  height: auto ;
+  margin-bottom: 100px;
+  border-radius: 8px;
+
+
+}
+.card_body_modal1{
+  margin: auto;
+
+  max-width: 1200px;
+
+  height: 20px;
+  padding: 2px 16px;
+
+}
+.card_body_modal2{
+  margin: auto;
+
+  max-width: 1000px;
+
+  height: 20px;
+  padding: 2px 16px;
+
+}

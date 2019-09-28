@@ -1,0 +1,48 @@
+{% block js %}
+<script language="javascript">
+  var innendruck_checkBox = document.getElementById("id_innendruck");
+  innendruck_checkBox.onclick = ausblende_innendruck;
+  var innendruck_cpi = document.getElementById("id_some_field_radio2_0");
+
+  var inndendruck_bereich = document.getElementById("inndendruck_bereich");
+  var innendruck_empfohlene_werte = document.getElementById("id_some_field_radio2_1");
+  var id_oeffnungen_beruecksichtigen = document.getElementById("id_oeffnungen_beruecksichtigen");
+
+
+  function ausblende_innendruck() {
+    if (innendruck_checkBox.checked == true) {
+
+
+
+      inndendruck_bereich.style.display = 'block';
+      innendruck_cpi.disabled = false;
+      innendruck_cpi.required = true;
+      innendruck_empfohlene_werte.disabled = false;
+      innendruck_empfohlene_werte.required = true;
+
+      if (id_oeffnungen_beruecksichtigen.checked == true){
+        innendruck_dominante_flaeche.disabled = false;
+      } else {
+        innendruck_empfohlene_werte.checked = true;
+        innendruck_dominante_flaeche.disabled = true;
+
+
+      }
+
+
+
+    } else {
+      inndendruck_bereich.style.display = 'none';
+      innendruck_cpi.disabled = true;
+      innendruck_cpi.required = false;
+      innendruck_empfohlene_werte.disabled = true;
+      innendruck_empfohlene_werte.required = false;
+
+    }
+
+
+
+
+  };
+</script>
+{% endblock %}

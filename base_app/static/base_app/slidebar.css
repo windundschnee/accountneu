@@ -1,0 +1,13 @@
+#img_slidebar{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+
+}
+#carouselExampleIndicators{
+  max-width: 800px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

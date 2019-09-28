@@ -1,0 +1,72 @@
+{% block js %}
+<script language="javascript">
+  var checkBox_waende = document.getElementById("id_waende_beruecksichtigen");
+  checkBox_waende.onclick = myFunction_winddruck_waende;
+  var hoehe = document.getElementById("id_hoehe");
+  hoehe.onchange = myFunction_winddruck_waende;
+  var breite_x = document.getElementById("id_breite_x");
+  breite_x.onchange = myFunction_winddruck_waende;
+
+  var breite_y = document.getElementById("id_breite_y");
+  breite_y.onchange = myFunction_winddruck_waende;
+  var innendruck_dominante_flaeche = document.getElementById("id_some_field_radio2_0");
+  var innendruck_empfohlene_werte = document.getElementById("id_some_field_radio2_1");
+  var id_anzahl_streifen = document.getElementById("id_anzahl_streifen");
+
+  var anzahl_streifen_bereich_wind_X = document.getElementById("anzahl_streifen_bereich_wind_X");
+  var id_reibbeiwert_waende = document.getElementById("id_reibbeiwert_waende");
+  var oeffnungen_bereich = document.getElementById("oeffnungen_bereich");
+
+
+  function myFunction_winddruck_waende() {
+
+
+
+
+
+    if (checkBox_waende.checked == true) {
+      oeffnungen_bereich.style.display = 'block';
+      anzahl_streifen_bereich_wind_X.style.display = 'block';
+      id_anzahl_streifen.style.display = 'block';
+      innendruck_dominante_flaeche.disabled = false;
+      innendruck_empfohlene_werte.checked = true;
+      innendruck_dominante_flaeche.checked = false;
+      id_reibbeiwert_waende.disabled = false;
+      id_reibbeiwert_waende.required = true;
+
+
+
+      if (parseFloat(hoehe.value) > 2 * parseFloat(breite_y.value)) {
+
+
+        id_anzahl_streifen.disabled = false;
+        id_anzahl_streifen.required = "required";
+
+      } else if (parseFloat(hoehe.value) > 2 * parseFloat(breite_x.value)) {
+
+        id_anzahl_streifen.disabled = false;
+        id_anzahl_streifen.required =  "required";
+
+      } else {
+        id_anzahl_streifen.required =  "";
+        id_anzahl_streifen.disabled = true;
+
+
+      }
+
+    } else {
+
+      innendruck_dominante_flaeche.checked = false;
+      innendruck_empfohlene_werte.checked = true;
+      innendruck_dominante_flaeche.disabled = true;
+      anzahl_streifen_bereich_wind_X.style.display = 'none';
+      id_anzahl_streifen.style.display = 'none';
+
+
+      oeffnungen_bereich.style.display = 'none';
+      id_reibbeiwert_waende.disabled = true;
+      id_reibbeiwert_waende.required = false;
+    }
+  };
+</script>
+{% endblock %}

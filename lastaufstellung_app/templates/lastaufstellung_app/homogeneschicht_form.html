@@ -1,0 +1,93 @@
+{% extends "base_app/base.html" %}
+{% block title %}Homogene Schicht{% endblock %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript">
+  $(function() {
+
+    $(".inline.{{ homogeneschicht_form.prefix }}").formset({
+      prefix: "{{ homogeneschicht_form.prefix }}",
+    })
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">Meine Schicht</li>
+  </ol>
+</nav>
+<div class="card">
+  <h3 class="card-header">Eingaben: Schicht</h3>
+  <div class="card-body">
+    <div>
+      <h1>Add Recipe</h1>
+      <form action="." method="post">
+        {% csrf_token %}
+        <div>
+          {{ form.as_p }}
+        </div>
+
+        <fieldset>
+          <legend>Recipe instruction</legend>
+
+          {{ homogeneschicht_form.non_form_errors }}
+          {% for form in homogeneschicht_form %}
+        <h1>Id: {{ form.id }}</h1>
+          <div class="form-inline">
+            {{ form.schichtname.errors }}
+            <div class="form-group">
+              {{ form.schichtname.label_tag }}
+              {{ form.schichtname }}
+            </div>
+            {{ form.dicke.errors }}
+            <div class="form-group">
+              {{ form.dicke.label_tag }}
+              {{ form.dicke }}
+            </div>
+            {{ form.wichte.errors }}
+            <div class="form-group">
+              {{ form.wichte.label_tag }}
+              {{ form.wichte }}
+            </div>
+            {{ form.last.errors }}
+            <div class="form-group">
+              {{ form.last.label_tag }}
+              {{ form.last }}
+            </div>
+
+          </div>
+          {% endfor %}
+        </fieldset>
+        <input type="submit" value="Add recipe" class="submit" />
+      </form>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% include "js_pultdaecher_edit.html" %}
+
+
+
+{% endblock %}

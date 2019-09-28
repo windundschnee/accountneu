@@ -1,0 +1,632 @@
+{% extends "base_app/base.html" %}
+{% block title %}Flachdächer{% endblock %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'flachdaecher_app/flachdach_form.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'flachdaecher_app/toggle_switch.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'flachdaecher_app/bildflachdach.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'flachdaecher_app/info_buttonflachdach.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Flachdach</li>
+  </ol>
+</nav>
+<div class="card">
+  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdächer"> Flachdächer</h3>
+  <div class="card-body">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-6">
+        <form id="flachdaecher_form" method="post">
+          {% csrf_token %}
+          <div class="loader-container">
+            <div class="loader"></div>
+          </div>
+          <div class="alert alert-secondary" role="alert">
+            <strong>Hinweis:</strong> Flachdächer sind gemäß ÖNORM EN 1991-1-4 Abschnitt 7.2.3 (1) Dächer, die weniger als 5° geneigt sind!
+          </div>
+          {{ form.non_field_errors }}
+          {% if form.errors %}
+          {% for field in form %}
+          {% for error in field.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          {{ form.non_field_errors }}
+
+
+          <section id="berechnungsverfahren_section">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+
+
+
+                    <div class="form-group">
+
+
+
+                      <div class="card-title">
+                        <h5><label for="{{ form.some_field.id_for_label }}"><b>Berechnungsverfahren</b></label></h5>
+                      </div>
+                      <div class="form-inline" style="margin-left:20px">
+                        <div class="radio">{{ form.some_field.0 }} </div>
+                        <a style="margin-left:20px" id="info_button1" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                      <div class="form-inline" style="margin-left:20px">
+                        <div class="radio">
+                          {{ form.some_field.1 }}
+                        </div>
+                        <a style="margin-left:20px" id="info_button3" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                    </div>
+                    {{ form.some_field.errors }}
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+          </section>
+
+
+
+          <section id="geometrie_section">
+            <div class="card">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col">
+                    <div class="card-title">
+                      <h5><label for=""><b>Geometrie</b></label></h5>
+                    </div>
+                    <div id="bereich_vereinfachtesverfahren" class="form-group">
+
+
+
+
+                      <label id="label_traufenbereich" for="{{ form.art_traufenbereich.id_for_label }}">{{ form.art_traufenbereich.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.art_traufenbereich }}
+                      </div>
+                    </div>
+                    {{ form.art_traufenbereich.errors }}
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col">
+                    <div class="form-group">
+
+                      <label for="{{ form.hoehe.id_for_label }}">{{ form.hoehe.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.hoehe }}
+                      </div>
+                    </div>
+                    {{ form.hoehe.errors }}
+                  </div>
+
+                  <div class="col">
+
+                    <div id="id_label_hoehe_attika" class="form-group">
+
+                      <label for="{{ form.hoehe_attika.id_for_label }}">{{ form.hoehe_attika.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.hoehe_attika }}
+                      </div>
+                    </div>
+                    {{ form.hoehe_attika.errors }}
+                    <div id="label_alpha" class="form-group">
+
+                      <label for="{{ form.alpha.id_for_label }}">{{ form.alpha.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.alpha }}
+                      </div>
+                    </div>
+                    {{ form.alpha.errors }}
+                    <div id="id_label_radius" class="form-group">
+
+                      <label for="{{ form.radius.id_for_label }}">{{ form.radius.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.radius }}
+                      </div>
+                    </div>
+                    {{ form.radius.errors }}
+                  </div>
+
+
+
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+
+                      <label for="{{ form.breite_x.id_for_label }}">{{ form.breite_x.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.breite_x }}
+                      </div>
+                    </div>
+                    {{ form.breite_x.errors }}
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+
+                      <label for="{{ form.breite_y.id_for_label }}">{{ form.breite_y.label_tag }}</label>
+                      <div class="" style="margin-left:20px">
+                        {{ form.breite_y }}
+                      </div>
+                    </div>
+                    {{ form.breite_y.errors }}
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+
+
+          <section id="wand_section">
+
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <div class="form-inline">
+                    <div class="onoffswitch">
+                      {{ form.waende_beruecksichtigen }}
+
+                      <label class="onoffswitch-label" for="id_waende_beruecksichtigen">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+
+                      </label>
+                    </div>
+                    <div class="card-title">
+                      <h5><label for=""> <b>Wände</b></label></h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="textkoerper_waende">
+
+                  <div id="anzahl_streifen_bereich_wind_X">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+
+                          <label for="">Fehlende Korrelation berücksichtigen?</label>
+
+                          <div class="form-inline" style="margin-left:20px">
+
+                            <div class="form-check">
+                              {{ form.fehlende_korrelation_beruecksichtigen }}
+                              <label class="form-check-label" for="defaultCheck1">
+                                Fehlende Korrelation
+                              </label>
+                            </div>
+
+                            <a style="margin-left:20px" id="info_button_fehlende_korrelation" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+
+
+
+                        <div class="form-group">
+
+
+
+                          <label for="{{ form.anzahl_streifen.id_for_label }}">{{ form.anzahl_streifen.label_tag }}</label>
+
+
+
+                          <div class="form-inline" style="margin-left:20px">
+                            {{ form.anzahl_streifen }}
+
+
+                            <a style="margin-left:20px" id="info_button_anzahl_streifen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                          </div>
+                        </div>
+                        {{ form.anzahl_streifen_wind_x.errors }}
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div id="oeffnungen_bereich">
+
+                    <div class="form-inline">
+                      <div class="onoffswitch">
+                        {{ form.oeffnungen_beruecksichtigen }}
+
+                        <label class="onoffswitch-label" for="id_oeffnungen_beruecksichtigen">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+
+                        </label>
+                      </div>
+                      <div class="card-title">
+                        <h5> <label class="label" for="id_oeffnungen_beruecksichtigen"><b>Öffnungen</b></label></h5>
+                      </div>
+                      <a style="margin-left:20px" id="info_button_oeffnungen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col">
+
+
+                        <table class="table table-borderless">
+                          <thead>
+                            <tr>
+                              <th></th>
+
+                              <th>[m²]</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{ form.oeffnung_nord_flaeche.label_tag }}</td>
+
+                              <td>{{ form.oeffnung_nord_flaeche }}
+                                {{ form.oeffnung_nord_flaeche.errors }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ form.oeffnung_ost_flaeche.label_tag }}</td>
+
+                              <td>{{ form.oeffnung_ost_flaeche }}
+                                {{ form.oeffnung_ost_flaeche.errors }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ form.oeffnung_sued_flaeche.label_tag }}</td>
+
+                              <td>{{ form.oeffnung_sued_flaeche }}
+                                {{ form.oeffnung_sued_flaeche.errors }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ form.oeffnung_west_flaeche.label_tag }}</td>
+
+                              <td>{{ form.oeffnung_west_flaeche }}
+                                {{ form.oeffnung_west_flaeche.errors }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+
+
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <section id="innendruck_section">
+            <div class="card">
+              <div class="card-body">
+
+                <div class="form-group">
+                  <div class="form-inline">
+                    <div class="onoffswitch">
+                      {{ form.innendruck }}
+
+                      <label class="onoffswitch-label" for="id_innendruck">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+
+                      </label>
+                    </div>
+                    <div class="card-title">
+                      <h5> <label class="label" for="id_innendruck"><b>Innendruck</b></label></h5>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="col">
+
+
+
+                  <div id="inndendruck_bereich" class="innendruckClass">
+
+
+                    <div class="form-group">
+
+                      <label for="{{ form.some_field_radio2.id_for_label }}">{{ form.some_field_radio2.label_tag }}</label>
+                      <div class="form-inline" style="margin-left:20px">
+                        <div class="radio">{{ form.some_field_radio2.1 }} </div>
+                        <a style="margin-left:20px" id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                    </div>
+                    {{ form.some_field_radio2.errors }}
+                    <div class="form-group">
+
+                      <div class="form-inline" style="margin-left:20px">
+                        <div class="radio">{{ form.some_field_radio2.0 }} </div>
+                        <a style="margin-left:20px" id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+
+
+
+
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section id="reibung_section">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+
+                  <div class="col-md-6">
+
+                    <div class="form-group">
+                      <div class="form-inline">
+                        <div class="onoffswitch">
+                          {{ form.reibung_beruecksichtigen }}
+
+                          <label class="onoffswitch-label" for="id_reibung_beruecksichtigen">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+
+                          </label>
+                        </div>
+                        <div class="card-title">
+                          <h5> <label class="label" for="id_reibung_beruecksichtigen"><b>Reibung</b></label></h5>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div id="reibungs_bereich" class="reibungs_class">
+
+
+
+
+                      <div class="form-group">
+
+                        <label for="{{ form.reibbeiwert_dach.id_for_label }}">{{ form.reibbeiwert_dach.label_tag }}</label>
+                        <div class="" style="margin-left:20px">
+                          {{ form.reibbeiwert_dach }}
+                        </div>
+                      </div>
+                      {{ form.reibbeiwert_dach.errors }}
+
+                      <div class="form-group">
+
+                        <label for="{{ form.reibbeiwert_waende.id_for_label }}">{{ form.reibbeiwert_waende.label_tag }}</label>
+                        <div class="" style="margin-left:20px">
+                          {{ form.reibbeiwert_waende }}
+                        </div>
+                      </div>
+                      {{ form.reibbeiwert_waende.errors }}
+
+
+
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+            <button type="submit" value="Submit" id="myDiv" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
+
+    </form>
+      </div>
+
+
+
+
+
+
+
+
+      <div class="col-xs-12 col-md-6">
+        <img style="width:100%" src="" id=myImg alt="Flachdächer nach EN/B 1991-1-4">
+
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div id="myModal_flachdaecher" class="modal1">
+
+
+
+  <!-- Modal content -->
+
+  <div class="card-body_modal1">
+    <div class="modal-header-close">
+      <button type="button" id=close1 class=close data-dismiss="modal1" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="img01">
+
+    <div id="caption">
+    </div>
+  </div>
+
+</div>
+
+<div id="myModal1" class="modal2">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal2">
+    <div class="modal-header-close">
+      <button type="button" id="close2" class=close data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_vereifacht_image" src="{% static 'flachdaecher_app/img/verfahren_vereinfacht.JPG' %}" width="100%" height="100%" alt="Verfahren nach EN">
+
+
+  </div>
+</div>
+
+<div id="myModal3" class="modal3">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal2">
+    <div class="modal-header-close">
+      <button type="button" id="close3" class=close data-dismiss="modal3" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/verfahren_nach_oenormEN.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+<div id="myModal4" class="modal4">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal4">
+    <div class="modal-header-close">
+      <button type="button" id="close4" class=close data-dismiss="modal4" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/innendruck_info.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+
+
+<div id="myModal6" class="modal6">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal6">
+    <div class="modal-header-close">
+      <button type="button" id="close6" class=close data-dismiss="modal4" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image" src="{% static 'flachdaecher_app/img/empfohleneWerte.JPG' %}" width="100%" height="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+
+<div id="myModal7" class="modal6">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal6">
+    <div class="modal-header-close">
+      <button type="button" id="close7" class=close data-dismiss="modal7" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="streifen_image" src="{% static 'flachdaecher_app/img/anzahlstreifen.JPG' %}" width="100%" alt="vereinfachtes Verfahren">
+
+
+  </div>
+</div>
+<div id="myModal8" class="modal6">
+
+
+
+  <!-- Modal content -->
+  <div class="card-body_modal6">
+    <div class="modal-header-close">
+      <button type="button" id="close8" class=close data-dismiss="modal8" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="korrelation_image" src="{% static 'flachdaecher_app/img/korrelation.JPG' %}" width="100%" alt="Korrelation">
+
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% include "js_flachdaecher_edit.html" %}
+{% include "js_flachdaecher_loader.html" %}
+
+{% include "jsdiableFields_waende.html" %}
+{% include "jsdiableFields_reibung.html" %}
+{% include "jsdiableFields_oeffnungen.html" %}
+{% include "jsdiableFields_innendruck.html" %}
+
+{% endblock %}

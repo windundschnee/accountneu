@@ -1,0 +1,75 @@
+{% load static %}
+{% block sidebar %}
+
+
+
+
+
+<div id="mySidenav" class="w3-sidebar w3-bar-block">
+
+
+  <ul id="list_group" class="list-group">
+<a id="close_button" href="javascript:void(0)" onclick="closeNav()">
+  <h3 id="list_titel" class="card-header">Meine Projekte &times;
+
+  </h3></a>
+
+
+
+    {% for projekt in projekte %}
+    <a style="text-decoration: none;" href="{% url 'core:windbemessung_list' projekt.slug projekt.pk %}">
+      <li id=projekt class="w3-bar-item w3-button">{{ projekt.projekt_name }}</li>
+    </a>
+
+
+    {% endfor %}
+
+  </ul>
+  <br>
+  {% if projekte.has_next or projekte.has_previous %}
+  <ul class="pagination" style="float:right">
+
+    {% if projekte.has_previous %}
+
+    <li class="page-item">
+      <a onclick="openNav(); return false;" class="page-link" href="?page_side={{ projekte.previous_page_number }}">&laquo;</a>
+    </li>
+    {% else %}
+
+
+    <li class="page-item disabled"><a class="page-link">&laquo;</a>
+      {% endif %}
+    </li>
+    {% for page in projekte.paginator.page_range %}
+    {% if page == projekte.number %}
+    <li class="page-item active"><a class="page-link" href="?page_side={{page}}">{{page}}</a> </li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="?page_side={{page}}">{{page}}</a> </li>
+    {% endif %}
+
+    {% endfor %}
+
+    {% if projekte.has_next %}
+    <li class="page-item">
+      <a id="link1" class="page-link" href="?page_side={{ projekte.next_page_number }}">&raquo;</a>
+
+    </li>
+    {% else %}
+
+    <li class="next disabled"><a class="page-link">&raquo;</a> </li>
+
+
+    {% endif %}
+
+  </ul>
+  {% endif %}
+
+
+
+
+
+</div>
+
+
+
+{% endblock %}

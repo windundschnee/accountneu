@@ -1,0 +1,84 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="de">
+
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Die 3 Meta-Tags oben *müssen* zuerst im head stehen; jeglicher sonstiger head-Inhalt muss *nach* diesen Tags kommen -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link href="{% static 'base_app/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static 'base_app/img/favicon.ico' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'base_app/foot_style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'base_app/navbar_style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'base_app/sidebar.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'base_app/container.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'anzeigetafeln_app/icon_mein.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'anzeigetafeln_app/responsive.css' %}">
+  <title>{% block title %}Base{% endblock %}</title>
+  {% block head %}
+  {% endblock %}
+</head>
+
+<body>
+  <div id="content" class="content">
+
+    {% block navbar %}
+    {% include "base_app/navbar.html" %}
+    {% endblock %}
+
+<br>
+
+
+
+
+        <div class="container-fluid" id="allgcontainer">
+
+            {% block content %}
+            {% endblock %}
+
+
+
+
+
+    </div>
+
+
+    {% block footer %}
+    {% include "base_app/footer.html" %}
+    {% endblock %}
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </div>
+
+
+
+</body>
+{% block js %}
+
+
+
+
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="{% static 'base_app/js/bootstrap.min.js' %}"></script>
+
+
+</html>

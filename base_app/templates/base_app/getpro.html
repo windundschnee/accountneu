@@ -1,0 +1,45 @@
+<!-- templates/home.html-->
+{% extends 'base_app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'base_app/getpro.css' %}">
+{% endblock %}
+{% block content %}
+
+
+<br>
+<div id="myjumbotron" class="jumbotron">
+{% if user.is_authenticated and user.is_pro %}
+
+
+{% block getpro_pro_user %}
+{% include "base_app/getpro_prouser.html" %}
+{% endblock %}
+
+
+{% elif user.is_authenticated and user.is_free %}
+
+{% block getpro_free_user %}
+{% include "base_app/getpro_freeuser.html" %}
+{% endblock %}
+
+
+
+{% endif %}
+
+  <p class="lead">Eine Jahreslizenz kostet: xxEuro!</p>
+  <hr class="my-2">
+  <p></p>
+  <p class="lead">
+    {% block getpro_paybutton %}
+    {% include "base_app/getpro_paybutton.html" %}
+    {% endblock %}
+  </p>
+</div>
+<br>
+
+
+
+{% endblock %}

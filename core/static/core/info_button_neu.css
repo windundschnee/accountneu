@@ -1,0 +1,18 @@
+
+
+
+#info_symbol.fa {
+  font-size: 38px;
+  color: #007399;
+  vertical-align: middle;
+
+
+
+}
+#info_symbol.fa:hover {
+  color: #00ace6;
+  font-size: 38px;
+
+  cursor: pointer;
+
+}

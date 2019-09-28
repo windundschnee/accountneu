@@ -1,0 +1,28 @@
+{% extends 'base_app/base.html' %}
+{% block title %}Erfolg{% endblock %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'contact_app/contact_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<br>
+
+<div id="card_contact" class="card">
+  <h3 class="card-header">Nachricht wurde versendet!</h3>
+  <div class="card-body">
+
+
+
+      <div class="col-md-10">
+        <h4>Vielen Dank! Wir melden uns in Kürze bei Ihnen!</h4>
+      </div>
+
+  </div>
+</div>
+
+{% endblock %}

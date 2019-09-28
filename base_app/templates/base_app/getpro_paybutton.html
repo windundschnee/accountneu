@@ -1,0 +1,14 @@
+{% block getpro_paybutton %}
+
+
+
+<form action="{% url 'account_app:charge' %}" method="post">
+  {% csrf_token %}
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_Av9l3aVDDxg5kVHkAeT6EAvy" data-amount="999" data-name="Demo Site" data-description="Example charge" data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto" data-currency="eur">
+  </script>
+</form>
+<script src="https://js.stripe.com/v3/"></script>
+
+
+{% endblock %}

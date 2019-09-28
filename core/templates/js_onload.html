@@ -1,0 +1,38 @@
+{% block js %}
+<script language="javascript">
+  //alert('funcionou');
+
+  window.onload = onload();
+
+
+  function onload() {
+    // Get the checkbox
+    var checkBox_seehoehe = document.getElementById("id_seehoehe_benutzerdefiniert");
+    var checkBox_winddruck = document.getElementById("id_winddruck_benutzerdefiniert");
+    var schneelast_benutzerdefiniert = document.getElementById("id_schneelast_benutzerdefiniert");
+    // Get the output text
+    var seehoehe = document.getElementById("id_seehoehe");
+    var basiswinddruck = document.getElementById("id_basiswinddruck");
+    // Get the output text
+    var schneelast = document.getElementById("id_schneelast");
+
+
+    // If the checkbox is checked, display the output text
+    if (checkBox_seehoehe.checked == true) {
+      seehoehe.readOnly = false;
+    } else {
+      seehoehe.readOnly = true;
+    }
+    if (checkBox_winddruck.checked == true) {
+      basiswinddruck.readOnly = false;
+    } else {
+      basiswinddruck.readOnly = true;
+    }
+    if (schneelast_benutzerdefiniert.checked == true) {
+      schneelast.readOnly = false;
+    } else {
+      schneelast.readOnly = true;
+    }
+  };
+</script>
+{% endblock %}

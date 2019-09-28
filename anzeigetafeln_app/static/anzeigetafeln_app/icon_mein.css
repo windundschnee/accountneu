@@ -1,0 +1,23 @@
+img.icon {
+  max-height: 55px;
+
+  margin: 2px;
+  margin-right: 10px;
+  margin-left: 10px;
+
+  border-radius: 25%;
+  border: 2px solid #73AD21;
+
+}
+
+.card-header {
+  background-color: rgba(0, 107, 179, 0.7);
+  color: white;
+
+}
+
+h3.card-header.form-inline {
+
+  padding: 0px;
+
+}

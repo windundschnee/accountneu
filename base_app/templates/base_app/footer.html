@@ -1,0 +1,21 @@
+{% load static %}
+{% block footer %}
+<footer class="footer" style="text-align:left">
+
+  <div class="foot-container">
+    &copy; 2018 Copyright: Danas Production
+
+
+    <a href="{% url 'base_app:home' %}">Home</a>
+    <a href="#">AGB</a>
+    <a href="#">Impressum</a>
+    <a href="#">FAQ</a>
+    <a href="{% url 'contact_app:contact' %}">Kontakt</a>
+
+
+
+
+
+  </div>
+</footer>
+{% endblock %}

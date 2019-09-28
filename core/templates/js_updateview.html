@@ -1,0 +1,17 @@
+{% block js %}
+<script language="javascript">
+  window.onload = myFunction();
+
+  function myFunction() {
+    var wert = document.getElementById("binichimupdateview").value;
+    if (wert == 'True') {
+
+      $(':radio:not(:checked)').attr('disabled', true);
+
+
+    }else{
+      document.getElementById("id_bemessungsart_wind_schnee_0").checked = true;
+    }
+  };
+</script>
+{% endblock %}

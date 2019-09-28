@@ -1,0 +1,134 @@
+{% extends 'base_app/base.html' %}
+{% load static %}
+
+{% block title %}Profil{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'account_app/user_profile.css' %}">
+{% endblock %}
+{% block content %}
+<br>
+
+
+
+<div id="profile_card" class="card">
+  <div class="row">
+    <div class="col">
+
+
+      {% if user.is_pro %}
+      {% if user.verlaengerung_notwendig %}
+      <div class="isa_warning" id="verlaengerung_noetig">
+        <a id="verlaengern_link" href="{% url 'base_app:getpro' %}"><i class="fa fa-warning"></i>
+      Ihre Lizenz läuft bald aus! &rarr; Lizenz verlängern!</a>
+      </div>
+
+      {% endif %}
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <img class="card-img-top" src="{% static 'account_app/img/img_avatarmale.png' %}" id="avatar_image" alt="Avatar">
+      <img class="card-img-top" src="{% static 'account_app/img/img_avatarfemale.png' %}" id="avatar_image" alt="Avatar">
+    </div>
+    <br>
+    <h4 class="card-title" style="text-align:center"><b> {{ user.email }}</b></h4>
+
+    <div class="row">
+      <div class="col" id="linke_spalte">
+        <p><b>Firma:</b></p>
+      </div>
+      <div class="col">
+        <p>{{ user.company }}</p>
+      </div>
+
+    </div>
+    {% if user.is_free %}
+    <div class="row">
+      <div id="linke_spalte" class="col">
+        <p><b>Registriert am:</b></p>
+      </div>
+      <div class="col">
+        <p>{{ user.is_free_date }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div id="linke_spalte" class="col">
+        <p><b>Version:</b></p>
+      </div>
+      <div class="col">
+        <p>Demo</p>
+      </div>
+    </div>
+    {% endif %}
+    {% if user.is_pro %}
+    <div class="row">
+      <div id="linke_spalte" class="col">
+        <p><b>Registriert am:</b></p>
+      </div>
+      <div class="col">
+
+        <p>{{ user.is_pro_date }}</p>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <div id="linke_spalte" class="col">
+        <p><b>Ablaufdatum:</b></p>
+      </div>
+      <div class="col">
+
+        <p>{{ user.is_pro_exired_date}}</p>
+      </div>
+
+    </div>
+    <div class="row">
+      <div id="linke_spalte" class="col">
+        <p><b>Version:</b></p>
+      </div>
+      <div class="col">
+        <p>Professional</p>
+      </div>
+    </div>
+
+
+    {% endif %}
+
+    <div class="row">
+<div class="col-md-3">
+
+</div>
+
+      <div class="col-md-3">
+        <a href="{% url 'account_app:edit_profile' %}" class="btn btn-primary">Profil bearbeiten</a>
+
+      </div>
+      <div class="col-md-3">
+        <a href="{% url 'account_app:change_password' %}" class="btn btn-outline-primary">
+          Passwort ändern
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="{% url 'base_app:getpro' %}" class="btn btn-outline-success">
+          {% if user.is_pro %}Lizenz verlängern!{% endif %}{% if user.is_free %}Lizenz beantragen!{% endif %}
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}

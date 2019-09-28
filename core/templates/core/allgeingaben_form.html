@@ -1,0 +1,249 @@
+{% extends "base_app/base.html" %}
+{% block title %}Projekt{% endblock %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/gelaendekategorie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/info_button_abminderung.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/info_button_neu.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/style_form.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
+
+    <li class="breadcrumb-item active" aria-current="page">{% if bin_im_updateview == True %}{{ projekt_name }}{% else %}Neues Projekt{% endif %}</li>
+  </ol>
+</nav>
+<div class="card">
+  <h3 class="card-header">{% if object.projekt_name %}{{ object.projekt_name }} - {% endif %}Standortparameter</h3>
+  <div class="card-body">
+
+
+    <form id="needs-validation" method="post">
+      {% csrf_token %}
+
+
+
+      <div class="row">
+        <div class="col-xs-12 col-md-4">
+          <div class="form-group">
+
+
+            {{ form.projekt_name.label_tag }}
+
+
+              {{ form.projekt_name }}
+
+
+          </div>
+          <div class="form-group">
+
+            {{ form.bundesland.label_tag }}
+
+              {{ form.bundesland }}
+
+          </div>
+          <div class="form-group">
+
+            <label for="{{ form.ort.id_for_label }}">Ort:</label>
+
+
+              {{ form.ort }}
+
+
+
+          </div>
+          <div class="form-group">
+
+            {{ form.gelaendekategorie.label_tag }}
+
+
+              {{ form.gelaendekategorie }}
+
+
+          </div>
+
+
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+          <div class="form-group">
+            {{ form.basiswinddruck.label_tag }}
+
+            <div class="form-inline">
+
+              {{ form.basiswinddruck }}
+
+              <div class="checkbox-class">
+                {{ form.winddruck_benutzerdefiniert }} benutzerdefiniert
+              </div>
+
+            </div>
+
+          </div>
+          {{ form.basiswinddruck.errors }}
+          <div class="form-group">
+            {{ form.windgeschwindigkeit.label_tag }}
+
+
+
+              {{ form.windgeschwindigkeit }}
+
+
+          </div>
+
+          <div class="form-group">
+            {{ form.seehoehe.label_tag }}
+
+            <div class="form-inline">
+
+              {{ form.seehoehe }}
+
+
+                <a style="margin-left:8px" id="info_button2" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+
+
+
+              <div class="checkbox-class">
+                {{ form.seehoehe_benutzerdefiniert }} benutzerdefiniert
+              </div>
+
+            </div>
+          </div>
+
+          {{ form.seehoehe.errors }}
+          <div class="form-group">
+            {{ form.schneelast.label_tag }}
+
+            <div class="form-inline">
+
+              {{ form.schneelast }}
+
+              <div class="">
+                <a style="margin-left:8px" id="info_button3" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+
+
+              </div>
+              <div class="checkbox-class">
+                {{ form.schneelast_benutzerdefiniert }} benutzerdefiniert
+              </div>
+
+            </div>
+
+          </div>
+          {{ form.schneelast.errors }}
+
+          <div class="form-group">
+            {{ form.abminderungsfaktor.label_tag }}
+
+            <div class="form-inline">
+
+                {{ form.abminderungsfaktor }}
+
+              <a style="margin-left:8px" id="info_button1" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+            </div>
+          </div>
+          <br>
+
+          <button type="submit" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <img id="myImg" src="{% static 'core/img/bild1.JPG' %}" width="100%" height="100%" alt="Geländekategorie nach EN/B 1991-1-4">
+
+        </div>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+      {{ form.seehoehe_hidden }}
+      {{ form.schneelast_hidden }}
+
+      {{ form.schneelastzone_hidden }}
+      {{ form.basiswinddruck_hidden }}
+    </form>
+
+
+  </div>
+
+</div>
+
+<div id="myModal" class="modal">
+  <div class="card-body_modal">
+
+    <div class="modal-header-close">
+      <button type="button" id=close class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+
+
+    <!-- Modal Content (The Image) -->
+
+    <img class="modal-content" id="img01">
+
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+  </div>
+</div>
+<div id="myModal_one" class="modal1">
+  <div class="card_body_modal1">
+
+    <div class="modal-header-close">
+      <button id=close1 type="button" class="close" data-dismiss="modal1" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="abminderungsfaktor_image" src="{% static 'core/img/Abminderungsfaktor_info.jpg' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+
+<div id="myModal_three" class="modal2">
+  <div class="card_body_modal2">
+
+    <div class="modal-header-close">
+      <button id=close3 type="button" class="close" data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="seehoehe_image" src="{% static 'core/img/seehoehe_info.jpg' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+<div id="myModal_5" class="modal2">
+  <div class="card_body_modal2">
+
+    <div class="modal-header-close">
+      <button id=close5 type="button" class="close" data-dismiss="modal2" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="seehoehe_image" src="{% static 'core/img/seehoehe_info.jpg' %}" width="100%" height="100%" alt="Abminderungsfaktor">
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+{% include "js_neu.html" %}
+{% include "js_seehoehe.html" %}
+{% include "js_windgeschwindigkeit.html" %}
+{% include "js_schneeregellast.html" %}
+{% include "js_schneelastzone.html" %}
+{% include "js_basiswind.html" %}
+{% include "js_info_allgeingaben.html" %}
+{% include "js_onload.html"%}
+{% include "js_loader.html" %}
+{% endblock %}

@@ -1,0 +1,320 @@
+{% block js %}
+<script language="javascript">
+  // Get the modal
+  window.onclick = function(event) {
+
+    if (event.target == modal) {
+      modal.style.display = "none";
+    } else if (event.target == modal2) {
+      modal2.style.display = "none";
+    } else if (event.target == modal3) {
+      modal3.style.display = "none";
+    } else if (event.target == modal4) {
+      modal4.style.display = "none";
+    } else if (event.target == modal6) {
+      modal6.style.display = "none";
+    } else if (event.target == modal7) {
+      modal7.style.display = "none";
+    }else if (event.target == modal8) {
+      modal8.style.display = "none";
+    }
+  }
+  window.onload = function() {
+    myFunction_winddruck_waende();
+    vereinfachtesVerfahren();
+    ausblende_winddruck_oeffnungen();
+    ausblende_winddruck_reibung();
+    ausblende_innendruck();
+
+  }
+  var modal = document.getElementById('myModal_flachdaecher');
+
+
+  var img = document.getElementById('myImg');
+  var traufenbereich = document.getElementById('id_art_traufenbereich');
+  var modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
+  var alpha = document.getElementById('id_alpha');
+  var alphalabel = document.getElementById('label_alpha');
+  var attika_hoehe = document.getElementById('id_hoehe_attika');
+  var label_attika_hoehe = document.getElementById('id_label_hoehe_attika');
+  var radius = document.getElementById('id_radius');
+  var label_radius = document.getElementById('id_label_radius');
+
+  var checkBox = document.getElementById("id_innendruck");
+
+  var standard_verfahren = document.getElementById("id_some_field_1")
+  var vereinfachtes_verfahren = document.getElementById("id_some_field_0");
+  var label_traufenbereich = document.getElementById('label_traufenbereich');
+  var bereich_vereinfachtesverfahren = document.getElementById('bereich_vereinfachtesverfahren')
+
+  var innendruck_cpi_radio = document.getElementById("id_some_field_radio2_0");
+
+
+  var radiobuttons3 = document.getElementById("id_some_field_radio2_1");
+
+
+
+
+
+  // Get the output text
+  var text = document.getElementById("inndendruck_bereich");
+
+  vereinfachtes_verfahren.onclick = vereinfachtesVerfahren;
+  standard_verfahren.onclick = vereinfachtesVerfahren;
+
+  function vereinfachtesVerfahren() {
+
+    if (vereinfachtes_verfahren.checked == true) {
+      document.getElementById('myImg').src = "/static/flachdaecher_app/img/flachdaecher_scharfkantiger_traufbereich.JPG";
+      bereich_vereinfachtesverfahren.hidden = true;
+      label_traufenbereich.hidden = true;
+      traufenbereich.required = "";
+      traufenbereich.hidden = true;
+      attika_hoehe.required = "";
+      attika_hoehe.hidden = true;
+      label_attika_hoehe.hidden = true;
+      alpha.required = "";
+      alpha.hidden = true;
+      alphalabel.hidden = true;
+      radius.required = "";
+      radius.hidden = true;
+      label_radius.hidden = true;
+
+
+
+
+    }else {
+      bereich_vereinfachtesverfahren.hidden = false;
+      label_traufenbereich.hidden = false;
+      traufenbereich.required = "required";
+      traufenbereich.hidden = false;
+      attika_hoehe.required = "required";
+      attika_hoehe.hidden = false;
+      label_attika_hoehe.hidden = false;
+      alpha.required = "required";
+      alpha.hidden = false;
+      alphalabel.hidden = false;
+      radius.required = "required";
+      radius.hidden = false;
+      label_radius.hidden = false;
+      bildLaden();
+
+    }
+
+
+  };
+
+
+
+  function bildLaden() {
+
+    if (traufenbereich.value == 'scharfkantiger Traufbereich') {
+      document.getElementById('myImg').src = "/static/flachdaecher_app/img/flachdaecher_scharfkantiger_traufbereich.JPG";
+      attika_hoehe.style.display = 'none';
+      attika_hoehe.required = "";
+      label_attika_hoehe.style.display = 'none';
+
+      alpha.style.display = 'none';
+      alpha.required = "";
+      alphalabel.style.display = 'none';
+
+      radius.style.display = 'none';
+      radius.required = "";
+      label_radius.style.display = 'none';
+
+    } else if (traufenbereich.value == 'mit Attika') {
+      attika_hoehe.style.display = 'block';
+      attika_hoehe.required = "required";
+      label_attika_hoehe.style.display = 'block';
+      alpha.style.display = 'none';
+      alpha.required = "";
+      alphalabel.style.display = 'none';
+      radius.style.display = 'none';
+      radius.required = "";
+      label_radius.style.display = 'none';
+
+
+
+
+      document.getElementById('myImg').src = "/static/flachdaecher_app/img/flachdaecher_mit_Attika.JPG";
+    } else if (traufenbereich.value == 'abgerundeter Traufbereich') {
+
+      attika_hoehe.style.display = 'none';
+      attika_hoehe.required = "";
+      label_attika_hoehe.style.display = 'none';
+      alpha.style.display = 'none';
+      alpha.required = "";
+      alphalabel.style.display = 'none';
+      radius.style.display = 'block';
+      radius.required = "required";
+      label_radius.style.display = 'block';
+
+
+
+      document.getElementById('myImg').src = "/static/flachdaecher_app/img/flachdaecher_abgerundeter_traufbereich.JPG";
+    } else {
+
+
+
+      document.getElementById('myImg').src = "/static/flachdaecher_app/img/flachdaecher_mansardenartiger_traufbereich.JPG";
+      attika_hoehe.required = "";
+      attika_hoehe.style.display = 'none';
+      label_attika_hoehe.style.display = 'none';
+      alpha.style.display = 'block';
+      alpha.required = "required";
+      alphalabel.style.display = 'block';
+      radius.style.display = 'none';
+      radius.required = "";
+      label_radius.style.display = 'none';
+    }
+
+  };
+
+
+
+
+
+  traufenbereich.onchange = bildLaden();
+
+  img.onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  };
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementById("close1");
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+
+
+
+  // Get the modal
+  var modal2 = document.getElementById('myModal1');
+
+  // Get the button that opens the modal
+  var btn2 = document.getElementById("info_button1");
+
+  // Get the <span> element that closes the modal
+  var span2 = document.getElementById("close2");
+
+  // When the user clicks the button, open the modal
+  btn2.onclick = function() {
+    modal2.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span2.onclick = function() {
+    modal2.style.display = "none";
+  };
+
+
+  // Get the modal
+  var modal3 = document.getElementById('myModal3');
+
+  // Get the button that opens the modal
+  var btn3 = document.getElementById("info_button3");
+
+  // Get the <span> element that closes the modal
+  var span3 = document.getElementById("close3");
+
+  // When the user clicks the button, open the modal
+  btn3.onclick = function() {
+    modal3.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span3.onclick = function() {
+    modal3.style.display = "none";
+  };
+
+
+
+  // Get the modal 4
+  var modal4 = document.getElementById('myModal4');
+
+  // Get the button that opens the modal
+  var btn4 = document.getElementById("info_button_dominant");
+
+  // Get the <span> element that closes the modal
+  var span4 = document.getElementById("close4");
+
+  // When the user clicks the button, open the modal
+  btn4.onclick = function() {
+    modal4.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span4.onclick = function() {
+    modal4.style.display = "none";
+  };
+
+  // Get the modal  info_button_empfohleneWerte
+
+
+  // Get the button that opens the modal
+
+
+
+
+  // Get the modal
+  var modal6 = document.getElementById('myModal6');
+
+  // Get the button that opens the modal
+  var btn6 = document.getElementById("info_button_empfohleneWerte");
+
+  // Get the <span> element that closes the modal
+  var span6 = document.getElementById("close6");
+
+  // When the user clicks the button, open the modal
+  btn6.onclick = function() {
+    modal6.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span6.onclick = function() {
+    modal6.style.display = "none";
+  };
+  // Get the modal
+  var modal7 = document.getElementById('myModal7');
+
+  // Get the button that opens the modal
+  var btn7 = document.getElementById("info_button_anzahl_streifen");
+
+  // Get the <span> element that closes the modal
+  var span7 = document.getElementById("close7");
+
+  // When the user clicks the button, open the modal
+  btn7.onclick = function() {
+    modal7.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span7.onclick = function() {
+    modal7.style.display = "none";
+  };
+
+  // Get the modal
+  var modal8 = document.getElementById('myModal8');
+
+  // Get the button that opens the modal
+  var btn8 = document.getElementById("info_button_fehlende_korrelation");
+
+  // Get the <span> element that closes the modal
+  var span8 = document.getElementById("close8");
+
+  // When the user clicks the button, open the modal
+  btn8.onclick = function() {
+    modal8.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span8.onclick = function() {
+    modal8.style.display = "none";
+  };
+</script>
+{% endblock %}

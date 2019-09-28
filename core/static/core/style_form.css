@@ -1,0 +1,16 @@
+.form-control {
+
+}
+
+
+
+.checkbox-class {
+  margin-left: 8px
+}
+
+
+
+.form-inline .form-control {
+  min-width: 60%;
+
+}

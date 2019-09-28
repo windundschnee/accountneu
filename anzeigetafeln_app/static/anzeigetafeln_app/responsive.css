@@ -1,0 +1,51 @@
+.form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+.neues_bauteil_button{
+  text-align: right;
+  padding:10px;
+}
+@media(max-width:685px) {
+  .card {
+    margin: 10px;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  button {
+    margin: 10px;
+  }
+
+  .btn-success {
+
+    font-size: 16px;
+}
+td.text-left{
+  padding-left: 0px;
+}
+th{
+  min-width: 300px;
+}
+}
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+@media(max-width:1385px) {
+  .scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+  }
+  .navbar.navbar-expand-lg.navbar-light.bg-light {
+    padding: 7px;
+    opacity: 0.95;
+}
+}

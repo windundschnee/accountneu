@@ -1,0 +1,34 @@
+{% block js %}
+<script language="javascript">
+  //alert('funcionou');
+  $("#id_ort").change(function() {
+
+    get_windgeschwindigkeit();
+
+  });
+  $("#id_basiswinddruck").change(function() {
+
+    get_windgeschwindigkeit();
+
+  });
+  $("#id_bundesland").change(function() {
+
+    get_windgeschwindigkeit();
+
+  });
+
+  function get_windgeschwindigkeit() {
+
+    var windgeschwindigkeit = document.getElementById("id_windgeschwindigkeit");
+    var basiswinddruck = document.getElementById("id_basiswinddruck");
+
+    wind_berechnet = Math.sqrt(2*1000*basiswinddruck.value/1.25).toFixed(2)
+
+    windgeschwindigkeit.value = wind_berechnet;
+
+
+
+
+  }
+</script>
+{% endblock %}

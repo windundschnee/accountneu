@@ -1,0 +1,15 @@
+img.icon {
+  max-width: 70px;
+  margin: 20px;
+  border-radius: 25%;
+  border: 2px solid #73AD21;
+
+}
+
+a.popover_me.popover:hover{
+    width:200px;
+    height:250px;
+}
+a.popover.fade.bs-popover-bottom.show:hover{
+  width: 20px;
+}

@@ -1,0 +1,27 @@
+{% extends "base_app/base.html" %}
+{% block title %}{{ object.schichtname }} löschen{% endblock %}
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Lastannahmen</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Schicht Löschen</li>
+  </ol>
+</nav>
+<form method="post">
+    {% csrf_token %}
+  <h1>Schicht: {{ object.schichtname }}</h1>
+  <h2>Sind Sie sicher, dass Sie '{{ object.schichtname }}' löschen wollen? </h2>
+  <br>
+  <button class="btn btn-outline-danger"type="submit" name="button">Ja, löschen</button>
+    <a class="btn btn-outline-secondary" href="{{object.get_absolute_url}}">Nein, Zurück</a>
+</form>
+{% endblock %}
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% block js %}
+<script type="text/javascript">
+
+
+  var geodata = {{ projektname_django|safe }}
+  var projektname = geodata[0]
+  var bauteilname = geodata[1]
+  var firmenname = geodata[2]
+  var checkbox_standard = document.getElementById('checkbox_standardwerte')
+
+
+
+// assign function to onclick property of checkbox
+checkbox_standard.onclick = function() {
+    // access properties using this keyword
+    if ( this.checked ) {
+        // if checked ...
+        document.getElementById('id_titel').value=projektname;
+        document.getElementById('id_untertitel').value=bauteilname;
+        document.getElementById('id_untertitel2').value=firmenname;
+    } else {
+        // if not checked ...
+    }
+};
+
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+img.icon {
+  max-height: 75px;
+
+  margin: 2px;
+  margin-right: 10px;
+  margin-left: 10px;
+
+  border-radius: 25%;
+  border: 2px solid #73AD21;
+
+}

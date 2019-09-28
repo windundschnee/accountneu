@@ -1,0 +1,122 @@
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+  padding: 0px;
+  opacity: 0.95;
+}
+
+.bg-light {
+  background-color: rgba(0, 107, 179, 1) !important;
+}
+.card2 {
+
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    z-index: 0;
+
+}
+.card {
+
+    position: inherit;
+    overflow: visible !important;
+    z-index: 0;
+
+}
+#content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: no-repeat;
+  background-image: url("img/background2.png");
+  height: 100%;
+  width: 100%;
+}
+
+/* Loading PNG nach dem eine Page geladen wurde*/
+#needs-validation {
+  /* .loader-container will be positionned relative to this */
+  position: relative;
+}
+
+.loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(240, 240, 240, .7);
+  /* hide it at first */
+  display: none;
+}
+
+.loader {
+  border: 16px solid #80b3ff;
+  /* Light grey */
+  border-top: 16px solid #1a53ff;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  text-align: center;
+  /* Add the following to center it */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -38px;
+  /* half its width (border included) */
+  margin-top: -38px;
+  /* half its height */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Navigationsleiste */
+.navbar.navbar-expand-lg.navbar-light.bg-light a {
+  color: white;
+  position: relative;
+  z-index: 10000;
+
+  overflow: visible !important;
+}
+
+.collapse.navbar-collapse a {
+  padding: 15px;
+
+}
+
+.collapse.navbar-collapse a:hover {
+  background-color: #008ae6;
+}
+
+a.dropdown-item {
+    position: relative;
+    z-index: 10000;
+
+}
+
+.navbar-brand {
+  padding-left: 10px;
+  font-family: "Georgia";
+}
+
+.dropdown-menu {
+  background-color: #006bb3;
+}

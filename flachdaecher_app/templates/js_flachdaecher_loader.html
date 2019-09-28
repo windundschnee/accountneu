@@ -1,0 +1,15 @@
+{% block js %}
+<script type="text/javascript">
+
+  var myForm = document.getElementById('flachdaecher_form');
+
+  myForm.addEventListener('submit', showLoader);
+
+  function showLoader(e) {
+    this.querySelector('.loader-container').style.display = 'block';
+    // the line below is just for the demo, it stops the form from submitting
+    // so that you can see it works. Don't use it
+
+  }
+</script>
+{% endblock %}

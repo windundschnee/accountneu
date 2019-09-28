@@ -1,0 +1,82 @@
+{% extends 'base_app/base.html' %}
+{% block title %}Kontakt{% endblock %}
+
+<!--- Include the above in your HEAD tag --->
+
+
+
+
+
+{% load static %}
+
+{% block head %}
+
+<!--Hir wird das JavaScripts fürs Captcha geladen-->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="stylesheet" type="text/css" href="{% static 'contact_app/contact_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'freistehende_waende_app/card.css' %}">
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<br>
+<div id="card_contact" class="card">
+  <h3 class="card-header">Kontakt</h3>
+  <div class="card-body">
+
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="col-md-10">
+        <div class="form-group">
+          {{ form.from_email.errors }}
+          <label for="{{ form.from_email.id_for_label }}">{{ form.from_email.label_tag }}</label>
+          <div class="" style="margin-left:20px">
+            {{ form.from_email }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="form-group">
+          {{ form.subject.errors }}
+          <label for="{{ form.subject.id_for_label }}">{{ form.subject.label_tag }}</label>
+          <div class="" style="margin-left:20px">
+            {{ form.subject }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="form-group">
+          {{ form.message.errors }}
+          <label for="{{ form.message.id_for_label }}">{{ form.message.label_tag }}</label>
+          <div class="" style="margin-left:20px">
+            {{ form.message }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="" style="margin-left:20px">
+          <div class="g-recaptcha" data-sitekey="6LcU-3IUAAAAANxs0kJFr3L6jqipBDkbjKA3vKNc"></div>
+        </div>
+
+      </div>
+      <br>
+      <div class="col-md-10">
+        <div class="" style="margin-left:20px">
+          <button class="btn btn-success" type="submit">Senden</button>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}
