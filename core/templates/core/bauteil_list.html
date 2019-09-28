@@ -85,6 +85,9 @@
               {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Freistehende Dächer' %}
               <img class="icon" src="{% static 'core/img/iconfreistehendesdach.JPG' %}" alt="icon Freistehende Dächer">
 
+              {% elif element.bautteil_name.bemessungsart_wind_schnee == 'Windlasten Gesamtgebäude' %}
+              <img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Gesamtgebauede">
+
               {% endif %}
               {{ element.bautteil_name.bemessungsart_wind_schnee}}
 
