@@ -1,5 +1,5 @@
 from django.urls import path
-from views import GesamtgebaeudeCreateView
+#from views import GesamtgebaeudeCreateView
 
 
 app_name = 'gesamtgebaeude_app'
