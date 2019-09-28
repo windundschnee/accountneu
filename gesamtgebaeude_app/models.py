@@ -19,24 +19,24 @@ SAMPLE_CHOICES2=(
 
 
 
-gk = (
-        ('II', 'II'),
-        ('III', 'III'),
-        ('IV', 'IV'),
-        )
+
 
 class Gesamtgebaeude(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    flachdach_app_wahl = models.ForeignKey(FlachdachModel, on_delete=models.CASCADE)
+    dach_wahl = models.CharField(max_length=100, null=False, default="Dachwahl")
+
     projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE, null=True)
     app_wahl = models.CharField(max_length=100, null=False)
-    #edited_date = models.DateTimeField(blank=True, null=True)
+    edited_date = models.DateTimeField(blank=True, null=True)
 
 
 
     def save(self, *args, **kwargs):
-        self.app_wahl = slugify(self.flachdach_app_wahl)
+        self.app_wahl = slugify(self.dach_wahl)
         super(Gesamtgebaeude, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.user
+
+    def get_absolute_url(self):
+        return reverse('gesamtgebaeude_app:gesamtgebaeude_detail', kwargs={'slug': self.projekt.slug,'my': self.projekt.pk,'pk': self.pk})
