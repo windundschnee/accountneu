@@ -3,6 +3,7 @@ from gesamt_pdf_app.latexbasisfunktionen import *
 from gesamt_pdf_app.standortparameter import standortparameter
 from gesamt_pdf_app.kopfzeile import *
 import os.path as path
+from account_app.models import User
 
 from waende_app.latex_waende import latex_waende_ergebniss, bilder_waende, aussendruckbeiwerte_waende
 #Standard Ausdruckprotokoll_Flachdach
@@ -83,6 +84,18 @@ def flachdach_pdferzeugen(self, arg_latex):
     else:
         nur_aussendruckergebnisse_flachdach(self,arg_latex,output_ergebnisse_flachdach)
         nur_aussendruckergebnisse_flachdach_ohne_cp(self,arg_latex,output_ergebnisse_flachdach_ohne_cp)
+    print(self.flachdach.projekt)
+    print(self.flachdach.bautteil_name)
+    print(self.user.bautteil_name)
+    user = User.objects.filter(email=self.request.user)
+    print(user.company)
+    print(user.logo_kopfzeile.small.url)
+    #Kopfzeile eingaben
+    kopfzeile_eingeben_list={
+
+
+
+                        }
 
     # gesammt tex datei erstellen
 
@@ -91,7 +104,7 @@ def flachdach_pdferzeugen(self, arg_latex):
         preamble_static_latex(self,fd)
         if user_has_free_account:
             latexwasserzeichen(fd)
-        kopfundfusszeile_1(fd,arg_latex)
+        kopfundfusszeile_einzeln(fd,kopfzeile_eingeben_list,arg_latex)
         print('es macht das ausdruckprotokoll')
         print(my_path_ausdruckprotokoll)
 

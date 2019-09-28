@@ -1,7 +1,7 @@
 import os
 import os.path as path
 
-def kopfundfusszeile_einzeln(fd,arg_latex):
+def kopfundfusszeile_einzeln(fd,kopfzeile_eingeben_list,arg_latex):
     fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
     fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
     fd.write("\n"+r' &  &')
@@ -19,7 +19,7 @@ def kopfundfusszeile_einzeln(fd,arg_latex):
     fd.write("\n"+r'\textbf{Bearbeiter} & James Smith')#eintrag 8 Bearbeiter
     fd.write("\n"+r'\end{tabular}}')
 
-def kopfundfusszeile(fd,arg_latex):
+def kopfundfusszeile(fd,kopfzeile_eingeben_list,arg_latex):
     fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
     fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
     fd.write("\n"+r' &  &')
@@ -37,7 +37,7 @@ def kopfundfusszeile(fd,arg_latex):
     fd.write("\n"+r'\textbf{Bearbeiter} & James Smith')#eintrag 8 Bearbeiter
     fd.write("\n"+r'\end{tabular}}')
 
-def kopfundfusszeile_1(fd,arg_latex):
+def kopfundfusszeile_1(fd,kopfzeile_eingeben_list,arg_latex):
     fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
     fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
     fd.write("\n"+r' & Beispielprojekt &')
