@@ -145,11 +145,14 @@ class PdfCreateRedirectView(RedirectView):
         pk_projekt_name = self.kwargs.get('my')
         #Wenn bereits ein Objekt in pdfBearbeiten erstellt wurde
         pdf_bearbeitet = GesamtPdf.objects.filter(user=self.request.user, projekt_id=pk_projekt_name).exists()
+        user = User.objects.filter(email=self.request.user)
+
 
         args_latex = {
                     #'output_margin_ergebnisse':output_margin_ergebnisse,
                     'ergebnisse_berechnung':ergebnisse_berechnung,
                     'pdf_bearbeitet':pdf_bearbeitet,
+                    'user':user,
                     }
         #Pdf erzeugen!!
         pdferzeugen = flachdach_pdferzeugen(self, args_latex)
