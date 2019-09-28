@@ -21,8 +21,11 @@
     <li class="breadcrumb-item active" aria-current="page">Flachdach</li>
   </ol>
 </nav>
+
+
 <div class="card">
-  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdächer"> Flachdächer</h3>
+  <h3 class="card-header form-inline">
+    <img class="icon" src="{% if gesamtgebaeude %}{% static 'core/img/gesamtgebauede.JPG' %}{%else%}{% static 'core/img/flachdach.JPG' %}{%endif%}" alt="icon Flachdächer">{% if gesamtgebaeude %}Gesamtgebäude mit {%endif%} Flachdach</h3>
   <div class="card-body">
     <div class="row">
 

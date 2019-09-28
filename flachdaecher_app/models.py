@@ -36,6 +36,7 @@ class FlachdachModel(models.Model):
     some_field_radio2 = models.CharField(max_length=80, blank=True, null=True, default=1)
     date_posted = models.DateTimeField(default=timezone.now)
     flachdach_eingegeben = models.BooleanField(blank=False)
+    gesamtgebaeude = models.BooleanField(default=False)
     edited_date = models.DateTimeField(blank=True, null=True)
     waende_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
     oeffnungen_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
