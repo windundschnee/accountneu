@@ -89,11 +89,15 @@ def flachdach_pdferzeugen(self, arg_latex):
 
     #Kopfzeile eingaben
     user = get_object_or_404(User,email=self.request.user)
+    logo_kopfzeile = None
+
+    if user.logo_kopfzeile:
+        logo_kopfzeile = user.logo_kopfzeile.url
     kopfzeile_eingeben_list={'projekt': self.flachdach.projekt,
                     'bautteil_name':self.flachdach.bautteil_name,
                     'bemessungsart_wind_schnee':self.flachdach.bautteil_name.bemessungsart_wind_schnee,
                     'company':user.company,
-                    'logo_kopfzeile':user.logo_kopfzeile.small.url
+                    'logo_kopfzeile':logo_kopfzeile
                         }
 
     # gesammt tex datei erstellen
