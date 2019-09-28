@@ -28,10 +28,9 @@ gk = (
 class Gesamtgebaeude(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     flachdach_app_wahl = models.ForeignKey(FlachdachModel, on_delete=models.CASCADE)
-    projekt = models.ForeignKey(
-        allgEingaben,
-        on_delete=models.CASCADE,)
+    projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE, null=True)
     app_wahl = models.CharField(max_length=100, null=False)
+    #edited_date = models.DateTimeField(blank=True, null=True)
 
 
 

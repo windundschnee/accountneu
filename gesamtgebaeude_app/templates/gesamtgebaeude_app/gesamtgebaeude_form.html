@@ -1,9 +1,9 @@
 {% extends "base_app/base.html" %}
-{% block title %}Anzeigetafeln{% endblock %}
+{% block title %}Gesamtgebäude{% endblock %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'anzeigetafeln_app/anzeigetafeln_edit.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'anzeigetafeln_app/info_buttons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'gesamtgebaeude_app/anzeigetafeln_edit.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'gesamtgebaeude_app/info_buttons.css' %}">
 
 {% endblock %}
 
@@ -14,17 +14,17 @@
     <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
     <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' slug pk %}">Bauteile</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Flachdach</li>
+    <li class="breadcrumb-item active" aria-current="page">Gesamtgebäude</li>
   </ol>
 </nav>
 <div class="card" style="max-width:1000px">
-  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/anzeigetafel.JPG' %}" alt="icon Anzeigetafel"></i> Anzeigetafeln {% if object.projekt.projekt_name %} - {{ object.projekt.projekt_name }}{% endif %}</h3>
+  <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Anzeigetafel">Gesamtgebäude {% if object.projekt.projekt_name %} - {{ object.projekt.projekt_name }}{% endif %}</h3>
   <div class="card-body">
     <div class="row">
 
       <div class="col-xs-12 col-md-6">
 
-        <form id="anzeigetafeln_form" method="post">
+        <form id="gesamtgebauede_form" method="post">
           {% csrf_token %}
           <div class="loader-container">
             <div class="loader"></div>
@@ -80,7 +80,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
 
-        <img id="myImg" src="{% static 'anzeigetafeln_app/img/Anzeigetafel_info_27.JPG' %}" width="100%" height="auto" alt="Anzeigetafeln nach EN/B 1991-1-4">
+        <img id="myImg" src="{% static 'gesamtgebaeude_app/img/Anzeigetafel_info_27.JPG' %}" width="100%" height="auto" alt="Anzeigetafeln nach EN/B 1991-1-4">
 
       </div>
     </div>
