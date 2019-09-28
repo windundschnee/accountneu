@@ -4,7 +4,7 @@ from gesamt_pdf_app.standortparameter import standortparameter
 from gesamt_pdf_app.kopfzeile import *
 import os.path as path
 from account_app.models import User
-
+from django.shortcuts import get_object_or_404
 from waende_app.latex_waende import latex_waende_ergebniss, bilder_waende, aussendruckbeiwerte_waende
 #Standard Ausdruckprotokoll_Flachdach
 
@@ -84,17 +84,16 @@ def flachdach_pdferzeugen(self, arg_latex):
     else:
         nur_aussendruckergebnisse_flachdach(self,arg_latex,output_ergebnisse_flachdach)
         nur_aussendruckergebnisse_flachdach_ohne_cp(self,arg_latex,output_ergebnisse_flachdach_ohne_cp)
-    print(self.flachdach.projekt)
-    print(self.flachdach.bautteil_name)
-    print(self.user.bautteil_name)
-    user = User.objects.filter(email=self.request.user)
-    print(user.company)
-    print(user.logo_kopfzeile.small.url)
+
+
+
     #Kopfzeile eingaben
-    kopfzeile_eingeben_list={
-
-
-
+    user = get_object_or_404(User,email=self.request.user)
+    kopfzeile_eingeben_list={'projekt': self.flachdach.projekt,
+                    'bautteil_name':self.flachdach.bautteil_name,
+                    'bemessungsart_wind_schnee':self.flachdach.bautteil_name.bemessungsart_wind_schnee,
+                    'company':user.company,
+                    'logo_kopfzeile':user.logo_kopfzeile.small.url
                         }
 
     # gesammt tex datei erstellen
