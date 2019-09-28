@@ -49,3 +49,5 @@ def kopfundfusszeile_1(fd,arg_latex):
     fd.write("\n"+r'\\[-4pt]')
     fd.write("\n"+r'\textbf{Bearbeiter} & James Smith') # eintrag 5 Bauteilart
     fd.write("\n"+r'\end{tabular}}')
+
+    fd.write("\n"+r'\fancyhead[R]{bla}')

@@ -168,11 +168,12 @@ class PdfCreateRedirectViewSatteldachSchnee(RedirectView):
 
 
         arg_latex_list = [user_has_free_account,foldername,ergebnisse_satteldach_schnee,allgeingaben]
-
+        user = User.objects.filter(email=self.request.user)
 
         args_latex = {'user_has_free_account': user_has_free_account,
                     'foldername':foldername,
                     'ergebnisse_satteldach_schnee':ergebnisse_satteldach_schnee,
+                    'user':user,
 
 
                     }

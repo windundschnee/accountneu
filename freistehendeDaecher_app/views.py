@@ -177,13 +177,14 @@ class PdfCreateRedirectView(RedirectView):
 
 
         #Wenn bereits Objekte im pdfBearbeitenTitel Model je Bauteil/FreistehendeWand existiert
-
+        user = User.objects.filter(email=self.request.user)
 
 
         args_latex = {'user_has_free_account': user_has_free_account,
                     'foldername':foldername,
                     'ergebnisse_freistehende_daecher':ergebnisse_freistehende_daecher,
                     'eingaben_pdfbearbeiten':eingaben_pdfbearbeiten,
+                    'user':user,
 
                     }
 

@@ -166,12 +166,13 @@ class PdfCreateRedirectView(RedirectView):
 
         pk_projekt_name = self.kwargs.get('my')
         pdf_bearbeitet = GesamtPdf.objects.filter(user=self.request.user, projekt_id=pk_projekt_name).exists()
-
+        user = User.objects.filter(email=self.request.user)
         args_latex = {'user_has_free_account': user_has_free_account,
                     'foldername':foldername,
                     'ergebnisse_freistehende_waende':ergebnisse_freistehende_waende,
                     'eingaben_pdfbearbeiten':eingaben_pdfbearbeiten,
                     'pdf_bearbeitet':pdf_bearbeitet,
+                    'user':user,
                     }
 
 
