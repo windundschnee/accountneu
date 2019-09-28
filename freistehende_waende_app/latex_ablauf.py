@@ -4,6 +4,7 @@ from gesamt_pdf_app.standortparameter import standortparameter
 from gesamt_pdf_app.latexbasisfunktionen import *
 from gesamt_pdf_app.models import GesamtPdf
 from django.forms.models import model_to_dict
+from gesamt_pdf_app.kopfzeile import *
 
 
 #from pylatex.base_classes import LatexObject,Container

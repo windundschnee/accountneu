@@ -7,6 +7,7 @@ from flachdaecher_app.models import FlachdachModel
 from anzeigetafeln_app.models import AnzeigetafelnModel
 import os.path as path
 from .models import GesamtPdf
+from gesamt_pdf_app.kopfzeile import *
 
 
 def gesamt_pdf_erzeugen(self, arg_latex):
