@@ -15,7 +15,7 @@ from kehldach_schnee_app.models import KehldachSchneeModel
 class GesamtPdf(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE,)
-    logo_kopfzeile = StdImageField(upload_to='bilder/', blank=True, variations={'small': (160, 124),})
+    
     pdf_bearbeitet = models.BooleanField(default=False)
     next = models.CharField(max_length=80, blank=True)
     kurz_lang_version = models.CharField(max_length=80, default="text", blank=False)

@@ -39,6 +39,7 @@ urlpatterns = [
 
     path('', include('allg_berechnungen_app.urls')),
     path('', include('gesamt_pdf_app.urls')),
+    path('', include('gesamtgebaeude_app.urls')),
 
 
 

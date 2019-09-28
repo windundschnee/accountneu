@@ -18,15 +18,15 @@ class FlachdachModel(models.Model):
         Bauteil,
         on_delete=models.CASCADE,)
     art_traufenbereich = models.CharField(max_length=80, default='')
-    hoehe_attika = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
+    hoehe_attika = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=True)
     alpha = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
-    radius = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
+    radius = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=True)
 
 
 
-    hoehe = models.DecimalField(decimal_places=2, max_digits=7, blank=False, null=True)
-    breite_x = models.DecimalField(decimal_places=2, max_digits=7, blank=False, null=True)
-    breite_y = models.DecimalField(decimal_places=2, max_digits=7, blank=False, null=True)
+    hoehe = models.DecimalField(decimal_places=1, max_digits=7, blank=False, null=True)
+    breite_x = models.DecimalField(decimal_places=1, max_digits=7, blank=False, null=True)
+    breite_y = models.DecimalField(decimal_places=1, max_digits=7, blank=False, null=True)
     innendruck = models.BooleanField(blank=True, null=True, default=True)
 
 
@@ -39,10 +39,10 @@ class FlachdachModel(models.Model):
     edited_date = models.DateTimeField(blank=True, null=True)
     waende_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
     oeffnungen_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
-    oeffnung_nord_flaeche = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=False, default=0)
-    oeffnung_ost_flaeche = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=False, default=0)
-    oeffnung_sued_flaeche = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=False, default=0)
-    oeffnung_west_flaeche = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=False, default=0)
+    oeffnung_nord_flaeche = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=False, default=0)
+    oeffnung_ost_flaeche = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=False, default=0)
+    oeffnung_sued_flaeche = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=False, default=0)
+    oeffnung_west_flaeche = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=False, default=0)
     reibung_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
     reibbeiwert_dach = models.DecimalField(decimal_places=2,default=0, max_digits=7, blank=True, null=True)
     reibbeiwert_waende = models.DecimalField(decimal_places=2,default=0, max_digits=7, blank=True, null=True)
