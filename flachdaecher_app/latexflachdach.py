@@ -1,6 +1,6 @@
 import os
 import io
-from gesamt_pdf_app.latexbasisfunktionen import reibung_margin_vernachlaessigen,reibung_margin_tab
+from gesamt_pdf_app.reibung import reibung_margin_vernachlaessigen,reibung_margin_tab
 # from pylatex import Document, Section, Subsection, Command,Figure,TikZ, TikZNode, TikZDraw, TikZCoordinate, TikZUserPath, TikZOptions,Package
 # from pylatex.utils import italic, NoEscape
 # from latex import build_pdf
@@ -40,9 +40,9 @@ def geometrische_angaben_flachdach(self,arg_latex,filename):
         #Beschreibung in Margin
         fd.write("\n"+r'\switchcolumn*')
         fd.write("\n"+r'\begin{tabular}{ r @{\dots} L{2.8cm} }')
-        fd.write("\n"+r'$\ell_W$ & Länge in Ost West Richtung  ')
+        fd.write("\n"+r'$\ell_W$ & Länge Westseite  ')
         fd.write("\n"+r'\\')
-        fd.write("\n"+r'$\ell_S$ & Länge in Nord Süd Richtung  ')
+        fd.write("\n"+r'$\ell_S$ & Länge Südseite  ')
         fd.write("\n"+r'\\')
         fd.write("\n"+r'$h$ & Traufenhöhe  ')
         fd.write("\n"+r'\\')

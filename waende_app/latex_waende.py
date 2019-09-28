@@ -2,7 +2,7 @@ import os
 import io
 from itertools import islice
 import numpy as np
-from gesamt_pdf_app.latexbasisfunktionen import reibung_margin_vernachlaessigen
+from gesamt_pdf_app.reibung import reibung_margin_vernachlaessigen
 # from pylatex import Document, Section, Subsection, Command,Figure,TikZ, TikZNode, TikZDraw, TikZCoordinate, TikZUserPath, TikZOptions,Package
 # from pylatex.utils import italic, NoEscape
 # from latex import build_pdf

@@ -5,6 +5,7 @@ from latex import build_pdf
 from gesamt_pdf_app.latexbasisfunktionen import *
 from gesamt_pdf_app.models import GesamtPdf
 from django.forms.models import model_to_dict
+from gesamt_pdf_app.kopfzeile import *
 
 
 def geometrische_angaben(self,arg_latex,filename):

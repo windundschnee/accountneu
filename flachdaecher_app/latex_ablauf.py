@@ -1,6 +1,7 @@
 from .latexflachdach import geometrische_angaben_flachdach, bilder_flachdach, aussendruck_und_innendruckergebnisse_flachdach, nur_aussendruckergebnisse_flachdach, aussendruck_und_innendruckergebnisse_flachdach_ohne_cp, nur_aussendruckergebnisse_flachdach_ohne_cp
 from gesamt_pdf_app.latexbasisfunktionen import *
 from gesamt_pdf_app.standortparameter import standortparameter
+from gesamt_pdf_app.kopfzeile import *
 import os.path as path
 
 from waende_app.latex_waende import latex_waende_ergebniss, bilder_waende, aussendruckbeiwerte_waende

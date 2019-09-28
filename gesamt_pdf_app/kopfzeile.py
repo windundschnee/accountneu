@@ -1,3 +1,6 @@
+import os
+import os.path as path
+
 def kopfundfusszeile_einzeln(fd,arg_latex):
     fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
     fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
@@ -20,7 +23,7 @@ def kopfundfusszeile(fd,arg_latex):
     fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
     fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
     fd.write("\n"+r' &  &')
-    fd.write("\n"+r'\textbf{Seite} & \thepage/\pageref{LastPage}') # eintrag 2 Seitenzahl
+    fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
     fd.write("\n"+r'\\[-4pt]')
     fd.write("\n"+r'\textbf{Bauteil}   & Wand') #eintrag 3 Bauteil
     fd.write("\n"+r'&')
