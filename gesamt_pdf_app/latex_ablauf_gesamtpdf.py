@@ -15,9 +15,6 @@ def gesamt_pdf_erzeugen(self, arg_latex):
     #in 'eingaben_pdfbearbeiten' sind die eingabe werte: Kurz/LangVersion,
     eingaben_pdfbearbeiten_object = get_object_or_404(GesamtPdf, projekt_id=self.kwargs['my'])
 
-    #das habt michi gändert
-
-
     print(eingaben_pdfbearbeiten_object.flachdach_app_wahl)
     flachdach_app_wahl =eingaben_pdfbearbeiten_object.flachdach_app_wahl
     freistehendewaende_app_wahl = eingaben_pdfbearbeiten_object.freistehendewaende_app_wahl
