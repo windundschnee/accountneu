@@ -2,6 +2,7 @@ from django.db import models
 from account_app.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
+from core.models import allgEingaben
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 import uuid
@@ -27,6 +28,9 @@ gk = (
 class Gesamtgebaeude(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     flachdach_app_wahl = models.ForeignKey(FlachdachModel, on_delete=models.CASCADE)
+    projekt = models.ForeignKey(
+        allgEingaben,
+        on_delete=models.CASCADE,)
     app_wahl = models.CharField(max_length=100, null=False)
 
 

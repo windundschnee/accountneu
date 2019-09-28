@@ -32,6 +32,7 @@ from pultdach_schnee_app.models import PultdachSchneeModel
 from satteldach_schnee_app.models import SatteldachSchneeModel
 from kehldach_schnee_app.models import KehldachSchneeModel
 from django.core.mail import send_mail
+from gesamtgebaeude_app.models import Gesamtgebaeude
 #Liste aller Projekte
 class AllgemeineAngabenListView(LoginRequiredMixin, ListView):
     model = allgEingaben
@@ -134,6 +135,10 @@ class WindbemessungCreateView(LoginRequiredMixin, CreateView):
             return reverse_lazy('pultdach_schnee_app:pultdach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Kehldächer':
             return reverse_lazy('kehldach_schnee_app:kehldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+        elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Kehldächer':
+            return reverse_lazy('kehldach_schnee_app:kehldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+        elif self.object.bemessungsart_wind_schnee ==  'Windlasten Gesamtgebaeude':
+            return reverse_lazy('gesamtgebaeude_app:gesamtgebauede_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Satteldächer':
             print('jhkjhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
             return reverse_lazy('satteldach_schnee_app:satteldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
@@ -211,10 +216,11 @@ class WindbemessungListView(LoginRequiredMixin, ListView):
             pultdaecher_schnee_je_projekt = PultdachSchneeModel.objects.filter(user=self.request.user, projekt_id=pk)
             satteldaecher_schnee_je_projekt = SatteldachSchneeModel.objects.filter(user=self.request.user, projekt_id=pk)
             kehldaecher_schnee_je_projekt = KehldachSchneeModel.objects.filter(user=self.request.user, projekt_id=pk)
+            gesamtgebauede_je_projekt = Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=pk)
             #hier darf gechained werden!!!jedes model
             querylist = list(sorted(chain(anzeigetafeln_je_projekt,freistehende_waende_je_projekt,
             freistehende_daecher_je_projekt,flachdaecher_je_projekt,pultdaecher_je_projekt,pultdaecher_schnee_je_projekt,satteldaecher_schnee_je_projekt,
-            kehldaecher_schnee_je_projekt), key=attrgetter('edited_date'), reverse=True))
+            kehldaecher_schnee_je_projekt,gesamtgebauede_je_projekt), key=attrgetter('edited_date'), reverse=True))
 
 
 
