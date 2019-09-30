@@ -56,7 +56,7 @@ def standortparameter(self,arg_latex,filename):
          fd.write("\n"+r'\centering')
          fd.write("\n"+r'\begin{tabularx}{1\columnwidth}{B{1.24} B{0.88} B{0.88}}')
          fd.write("\n"+r'\rowcolor{Gray}	')
-         fd.write("\n"+r'\multicolumn{3}{c}{\textbf{Standortparameter}} \\')
+         fd.write("\n"+r'\multicolumn{3}{c}{\rule{0mm}{5mm} \Large{\textbf{Standortparameter}}} \\')
          fd.write("\n"+r'\begin{tabular}[t]{R{2.875cm}  L{2.875cm}}')
          fd.write("\n"+r'Bundesland:& '+ str(bundesland))
          fd.write("\n"+r'\\')
