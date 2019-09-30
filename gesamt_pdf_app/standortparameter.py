@@ -35,6 +35,7 @@ def standortparameter(self,arg_latex,filename):
          #fd.write("\n"+r'\newcolumntype{S}[1]{>{\setlength\hsize{#1\hsize}\centering\arraybackslash}X}') #centriert
          #fd.write("\n"+r'\newcolumntype{A}[1]{>{\setlength\hsize{#1\hsize}\raggedright\arraybackslash}X}') #Linksbündig
          fd.write("\n"+r'\switchcolumn*')
+         fd.write("\n"+r'\vspace{-0.3cm}')
          fd.write("\n"+r'\scriptsize')
          fd.write("\n"+r'\begin{tabular}{ r @{\dots} L{2.8cm} }')
          fd.write("\n"+r'$v_{b,0}$ &  Basiswind- geschwindigkeit')
@@ -52,6 +53,7 @@ def standortparameter(self,arg_latex,filename):
          fd.write("\n"+r'\end{tabular}')
          fd.write("\n"+r'\switchcolumn')
 
+         fd.write("\n"+r'\vspace{-0.5cm}')
          fd.write("\n"+r'\begin{table}[H]')
          fd.write("\n"+r'\centering')
          fd.write("\n"+r'\begin{tabularx}{1\columnwidth}{B{1.24} B{0.88} B{0.88}}')
