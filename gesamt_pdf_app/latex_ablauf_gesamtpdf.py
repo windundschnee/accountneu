@@ -43,10 +43,14 @@ def gesamt_pdf_erzeugen(self, arg_latex):
             latexwasserzeichen(fd)
 
         #Kopfzeile eingaben
+        kopfzeilen_art_wahl=eingaben_pdfbearbeiten_object.kopfzeilen_art_wahl
+        print(kopfzeilen_art_wahl)
+        print(kopfzeilen_art_wahl)
+        print(kopfzeilen_art_wahl)
         user = get_object_or_404(User,email=self.request.user)
         logo_kopfzeile = None
         if user.logo_kopfzeile:
-            logo_kopfzeile = user.logo_kopfzeile.small.url
+            logo_kopfzeile = user.logo_kopfzeile.url
 
 
         kopfzeile_eingeben_list={'projekt': eingaben_pdfbearbeiten_object.projekt.projekt_name,
@@ -54,7 +58,10 @@ def gesamt_pdf_erzeugen(self, arg_latex):
                         'logo_kopfzeile':logo_kopfzeile
                             }
 
-        kopfundfusszeile_gesamt(fd,kopfzeile_eingeben_list,arg_latex)
+        if kopfzeilen_art_wahl=='kopfzeile 1':
+            kopfundfusszeile_gesamt_links(fd,kopfzeile_eingeben_list,arg_latex)
+        if kopfzeilen_art_wahl=='kopfzeile 2':
+            kopfundfusszeile_gesamt_rechts(fd,kopfzeile_eingeben_list,arg_latex)
 
 
         fd.write("\n"+r'\begin{document}')
