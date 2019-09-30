@@ -304,7 +304,7 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
             fd.write("\n"+r'\DimlineH[nbco][rc][0.5][\num{'+ str(laenge_c_w)+r'}] ')
 
         #Pfeile für die Windrichtung
-        fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.5,'+ str(ls/2)+r') {windrichtung};')
+        fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.7,'+ str(ls/2)+r') {windrichtung};')
 
         #Schnitt
         fd.write("\n"+r'\pic at (-0.5,'+ str(ls+0.5)+r') {schnittsymbol};')
@@ -391,12 +391,17 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
 
 
         ##Margin
+
         fd.write("\n"+r'\switchcolumn*')
+        fd.write("\n"+r'\begin{figure}[H]')
+        fd.write("\n"+r'\centering')
+        fd.write("\n"+r'\begin{tikzpicture}')
+        fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (0,0) {compass};')
+        fd.write("\n"+r'\end{tikzpicture}')
+        fd.write("\n"+r'\end{figure}')
         fd.write("\n"+r'alle Werte in $[m]$')
-        #fd.write("\n"+r'\begin{tikzpicture}')
-        #fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (0,0) {compass};')
-        #fd.write("\n"+r'\end{tikzpicture}')
         fd.write("\n"+r'\switchcolumn')
+
 
 
         ####Bild zusammenfügen
@@ -437,6 +442,9 @@ def ansicht_waende(self, z_hoehe, anzahl_streifen,breite, breite_latex,himmelsri
 
     hoehendifferenz=np.diff(np.array(z_hoehe)).tolist()
     hoehendifferenz.insert(0,breite)
+    for ind, element in enumerate(hoehendifferenz):
+        hoehendifferenz[ind]=round(element,2)
+
 
 
 

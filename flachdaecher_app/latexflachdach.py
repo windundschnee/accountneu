@@ -786,27 +786,34 @@ def bilder_flachdach(self,arg_latex,filename):
         #Vertikale zwischen G und F
         fd.write("\n"+r'\draw (ng) -- (nj);')
         #Vertikale Bemasungslinien
-        fd.write("\n"+r'\DimlineV[nb][nh][0.5][\num{'+ str(bf_x)+r'}]')
+        fd.write("\n"+r'\DimlineV[na][ne][-0.5][\num{'+ str(bf_x)+r'}]')
         if bi_x <=0:
-            fd.write("\n"+r'\DimlineV[nh][nc][0.5][\num{'+ str(bh_x)+r'}]')
+            fd.write("\n"+r'\DimlineV[ne][nd][-0.5][\num{'+ str(bh_x)+r'}]')
         else:
-            fd.write("\n"+r'\DimlineV[nh][nl][0.5][\num{'+ str(bh_x)+r'}]')
-            fd.write("\n"+r'\DimlineV[nl][nc][0.5][\num{'+ str(bi_x)+r'}] ')
-        fd.write("\n"+r'\DimlineV[nb][nc][1][\num{'+ str(breite_x)+r'}] ')
+            fd.write("\n"+r'\DimlineV[ne][nk][-0.5][\num{'+ str(bh_x)+r'}]')
+            fd.write("\n"+r'\DimlineV[nk][nd][-0.5][\num{'+ str(bi_x)+r'}] ')
+        fd.write("\n"+r'\DimlineV[na][nd][-1][\num{'+ str(breite_x)+r'}] ')
         #Horizontale Bemasungslinien
         fd.write("\n"+r'\DimlineH[na][ni]['+ str(ls + 0.5) +r'][\num{'+ str(lf_x)+r'}] ')
         fd.write("\n"+r'\DimlineH[ni][nj]['+ str(ls + 0.5) +r'][\num{'+ str(lg_x)+r'}] ')
         fd.write("\n"+r'\DimlineH[nj][nb]['+ str(ls + 0.5) +r'][\num{'+ str(lf_x)+r'}]')
         fd.write("\n"+r'\DimlineH[na][nb]['+ str(ls + 1) +r'][\num{'+ str(breite_y)+r'}] ')
         #Flächenbezeichnung
-        fd.write("\n"+r'\node[between=na and nf]  {\Large{F}};')
-        fd.write("\n"+r'\node[between=ni and ng]  {\Large{G}};')
-        fd.write("\n"+r'\node[between=nj and nh]  {\Large{F}};')
-        fd.write("\n"+r'\node[between=ne and nl]  {\Large{H}};')
+        fd.write("\n"+r'\node[between=na and nf]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ni and ng]  {\large{G}};')
+        fd.write("\n"+r'\node[between=nj and nh]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ne and nl]  {\large{H}};')
         if bi_x >0:
-            fd.write("\n"+r'\node[between=nk and nc]  {\Large{I}};')
+            fd.write("\n"+r'\node[between=nk and nc]  {\large{I}};')
+
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=nd and nc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=nb and nc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=na and nb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=na and nd, above ,rotate=90]  {Westen};')
+
         #Pfeile für die Windrichtung
-        fd.write("\n"+r'\pic at ('+ str(lw/2)+r',-0.5) {windrichtung};')
+        fd.write("\n"+r'\pic at ('+ str(lw/2)+r',-0.7) {windrichtung};')
         fd.write("\n"+r'}}')
 
         #############################
@@ -837,10 +844,10 @@ def bilder_flachdach(self,arg_latex,filename):
         #Vertikale zwischen G und F
         fd.write("\n"+r'\draw (ng) -- (nj);')
         #Vertikale Bemasungslinien
-        fd.write("\n"+r'\DimlineV[na][nj]['+ str(lw + 0.5) +r'][\num{'+ str(lf_y)+r'}]')
-        fd.write("\n"+r'\DimlineV[nj][ni]['+ str(lw + 0.5) +r'][\num{'+ str(lg_y)+r'}]')
-        fd.write("\n"+r'\DimlineV[ni][nd]['+ str(lw + 0.5) +r'][\num{'+ str(lf_y)+r'}] ')
-        fd.write("\n"+r'\DimlineV[nb][nc][1][\num{'+ str(breite_x)+r'}] ')
+        fd.write("\n"+r'\DimlineV[na][nj]['+ str(lw + 0.9) +r'][\num{'+ str(lf_y)+r'}]')
+        fd.write("\n"+r'\DimlineV[nj][ni]['+ str(lw + 0.9) +r'][\num{'+ str(lg_y)+r'}]')
+        fd.write("\n"+r'\DimlineV[ni][nd]['+ str(lw + 0.9) +r'][\num{'+ str(lf_y)+r'}] ')
+        fd.write("\n"+r'\DimlineV[nb][nc][1.4][\num{'+ str(breite_x)+r'}] ')
         #Horizontale Bemasungslinien
         fd.write("\n"+r'\DimlineH[na][nh]['+ str(ls + 0.5) +r'][\num{'+ str(bf_y)+r'}] ')
         if bi_y <=0:
@@ -850,24 +857,35 @@ def bilder_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'\DimlineH[nl][nb]['+ str(ls + 0.5) +r'][\num{'+ str(bi_y)+r'}] ')
         fd.write("\n"+r'\DimlineH[na][nb]['+ str(ls + 1) +r'][\num{'+ str(breite_y)+r'}] ')
         #Flächenbezeichnung
-        fd.write("\n"+r'\node[between=nd and nf]  {\Large{F}};')
-        fd.write("\n"+r'\node[between=ni and ng]  {\Large{G}};')
-        fd.write("\n"+r'\node[between=nj and nh]  {\Large{F}};')
+        fd.write("\n"+r'\node[between=nd and nf]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ni and ng]  {\large{G}};')
+        fd.write("\n"+r'\node[between=nj and nh]  {\large{F}};')
         if bi_y >0:
-            fd.write("\n"+r'\node[between=ne and nl]  {\Large{H}};')
-            fd.write("\n"+r'\node[between=nk and nb]  {\Large{I}};')
+            fd.write("\n"+r'\node[between=ne and nl]  {\large{H}};')
+            fd.write("\n"+r'\node[between=nk and nb]  {\large{I}};')
         else:
-            fd.write("\n"+r'\node[between=ne and nb]  {\Large{H}};')
+            fd.write("\n"+r'\node[between=ne and nb]  {\large{H}};')
+
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=nd and nc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=nb and nc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=na and nb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=na and nd, above ,rotate=90]  {Westen};')
+
+
 
         #Pfeile für die Windrichtung
-        fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.5,'+ str(ls/2)+r') {windrichtung};')
+        fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.7,'+ str(ls/2)+r') {windrichtung};')
         fd.write("\n"+r'}}')
         ##Margin
         fd.write("\n"+r'\switchcolumn*')
+        fd.write("\n"+r'\begin{figure}[H]')
+        fd.write("\n"+r'\centering')
+        fd.write("\n"+r'\begin{tikzpicture}')
+        fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (0,0) {compass};')
+        fd.write("\n"+r'\end{tikzpicture}')
+        fd.write("\n"+r'\end{figure}')
         fd.write("\n"+r'alle Werte in $[m]$')
-        #fd.write("\n"+r'\begin{tikzpicture}')
-        #fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (0,0) {compass};')
-        #fd.write("\n"+r'\end{tikzpicture}')
         fd.write("\n"+r'\switchcolumn')
         ##############
         ####Bild zusammenfügen
@@ -882,7 +900,5 @@ def bilder_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'\pic at (0,0) {flachdachSued};')
         #Grundriss Flachdach wind von Westen
         fd.write("\n"+r'\pic at (7.5,0) {flachdachWest};')
-        #Windrose einfügen
-        fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (9.5,6.5) {compass};')
         fd.write("\n"+r'\end{tikzpicture}')
         fd.write("\n"+r'\end{figure}')

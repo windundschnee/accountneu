@@ -52,11 +52,6 @@ def flachdach_pdferzeugen(self, arg_latex):
 
 
                         }
-    print(self.flachdach.anzahl_streifen)
-    print(self.flachdach.anzahl_streifen)
-    print(self.flachdach.anzahl_streifen)
-    print(self.flachdach.anzahl_streifen)
-    print(self.flachdach.anzahl_streifen)
 
 
     ##### Tex dateien erstellen

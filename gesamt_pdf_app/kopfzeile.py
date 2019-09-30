@@ -10,6 +10,9 @@ def kopfundfusszeile_einzeln(fd,kopfzeile_eingeben_list,arg_latex):
     logo_kopfzeile= kopfzeile_eingeben_list['logo_kopfzeile']
     bemessungsart_wind_schnee=kopfzeile_eingeben_list['bemessungsart_wind_schnee']
 
+    # fd.write("\n"+r'\setlength{\headheight}{1.7cm}')
+    # fd.write("\n"+r'\setlength{\headsep}{0.6cm}')
+
 
     fd.write("\n"+r'\fancyhead[L]{')
     fd.write("\n"+r'\begin{tabular}{@{}l r | l r@{}}')
