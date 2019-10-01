@@ -15,6 +15,7 @@ from django.urls import reverse_lazy
 from .models import PultdachSchneeModel
 from .forms import PultdachSchneeForm
 from pathlib import Path
+from .latex_ablauf_pultdach_schnee import pultdach_schnee_pdferzeugen
 import os, sys
 # Create your views here.
 class PultdachSchneeCreateView(LoginRequiredMixin, CreateView):
@@ -168,18 +169,16 @@ class PdfCreateRedirectViewPultdachSchnee(RedirectView):
 
 
         arg_latex_list = [user_has_free_account,foldername,ergebnisse_pultdach_schnee,allgeingaben]
-        user = User.objects.filter(email=self.request.user)
 
         args_latex = {'user_has_free_account': user_has_free_account,
                     'foldername':foldername,
                     'ergebnisse_pultdach_schnee':ergebnisse_pultdach_schnee,
-                    'user':user,
 
 
                     }
 
         #Pdf erzeugen!!
-        #pdferzeugen = pultdach_schnee_pdferzeugen(self, args_latex)
+        pdferzeugen = pultdach_schnee_pdferzeugen(self, args_latex)
 
 
 

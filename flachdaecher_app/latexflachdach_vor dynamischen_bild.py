@@ -613,11 +613,11 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
         fd.write("\n"+r'\\')
         reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd)
         if anteil_f_und_g_x < 0.2 and anteil_f_und_g_y >= 0.2:
-            fd.write("\n"+r'Bei der Windrichtung aus Norden und Süden dürfen die Randzonen F und G gemäß ÖNORM B 1991-1-4 vernachlässigt werden.')
+            fd.write("\n"+r'Bei der Windrichtung aus Norden und Süden dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x >= 0.2 and anteil_f_und_g_y < 0.2:
-            fd.write("\n"+r'Bei der Windrichtung aus Osten und Westen dürfen die Randzonen F und G gemäß ÖNORM B 1991-1-4 vernachlässigt werden.')
+            fd.write("\n"+r'Bei der Windrichtung aus Osten und Westen dürfen die Randzonen F und G gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         elif anteil_f_und_g_x < 0.2 and anteil_f_und_g_y < 0.2:
-            fd.write("\n"+r'Die Randzonen F und G dürfen gemäß ÖNORM B 1991-1-4 vernachlässigt werden.')
+            fd.write("\n"+r'Die Randzonen F und G dürfen gemäß ÖNORM EN 1991-1-4 vernachlässigt werden.')
         else:
             print('Randbereiche dürfen nicht vernachlässigt werden')
         fd.write("\n"+r'\switchcolumn')
@@ -657,3 +657,253 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
             ueberlagerter_winddruck(self,arg_latex,fd)
         fd.write("\n"+r'\end{tabularx}')
         fd.write("\n"+r'\end{table}')
+
+
+
+def bilder_flachdach(self,arg_latex,filename):
+        #breite westen ist die länge zwischen ost und westseite in den bezeichnungn bei der eingabe wurde das gändert nicht verwechseln
+
+        #breite süden ist die länge zwischen süd und nordseite in den bezeichnungn bei der eingabe wurde das gändert nicht verwechseln
+
+    ergebnisse_berechnung =  arg_latex['ergebnisse_berechnung']
+
+    art_traufenbereich = self.flachdach.art_traufenbereich
+    hoehe = self.flachdach.hoehe
+    hoehe_attika = self.flachdach.hoehe_attika
+    radius = self.flachdach.radius
+    alpha = self.flachdach.alpha
+    laenge_sued = self.flachdach.breite_x
+    laenge_west = self.flachdach.breite_y
+    vereinfachtes_verfahren = self.flachdach.some_field
+
+    sonstige_werte_berechnet=ergebnisse_berechnung['geometrische_werte_flachdach']
+    lf_sued=sonstige_werte_berechnet['lf_sued']
+    lg_sued=sonstige_werte_berechnet['lg_sued']
+    bf_sued=sonstige_werte_berechnet['bf_sued']
+    bh_sued=sonstige_werte_berechnet['bh_sued']
+    bi_sued=sonstige_werte_berechnet['bi_sued']
+    lf_west=sonstige_werte_berechnet['lf_west']
+    lg_west=sonstige_werte_berechnet['lg_west']
+    bf_west=sonstige_werte_berechnet['bf_west']
+    bh_west=sonstige_werte_berechnet['bh_west']
+    bi_west=sonstige_werte_berechnet['bi_west']
+    # für die tikz zeichnung Größe kann so vareiert werden
+
+    laenge_westen_latex=3
+    laenge_sueden_latex=4
+    e=5
+
+    ew=4
+    h_tikz=1.5
+
+    with io.open(filename,'w', encoding="UTF8") as fd:
+        ###############
+        #Ansicht
+        fd.write("\n"+r'\tikzset{')
+        fd.write("\n"+r'flachdachAnsicht/.pic = {')
+        fd.write("\n"+r'\node[coordinate] at (0,0) (na) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r',0) (nb) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r','+ str(h_tikz)+r') (nc) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(h_tikz)+r') (nd) {};')
+
+        #Boden
+        fd.write("\n"+r'\draw[line width=0.35mm] (na) -- +(-0.5,0);')
+        fd.write("\n"+r'\draw[line width=0.35mm] (nb) -- +(0.5,0);')
+        fd.write("\n"+r'\draw[line width=0.35mm] (na) -- (nb);')
+        fd.write("\n"+r'\fill[pattern,pattern= north east lines] ($(na)-(0.5,0)$) rectangle ($(nb)+(0.5,-0.3)$);')
+        if art_traufenbereich=="scharfkantiger Traufbereich" or vereinfachtes_verfahren == 'Vereinfachtes Verfahren gemäß ÖNORM B 1991-1-4, Abschnitt 9.2.3.1':
+            fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (nc) -- (nd) -- cycle;')
+        elif art_traufenbereich=="mit Attika" and vereinfachtes_verfahren=='Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3':
+            fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (nc) -- (nd) -- cycle;')
+            fd.write("\n"+r'\draw[line width=0.25mm] (nd) -- +(0,0.5);')
+            fd.write("\n"+r'\draw[line width=0.25mm] (nc) -- +(0,0.5);')
+            fd.write("\n"+r'\node[coordinate] at ($(nd)+(0,0.5)$) (nat) {};')
+            fd.write("\n"+r'\DimlineV[nd][nat][-0.7][\num{'+ str(hoehe_attika)+r'}]')
+        elif art_traufenbereich=="abgerundeter Traufbereich" and vereinfachtes_verfahren=='Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3':
+            fd.write("\n"+r'\node[coordinate] at ($(nd)-(0,0.5)$) (nda) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nd)+(0.5,0.0)$) (ndc) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nc)-(0,0.5)$) (ncb) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nc)-(0.5,0.0)$) (ncd) {};')
+            fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (ncb);')
+            fd.write("\n"+r'\draw[line width=0.25mm]  (ncd) -- (ndc);')
+            fd.write("\n"+r'\draw[line width=0.25mm]  (nda) -- (na);')
+            #Rundung links
+            fd.write("\n"+r'\draw[line width=0.25mm] (nda)  arc[radius = 5mm, start angle= 180, end angle= 90];')
+            fd.write("\n"+r'\draw[->] ($(nda)+(0.5,0)$) node[above,rotate=-45]{\tiny{\num{'+ str(radius)+r'}}} -- +(135:0.5) ;')
+            #Rundung rechts
+            fd.write("\n"+r'\draw[line width=0.25mm] (ncb)  arc[radius = 5mm, start angle= 0, end angle= 90];')
+            fd.write("\n"+r'\draw[->] ($(ncb)-(0.5,0)$) node[above,rotate=45]{\tiny{\num{'+ str(radius)+r'}}} -- +(45:0.5) ;')
+        elif art_traufenbereich=="mansardenartig abgeschrägter Traufbereich" and vereinfachtes_verfahren=='Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3':
+            fd.write("\n"+r'\node[coordinate] at ($(nd)-(0,0.3)$) (nda) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nd)+(0.8,0.0)$) (ndc) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nc)-(0,0.3)$) (ncb) {};')
+            fd.write("\n"+r'\node[coordinate] at ($(nc)-(0.8,0.0)$) (ncd) {};')
+            fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (ncb);')
+            fd.write("\n"+r'\draw[line width=0.25mm]  (ncd) -- (ndc);')
+            fd.write("\n"+r'\draw[line width=0.25mm]  (nda) -- (na);')
+            #Schräge
+            fd.write("\n"+r'\draw[line width=0.25mm]  (nda) -- (ndc);')
+            fd.write("\n"+r'\draw[line width=0.25mm]  (ncd) -- (ncb);')
+            fd.write("\n"+r'\draw[line width=0.13mm]  (nd) -- ($(ndc)-(0.2,0)$);')
+            #Winkelbemassung rechts
+            fd.write("\n"+r'\draw[line width=0.13mm]  (nc) -- ($(ncd)+(0.2,0)$);')
+            fd.write("\n"+r'\tkzMarkAngle[size=.5](ncb,ncd,nc)')
+            fd.write("\n"+r'\tkzLabelAngle[pos=0.9](ncb,ncd,nc){\tiny{\num{'+ str(alpha)+r'}}}')
+            #Winkelbemassung links
+            fd.write("\n"+r'\draw[line width=0.13mm]  (nd) -- ($(ndc)-(0.2,0)$);')
+            fd.write("\n"+r'\tkzMarkAngle[size=.5](nd,ndc,nda)')
+            fd.write("\n"+r'\tkzLabelAngle[pos=-0.9](nd,ndc,nda){\tiny{\num{'+ str(alpha)+r'}}}')
+
+
+
+        #Bemasung
+        #fd.write("\n"+r'\DimlineH[($(na)-(0.0,1.0)$)][($(nb)-(0.0,1.0)$)][\num{'+ str(laenge_west)+r'}]')
+        fd.write("\n"+r'\DimlineV[na][nd][-0.7][\num{'+ str(hoehe)+r'}]')
+
+        fd.write("\n"+r'}}')
+
+
+        ####################
+        #Grundriss Wind aus Süden
+        fd.write("\n"+r'\tikzset{')
+        fd.write("\n"+r'flachdachSued/.pic = {')
+        fd.write("\n"+r'\node[coordinate] at (0,0) (na) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r',0) (nb) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r','+ str(laenge_westen_latex)+r') (nc) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(laenge_westen_latex)+r') (nd) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(e / 10)+r') (ne) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(e / 4)+r','+ str(e / 10)+r') (nf) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex- e / 4)+r','+str( e / 10)+r') (ng) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r','+str( e / 10)+r') (nh) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(e / 4)+r',0) (ni) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+str(laenge_sueden_latex- e / 4)+r',0) (nj) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+str(e / 2)+r') (nk) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r','+ str(e / 2)+r') (nl) {};')
+        #Umrandungslinien
+        fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (nc) -- (nd) -- cycle;')
+        #Horizontale F G
+        fd.write("\n"+r'\draw (ne) -- (nh);')
+        #Horizontale H zwischen I
+        if bi_sued >0:
+            fd.write("\n"+r'\draw (nk) -- (nl);')
+        #Vertikale zwischen F und G
+        fd.write("\n"+r'\draw (nf) -- (ni);')
+        #Vertikale zwischen G und F
+        fd.write("\n"+r'\draw (ng) -- (nj);')
+        #Vertikale Bemasungslinien
+        fd.write("\n"+r'\DimlineV[na][ne][-0.5][\num{'+ str(bf_sued)+r'}]')
+        if bi_sued <=0:
+            fd.write("\n"+r'\DimlineV[ne][nd][-0.5][\num{'+ str(bh_sued)+r'}]')
+        else:
+            fd.write("\n"+r'\DimlineV[ne][nk][-0.5][\num{'+ str(bh_sued)+r'}]')
+            fd.write("\n"+r'\DimlineV[nk][nd][-0.5][\num{'+ str(bi_sued)+r'}] ')
+        fd.write("\n"+r'\DimlineV[na][nd][-1][\num{'+ str(laenge_sued)+r'}] ')
+        #Horizontale Bemasungslinien
+        fd.write("\n"+r'\DimlineH[na][ni]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(lf_sued)+r'}] ')
+        fd.write("\n"+r'\DimlineH[ni][nj]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(lg_sued)+r'}] ')
+        fd.write("\n"+r'\DimlineH[nj][nb]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(lf_sued)+r'}]')
+        fd.write("\n"+r'\DimlineH[na][nb]['+ str(laenge_westen_latex + 1) +r'][\num{'+ str(laenge_west)+r'}] ')
+        #Flächenbezeichnung
+        fd.write("\n"+r'\node[between=na and nf]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ni and ng]  {\large{G}};')
+        fd.write("\n"+r'\node[between=nj and nh]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ne and nl]  {\large{H}};')
+        if bi_sued >0:
+            fd.write("\n"+r'\node[between=nk and nc]  {\large{I}};')
+
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=nd and nc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=nb and nc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=na and nb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=na and nd, above ,rotate=90]  {Westen};')
+
+        #Pfeile für die Windrichtung
+        fd.write("\n"+r'\pic at ('+ str(laenge_sueden_latex/2)+r',-0.7) {windrichtung};')
+        fd.write("\n"+r'}}')
+
+        #############################
+        #Grundriss Wind aus Westen
+        fd.write("\n"+r'\tikzset{')
+        fd.write("\n"+r'flachdachWest/.pic = {')
+        fd.write("\n"+r'\node[coordinate] at (0,0) (na) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r',0) (nb) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(laenge_sueden_latex)+r','+ str(laenge_westen_latex)+r') (nc) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(laenge_westen_latex)+r') (nd) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(ew / 10)+r','+ str(laenge_westen_latex)+r') (ne) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(ew / 10)+r','+ str(laenge_westen_latex-ew / 4)+r') (nf) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(ew / 10)+r','+str( ew / 4)+r') (ng) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(ew/10)+r',0) (nh) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(laenge_westen_latex-ew / 4)+r') (ni) {};')
+        fd.write("\n"+r'\node[coordinate] at (0,'+ str(ew / 4)+r') (nj) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+str(ew / 2)+r','+str(laenge_westen_latex)+r') (nk) {};')
+        fd.write("\n"+r'\node[coordinate] at ('+ str(ew/2)+r',0) (nl) {};')
+        #Umrandungslinien
+        fd.write("\n"+r'\draw[line width=0.25mm] (na) -- (nb) -- (nc) -- (nd) -- cycle;')
+        #Horizontale F G
+        fd.write("\n"+r'\draw (ne) -- (nh);')
+        #Horizontale H zwischen I
+        if bi_west >0:
+            fd.write("\n"+r'\draw (nk) -- (nl);')
+        #Vertikale zwischen F und G
+        fd.write("\n"+r'\draw (nf) -- (ni);')
+        #Vertikale zwischen G und F
+        fd.write("\n"+r'\draw (ng) -- (nj);')
+        #Vertikale Bemasungslinien
+        fd.write("\n"+r'\DimlineV[na][nj]['+ str(laenge_sueden_latex + 0.9) +r'][\num{'+ str(lf_west)+r'}]')
+        fd.write("\n"+r'\DimlineV[nj][ni]['+ str(laenge_sueden_latex + 0.9) +r'][\num{'+ str(lg_west)+r'}]')
+        fd.write("\n"+r'\DimlineV[ni][nd]['+ str(laenge_sueden_latex + 0.9) +r'][\num{'+ str(lf_west)+r'}] ')
+        fd.write("\n"+r'\DimlineV[nb][nc][1.4][\num{'+ str(laenge_sued)+r'}] ')
+        #Horizontale Bemasungslinien
+        fd.write("\n"+r'\DimlineH[na][nh]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(bf_west)+r'}] ')
+        if bi_west <=0:
+            fd.write("\n"+r'\DimlineH[nh][nb]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(bh_west)+r'}] ')
+        else:
+            fd.write("\n"+r'\DimlineH[nh][nl]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(bh_west)+r'}] ')
+            fd.write("\n"+r'\DimlineH[nl][nb]['+ str(laenge_westen_latex + 0.5) +r'][\num{'+ str(bi_west)+r'}] ')
+        fd.write("\n"+r'\DimlineH[na][nb]['+ str(laenge_westen_latex + 1) +r'][\num{'+ str(laenge_west)+r'}] ')
+        #Flächenbezeichnung
+        fd.write("\n"+r'\node[between=nd and nf]  {\large{F}};')
+        fd.write("\n"+r'\node[between=ni and ng]  {\large{G}};')
+        fd.write("\n"+r'\node[between=nj and nh]  {\large{F}};')
+        if bi_west >0:
+            fd.write("\n"+r'\node[between=ne and nl]  {\large{H}};')
+            fd.write("\n"+r'\node[between=nk and nb]  {\large{I}};')
+        else:
+            fd.write("\n"+r'\node[between=ne and nb]  {\large{H}};')
+
+        #Himmelsrichtungen
+        fd.write("\n"+r'\node[between=nd and nc, above ]  {Norden};')
+        fd.write("\n"+r'\node[between=nb and nc, below ,rotate=90]  {Osten};')
+        fd.write("\n"+r'\node[between=na and nb, below ]  {Süden};')
+        fd.write("\n"+r'\node[between=na and nd, above ,rotate=90]  {Westen};')
+
+
+
+        #Pfeile für die Windrichtung
+        fd.write("\n"+r'\pic[rotate=-90,,transform shape] at (-0.7,'+ str(laenge_westen_latex/2)+r') {windrichtung};')
+        fd.write("\n"+r'}}')
+        ##Margin
+        fd.write("\n"+r'\switchcolumn*')
+        fd.write("\n"+r'\begin{figure}[H]')
+        fd.write("\n"+r'\centering')
+        fd.write("\n"+r'\begin{tikzpicture}')
+        fd.write("\n"+r' \pic[scale=1,fill=black,text=black] at (0,0) {compass};')
+        fd.write("\n"+r'\end{tikzpicture}')
+        fd.write("\n"+r'\end{figure}')
+        fd.write("\n"+r'alle Werte in $[m]$')
+        fd.write("\n"+r'\switchcolumn')
+        ##############
+        ####Bild zusammenfügen
+        fd.write("\n"+r'\begin{figure}[H]')
+        fd.write("\n"+r'\centering')
+        fd.write("\n"+r'\begin{tikzpicture}')
+        #Ansicht einfügen
+        fd.write("\n"+r'\node[anchor=west] at (-1,8.3)  {\Large{Ansicht Traufenbereich}};')
+        fd.write("\n"+r'\pic at (0,5.7) {flachdachAnsicht};')
+        #Grundriss Flachdach wind von Süden
+        fd.write("\n"+r'\node[anchor=west] at (-1,4.8)  {\Large{Dachdraufsicht}};')
+        fd.write("\n"+r'\pic at (0,0) {flachdachSued};')
+        #Grundriss Flachdach wind von Westen
+        fd.write("\n"+r'\pic at (7.5,0) {flachdachWest};')
+        fd.write("\n"+r'\end{tikzpicture}')
+        fd.write("\n"+r'\end{figure}')
