@@ -15,7 +15,6 @@ from django.shortcuts import get_object_or_404
 import os.path as path
 from pathlib import Path
 import os
-from django.urls import reverse_lazy # new
 # Create your views here.
 class GesamtgebaeudeCreateView(LoginRequiredMixin, CreateView):
     model = Gesamtgebaeude
@@ -44,10 +43,58 @@ class GesamtgebaeudeCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-    def get_success_url(self):
-        if self.object.dach_wahl ==  'Flachdach':
 
-            return reverse_lazy('flachdaecher_app:flachdach_create', args=(self.object.projekt.slug, self.object.projekt.id, self.object.bautteil_name.id))
+class GesamtgebaeudeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Gesamtgebaeude
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+
+        #print(aktueller_projekt_name.gelaendekategorie)
+        bauteile_je_projekt = allgEingaben.objects.filter(user=self.request.user).values('projekt_name')
+        allgEingaben2 = allgEingaben.objects.filter(user=self.request.user).values('projekt_name')
+        #pk vom allgEingaben (Projekts) Model um pk´s anzuzeigen
+        if allgEingaben2.exists() == True:
+            context['allgEingaben_bearbeitet'] = get_object_or_404(allgEingaben,user=self.request.user, id=self.kwargs['my'])
+        #pk vom Windbemessung (Bauteil) Model um pk´s anzuzeigen
+        context['windbemessung'] = Bauteil.objects.filter(user=self.request.user).values('bautteil_name')
+        #pk vom Projekt
+        pk_projekt_name = self.kwargs.get('my')
+        #Wenn bereits ein Objekt in GesamtPdf erstellt wurde
+        pdf_bearbeitet_ja = GesamtPdf.objects.filter(user=self.request.user, projekt_id=pk_projekt_name).exists()
+        #Dann soll dieses mittels context['pdf'] bereit Freistehende
+        #Damit ich die id auslesen kann um GesamtPdf_update zu erreichen
+        if pdf_bearbeitet_ja == True:
+            context['pdf'] = get_object_or_404(GesamtPdf,user=self.request.user, projekt_id=self.kwargs['my'])
+
+        pk_gesamtgebaeude = self.kwargs.get('pk')
+
+        #context['pdf_bearbeitet'] ist für Entscheidung ob updateView oder createView
+        context['pdf_bearbeitet'] = pdf_bearbeitet_ja
+
+        #wenn das Pdf mit demselben pk bereits einmal erzeugt wurde
+        #soll im freistehendewaende_detail.html der downloadButton und der Pfad
+        #angezeigt werden
+        user_id = str(self.request.user.id)
+        filename_pdf_anzeigen = '/media/gesamtgebaeude/'+user_id+'/Ausdruckprotokoll_Gesamtgebaeude'+str(pk_gesamtgebaeude)+'.pdf'
+        my_file = Path(filename_pdf_anzeigen)
+        BASE_DIR = os.path.dirname(os.path.abspath(path.join(__file__ ,"../")))
+        my_path = BASE_DIR +'/media/gesamtgebaeude/' + user_id +'/Ausdruckprotokoll_Gesamtgebaeude'+str(pk_gesamtgebaeude)+'.pdf'
+
+        if os.path.exists(my_path):
+            context['filename_pdf_anzeigen'] = filename_pdf_anzeigen
+            context['existiert_pdf'] = True
+
+
         else:
-            print('Errrrrööööööööööööööööööööööööööööööööööööööööööööööööööör')
-            return reverse_lazy('core:allgEingaben_list')
+            context['filename_pdf_anzeigen'] = ''
+            context['existiert_pdf'] = False
+
+        return context
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.user:
+            return True
+        return False
