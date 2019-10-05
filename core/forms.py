@@ -121,7 +121,7 @@ class RegCarForm(forms.ModelForm):
 SAMPLE_CHOICES_WIND=(
 ( 'Windlasten Freistehende Wände','Freistehende Wände'),
 ( 'Windlasten Freistehende Dächer','Freistehende Dächer'),
-('Windlasten Gesamtgebaeude','Gesamtgebäude (Wände & Dach)'),
+('Windlasten Gesamtgebäude','Gesamtgebäude (Wände & Dach)'),
 ('Windlasten Flachdächer','Flachdächer'),
 ('Windlasten Pultdächer','Pultdächer'),
 ('Windlasten Anzeigetafeln','Anzeigetafeln'),
