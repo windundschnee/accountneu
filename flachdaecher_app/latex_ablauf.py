@@ -57,7 +57,8 @@ def flachdach_pdferzeugen(self, arg_latex):
                         'fehlende_korrelation_beruecksichtigen':self.flachdach.fehlende_korrelation_beruecksichtigen,
                         'breite_sued':self.flachdach.breite_x,
                         'breite_west':self.flachdach.breite_y,
-                        'anzahl_streifen':int(self.flachdach.anzahl_streifen)
+                        'anzahl_streifen':int(self.flachdach.anzahl_streifen),
+                        'einflussflaeche':5
                         }
 
     #Kopfzeile eingaben
@@ -91,12 +92,13 @@ def flachdach_pdferzeugen(self, arg_latex):
 
     #Wände
     if self.flachdach.waende_beruecksichtigen == True:
-        aussendruckbeiwerte_waende(self,arg_latex,my_path_cpe_waende)
+        aussendruckbeiwerte_waende(self,arg_latex,latex_waende_list,my_path_cpe_waende)
         latex_waende_ergebniss(self,arg_latex,latex_waende_list,my_path_ergebnisse_waende)
         bilder_waende(self,arg_latex,latex_waende_list,my_path_bilder_waende)
         #Falls bereits wände vorhanden sind werden die dateien gelöscht so werden die Wände nur angezeigt wenn sie da sind
     elif os.path.exists(my_path_ergebnisse_waende):
         os.remove(my_path_cpe_waende)
+        os.remove(my_path_cpe_1_waende)
         os.remove(my_path_ergebnisse_waende)
         os.remove(my_path_bilder_waende)
 
@@ -118,13 +120,16 @@ def flachdach_pdferzeugen(self, arg_latex):
         input_latex(fd,path_standortparameter)
         input_latex(fd,output_geometrische_angaben_flachdach)
 
+
+        if self.flachdach.waende_beruecksichtigen == True:
+            input_latex(fd,my_path_bilder_waende)
+        input_latex(fd,output_bilder_flachdach)
+
         input_latex(fd,output_ergebnisse_flachdach)
         if self.flachdach.waende_beruecksichtigen == True:
             input_latex(fd,my_path_cpe_waende)
             input_latex(fd,my_path_ergebnisse_waende)
-        input_latex(fd,output_bilder_flachdach)
-        if self.flachdach.waende_beruecksichtigen == True:
-            input_latex(fd,my_path_bilder_waende)
+
 
         fd.write("\n"+r'\end{paracol}')
         fd.write("\n"+r'\end{document}')

@@ -1,5 +1,6 @@
 import os
 import io
+from allg_berechnungen_app.algemeine_berechnungsfunktionen import liste_runden_1
 
 def bilder_flachdach(self,arg_latex,filename):
 
@@ -15,7 +16,7 @@ def bilder_flachdach(self,arg_latex,filename):
     laenge_sued = self.flachdach.breite_y
     vereinfachtes_verfahren = self.flachdach.some_field
 
-    sonstige_werte_berechnet=ergebnisse_berechnung['geometrische_werte_flachdach']
+    sonstige_werte_berechnet=liste_runden_1(ergebnisse_berechnung['geometrische_werte_flachdach'])
     lf_sued=sonstige_werte_berechnet['lf_sued']
     lg_sued=sonstige_werte_berechnet['lg_sued']
     bf_sued=sonstige_werte_berechnet['bf_sued']
