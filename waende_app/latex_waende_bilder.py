@@ -1,6 +1,7 @@
 import os
 import io
 from itertools import islice
+from allg_berechnungen_app.algemeine_berechnungsfunktionen import liste_runden_1
 import numpy as np
 
 def bilder_waende(self,arg_latex,latex_waende_list,filename):
@@ -9,7 +10,7 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
     #breite süden ist die länge zwischen süd und nordseite in den bezeichnungn bei der eingabe wurde das gändert nicht verwechseln
     #Zeichencoordinaten
     ergebnisse_berechnung=arg_latex['ergebnisse_berechnung']
-    ergebnisse_waende=ergebnisse_berechnung['ergebnisse_waende']
+    ergebnisse_waende=liste_runden_1(ergebnisse_berechnung['ergebnisse_waende'])
     geometrie_waende_norden=ergebnisse_waende['geometrie_waende_norden']
     geometrie_waende_westen=ergebnisse_waende['geometrie_waende_westen']
 
@@ -23,7 +24,7 @@ def bilder_waende(self,arg_latex,latex_waende_list,filename):
     #Längen westen
 
     rechenwert_e_w=geometrie_waende_westen['rechenwert_e']
-    laenge_a_w=geometrie_waende_westen['laenge_a']
+    laenge_a_w=round(geometrie_waende_westen['laenge_a'],1)
     laenge_b_w=geometrie_waende_westen['laenge_b']
     laenge_c_w=geometrie_waende_westen['laenge_c']
     #Norden längen

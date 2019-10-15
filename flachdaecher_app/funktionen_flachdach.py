@@ -9,13 +9,19 @@ def scharfkantiger_traufbereich():
 	cp_i_sog=-0.2
 	cp_i_druck=0.2
 	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck]
+	return cpe
 
+def scharfkantiger_traufbereich_1():
 
+	cp_f=-2.5
+	cp_g=-2.0
+	cp_h=-1.2
+	cp_i_sog=-0.2
+	cp_i_druck=0.2
+	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck]
 	return cpe
 
 def mit_attika(hp_zu_h):
-	cp_auf_mans_druck = 0
-	cp_auf_mans_sog = 0
 	cp_i_sog=-0.2
 	cp_i_druck=0.2
 
@@ -37,12 +43,34 @@ def mit_attika(hp_zu_h):
 		print("Fehler in Freistehenden Wände mit Attika")
 
 	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck]
-
 	return cpe
 
+def mit_attika_1(hp_zu_h):
+	cp_i_sog=-0.2
+	cp_i_druck=0.2
+	cp_h  = -1.2
+
+	if hp_zu_h < 0.1:
+		attika_f  = np.array([-2.2,-2.0,-1.8])
+		attika_g  = np.array([-1.8,-1.6,-1.4])
+		attika_hp_zu_h  = np.array([0.025,0.05,0.1])
+		interpolation_f = interp1d(attika_hp_zu_h, attika_f)
+		interpolation_g = interp1d(attika_hp_zu_h, attika_g)
+		cp_f=float(interpolation_f(hp_zu_h))
+		cp_g=float(interpolation_g(hp_zu_h))
+
+
+	elif hp_zu_h >= 0.1:
+		cp_f=-1.8
+		cp_g=-1.4
+	else:
+		print("Fehler in Freistehenden Wände mit Attika")
+
+	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck]
+	return cpe
+
+
 def abgerundeter_traufbereich(r_zu_h):
-	cp_auf_mans_druck = 0
-	cp_auf_mans_sog = 0
 	cp_i_sog=-0.2
 	cp_i_druck=0.2
 	if r_zu_h < 0.2:
@@ -69,6 +97,32 @@ def abgerundeter_traufbereich(r_zu_h):
 
 	return cpe
 
+def abgerundeter_traufbereich_1(r_zu_h):
+	cp_i_sog=-0.2
+	cp_i_druck=0.2
+	if r_zu_h < 0.2:
+		rund_f  = np.array([-1.5,-1.2,-0.8]) #Vektor mit allen f Werten
+		rund_g  = np.array([-1.8,-1.4,-0.8])
+		rund_h  = np.array([-0.4,-0.3,-0.3])
+		rund_r_zu_h  = np.array([0.05,0.1,0.2]) # Vektor mit den verhältnissen
+		interpolation_f = interp1d(rund_r_zu_h,rund_f) # interpolationsfunktion
+		interpolation_g = interp1d(rund_r_zu_h,rund_g)
+		interpolation_h = interp1d(rund_r_zu_h,rund_h)
+		cp_f=float(interpolation_f(r_zu_h))	# gibt interpolierten wert aus
+		cp_g=float(interpolation_g(r_zu_h))
+		cp_h=float(interpolation_h(r_zu_h))
+
+	elif r_zu_h >= 0.2:
+		cp_f=-0.8
+		cp_g=-0.8
+		cp_h=-0.3
+	else:
+		print("Fehler in Freistehenden Wände mit Attika")
+
+	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck]
+
+	return cpe
+
 def mansarde(alpha):
 	mans_f  = np.array([-1.0,-1.2,-1.3,-1.8])
 	mans_g  = np.array([-1.0,-1.3,-1.3,-1.2])
@@ -81,6 +135,32 @@ def mansarde(alpha):
 	cp_g=float(interpolation_g(alpha))
 	cp_h  =float(interpolation_h(alpha))
 	auf_mans_sog=np.array([-0.5,0,0.7,0.8])
+	auf_mans_druck=np.array([0.7,0.7,0.7,0.8])
+	auf_mans_alpha = np.array([30,45,60,75])
+	auf_mans_interpolation_sog=interp1d(mans_alpha, auf_mans_sog)
+	auf_mans_interpolation_druck=interp1d(mans_alpha, auf_mans_druck)
+	cp_auf_mans_sog=float(auf_mans_interpolation_sog(alpha))
+	cp_auf_mans_druck=float(auf_mans_interpolation_druck(alpha))
+
+	cp_i_sog=-0.2
+	cp_i_druck=0.2
+
+	cpe=[cp_f,cp_g,cp_h,cp_i_sog,cp_i_druck,cp_auf_mans_druck,cp_auf_mans_sog]
+
+	return cpe
+
+def mansarde_1(alpha):
+	mans_f  = np.array([-1.5,-1.8,-1.9,-2.5])
+	mans_g  = np.array([-1.5,-1.9,-1.9,-2.0])
+	mans_h  = np.array([-0.3,-0.4,-0.5,-1.2])
+	mans_alpha  = np.array([30,45,60,90])
+	interpolation_f = interp1d(mans_alpha, mans_f)
+	interpolation_g = interp1d(mans_alpha, mans_g)
+	interpolation_h = interp1d(mans_alpha, mans_h)
+	cp_f=float(interpolation_f(alpha))
+	cp_g=float(interpolation_g(alpha))
+	cp_h  =float(interpolation_h(alpha))
+	auf_mans_sog=np.array([-1.5,0,0.7,0.8])
 	auf_mans_druck=np.array([0.7,0.7,0.7,0.8])
 	auf_mans_alpha = np.array([30,45,60,75])
 	auf_mans_interpolation_sog=interp1d(mans_alpha, auf_mans_sog)

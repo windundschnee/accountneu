@@ -16,27 +16,29 @@ def kopfundfusszeile_einzeln(fd,kopfzeile_eingeben_list,arg_latex):
 
     fd.write("\n"+r'\fancyhead[L]{')
     fd.write("\n"+r'\begin{tabular}{@{}l r | l r@{}}')
+    fd.write("\n"+r'\multicolumn{4}{@{} l}{\large{\scshape{NF Calculator V1.0.0} } } \\')
 
-    fd.write("\n"+r'\textbf{'+ str(bemessungsart_wind_schnee)+r'} & ') # eintrag 5 Bauteilart
+    fd.write("\n"+r'\multicolumn{2}{@{} l |}{\textbf{'+ str(company)+r'} }   ')
     fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
+    fd.write("\n"+r'\multicolumn{2}{ l}{\textbf{'+ str(bemessungsart_wind_schnee)+r'}} ')
     fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
+
+    fd.write("\n"+r'	\textbf{Projekt}')
     fd.write("\n"+r' & '+ str(projekt)+r' &')
-
-    fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
+    fd.write("\n"+r'\textbf{Seite} & \thepage')
     fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bauteil}   & '+ str(bautteil_name)+r'') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
 
-    fd.write("\n"+r'\textbf{Firma} & '+ str(company)+r'')  # eintrag 6 Bauteilart
+    fd.write("\n"+r'\textbf{Bauteil}   & '+ str(bautteil_name)+r'')
+    fd.write("\n"+r'&')
+    fd.write("\n"+r'\textbf{Datum} & \today')
+
     fd.write("\n"+r'\end{tabular}\hfill')
 
     if logo_kopfzeile:
         logo_kopfzeile_gesamtpfad=BASE_DIR+logo_kopfzeile
         logo_kopfzeile_latex=logo_kopfzeile_gesamtpfad.replace("\\", "/")
         fd.write("\n"+r'\begin{tabular}{@{}c @{}}')
-        fd.write("\n"+r'\includegraphics[height=1.6cm,width=5.0cm]{'+ str(logo_kopfzeile_latex)+r'}')
+        fd.write("\n"+r'\includegraphics[height=1.8cm,width=5.0cm]{'+ str(logo_kopfzeile_latex)+r'}')
         fd.write("\n"+r'\end{tabular}')
     fd.write("\n"+r'}')
 
@@ -49,12 +51,13 @@ def kopfundfusszeile_gesamt_rechts(fd,kopfzeile_eingeben_list,arg_latex):
 
     fd.write("\n"+r'\fancyhead[L]{')
     fd.write("\n"+r'\begin{tabular}{@{}l r | l r@{}}')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
-    fd.write("\n"+r' & '+ str(projekt)+r' &')
+    fd.write("\n"+r'\multicolumn{4}{@{} l}{\large{\scshape{NF Calculator V1.0.0} } } \\')
+    fd.write("\n"+r'\textbf{'+ str(company)+r'}   & ')
+    fd.write("\n"+r'&')
     fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
     fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Firma}   & '+ str(company)+r'') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
+    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
+    fd.write("\n"+r' & '+ str(projekt)+r' &')
     fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
     fd.write("\n"+r'\end{tabular}\hfill')
 
@@ -78,20 +81,21 @@ def kopfundfusszeile_gesamt_links(fd,kopfzeile_eingeben_list,arg_latex):
         logo_kopfzeile_gesamtpfad=BASE_DIR+logo_kopfzeile
         logo_kopfzeile_latex=logo_kopfzeile_gesamtpfad.replace("\\", "/")
         fd.write("\n"+r'\begin{tabular}{@{}c @{}}')
-        fd.write("\n"+r'\includegraphics[height=1.4cm,width=5.0cm]{'+ str(logo_kopfzeile_latex)+r'}')
+        fd.write("\n"+r'\includegraphics[height=1.6cm,width=5.0cm]{'+ str(logo_kopfzeile_latex)+r'}')
         fd.write("\n"+r'\end{tabular}')
 
     fd.write("\n"+r'\hfill')
 
 
     fd.write("\n"+r'\begin{tabular}{@{}l r | l r@{}}')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
-    fd.write("\n"+r' & '+ str(projekt)+r' &')
+    fd.write("\n"+r'\multicolumn{4}{ r @{}}{\large{\scshape{NF Calculator V1.0.0}}} \\[3pt]')
+    fd.write("\n"+r'\textbf{'+ str(company)+r'}   & ')
+    fd.write("\n"+r'&')
     fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
     fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Firma}   & '+ str(company)+r'') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
+    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
+    fd.write("\n"+r' & '+ str(projekt)+r' &')
+    fd.write("\n"+r'\textbf{Datum} & \today')
     fd.write("\n"+r'\end{tabular}')
 
 

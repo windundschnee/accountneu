@@ -4,6 +4,7 @@ from freistehende_waende_app.models import FreistehendeWaende
 from flachdaecher_app.models import FlachdachModel
 from anzeigetafeln_app.models import AnzeigetafelnModel
 from.standortparameter import *
+from core.models import Bauteil, allgEingaben
 import os.path as path
 from .models import GesamtPdf
 from gesamt_pdf_app.kopfzeile import *
@@ -15,11 +16,18 @@ from django.shortcuts import get_object_or_404
 def gesamt_pdf_erzeugen(self, arg_latex):
     #hier sollen die Standortparameter in das GEsamtpdf geschrieben werden
     #get_standortparameter(self, arg_latex)
-    #in 'eingaben_pdfbearbeiten' sind die eingabe werte: Kurz/LangVersion,
+
     eingaben_pdfbearbeiten_object = get_object_or_404(GesamtPdf, projekt_id=self.kwargs['my'])
+
+
 
     # Infos zum app
     flachdach_app_wahl =eingaben_pdfbearbeiten_object.flachdach_app_wahl
+
+
+
+
+
     freistehendewaende_app_wahl = eingaben_pdfbearbeiten_object.freistehendewaende_app_wahl
     anzeigetafeln_app_wahl=eingaben_pdfbearbeiten_object.anzeigetafeln_app_wahl
     kurz_lang_version=eingaben_pdfbearbeiten_object.kurz_lang_version
@@ -74,6 +82,8 @@ def gesamt_pdf_erzeugen(self, arg_latex):
         fd.write("\n"+r'\begin{document}')
         beginn_latex_format(fd)
         #Standortparameter werden eingefügt
+
+
         input_latex(fd,path_standortparameter)
 
         #### Die Bauteile werden eingefügt ####
@@ -81,14 +91,21 @@ def gesamt_pdf_erzeugen(self, arg_latex):
         #Flachdach
         for element in flachdach_app_wahl.all():
 
-            liste_flachdach = get_object_or_404(FlachdachModel.objects.filter(user=self.request.user, id = str(element.id)))
+
+
             my_path_geometrische_angaben = BASE_DIR +'/media/flachdach/' + user_id +'/output_geometrische_angaben_flachdach'+str(element.id)+'.tex'
             my_path_ergebnisse = BASE_DIR +'/media/flachdach/' + user_id +'/output_ergebnisse_flachdach'+str(element.id)+'.tex'
             my_path_ergebnisse_ohne_cp = BASE_DIR +'/media/flachdach/' + user_id +'/output_ergebnisse_flachdach_ohne_cp'+str(element.id)+'.tex'
             my_path_bilder = BASE_DIR +'/media/flachdach/' + user_id +'/output_bilder_flachdach'+str(element.id)+'.tex'
             my_path_cpe_waende =  BASE_DIR +'/media/flachdach/' + user_id  +'/output_cpe_waende'+str(element.id)+'.tex'
+            my_path_cpe_1_waende = BASE_DIR +'/media/flachdach/' + user_id  +'/output_cpe_1_waende'+str(element.id)+'.tex'
             my_path_ergebnisse_waende =  BASE_DIR +'/media/flachdach/' + user_id  +'/output_ergebnisse_waende'+str(element.id)+'.tex'
+            my_path_bilder_waende =  BASE_DIR +'/media/flachdach/' + user_id  +'/output_bilder_waende'+str(element.id)+'.tex'
             input_latex(fd,my_path_geometrische_angaben)
+            if os.path.exists(my_path_ergebnisse_waende):
+                input_latex(fd,my_path_bilder_waende)
+                input_latex(fd,my_path_bilder)
+
             if kurz_lang_version=='langversion':
                 input_latex(fd,my_path_ergebnisse)
             else:
@@ -96,8 +113,9 @@ def gesamt_pdf_erzeugen(self, arg_latex):
             if os.path.exists(my_path_ergebnisse_waende):
                 if kurz_lang_version=='langversion':
                     input_latex(fd,my_path_cpe_waende)
+                    input_latex(fd,my_path_cpe_1_waende)
                 input_latex(fd,my_path_ergebnisse_waende)
-            input_latex(fd,my_path_bilder)
+
 
         #Freistehende Wände
         for element in freistehendewaende_app_wahl.all():
