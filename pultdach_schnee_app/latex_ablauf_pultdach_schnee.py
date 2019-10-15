@@ -4,6 +4,7 @@ from gesamt_pdf_app.kopfzeile import *
 import os.path as path
 from account_app.models import User
 from django.shortcuts import get_object_or_404
+from .latex_pultdach_schnee import ergebnisse_angaben_pultdach_schnee, bilder_pultdach_schnee
 
 #Standard Ausdruckprotokoll_Flachdach
 
@@ -29,6 +30,8 @@ def pultdach_schnee_pdferzeugen(self, arg_latex):
     path_standortparameter = BASE_DIR +'/media/pdf_bearbeiten/' + user_id+'/standortparameter_schnee'+pk_projekt+'.tex'
 
     my_path_ausdruckprotokoll =  media_path +'/Ausdruckprotokoll_Pultdach_Schnee'+str(pk_bauteil)+'.tex'
+    my_path_ergebnisse=media_path +'/ergebnisse_pultdach_schnee'+str(pk_bauteil)+'.tex'
+    my_path_bilder=media_path +'/bilder_pultdach_schnee'+str(pk_bauteil)+'.tex'
     # hier wird der Speicherort und dateiname für die einzelnen latexteile bestimmt
 
 
@@ -38,6 +41,8 @@ def pultdach_schnee_pdferzeugen(self, arg_latex):
 
     ##### Tex dateien erstellen
     standortparameter_schnee(self,arg_latex,path_standortparameter)
+    ergebnisse_angaben_pultdach_schnee(self,arg_latex,my_path_ergebnisse)
+    bilder_pultdach_schnee(self,arg_latex,my_path_bilder)
 
 
     #Kopfzeile eingaben
@@ -67,6 +72,8 @@ def pultdach_schnee_pdferzeugen(self, arg_latex):
         beginn_latex_format(fd)
             ####Tex datein in ein document einfügen
         input_latex(fd,path_standortparameter)
+        input_latex(fd,my_path_ergebnisse)
+        input_latex(fd,my_path_bilder)
 
 
         fd.write("\n"+r'\end{paracol}')
