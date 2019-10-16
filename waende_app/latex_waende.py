@@ -248,15 +248,15 @@ def ueberlagerung_dom_flaeche(self,arg_latex,innendruck_verfahren_wahl,fd):
     beschriftung=['A','B','C','D','E']
     fd.write("\n"+r'\rowcolor{Gray}	')
     if innendruck_verfahren_wahl == 'Innendruckbeiwerte mittels dominanter Fläche nach Abschnitt 7.2.9':
-        fd.write("\n"+r' \textbf{überlagerter Winddruck $ w_{10} $ $\downarrow$ } & \textbf{überlagerter Winddruck $ w_{10} $ $\leftarrow$}\\')
+        fd.write("\n"+r' \textbf{Überlagerter Winddruck $ w_{10} $ $\downarrow$ } & \textbf{Überlagerter Winddruck $ w_{10} $ $\leftarrow$}\\')
     else:
-        fd.write("\n"+r' \textbf{überlagerter Winddruck $ w_{10} $ $\updownarrow$ } & \textbf{überlagerter Winddruck $ w_{10} $ $\leftrightarrow$}\\')
+        fd.write("\n"+r' \textbf{Überlagerter Winddruck $ w_{10} $ $\updownarrow$ } & \textbf{Überlagerter Winddruck $ w_{10} $ $\leftrightarrow$}\\')
     for ind_list, element_list in enumerate(ergebnisse_ueberlagerung_a_b_c_e):
         if ind_list == 2:
             fd.write("\n"+r'	 \\ \rule{0mm}{4mm}')
             fd.write("\n"+r'	 \\')
             fd.write("\n"+r'\rowcolor{Gray}	')
-            fd.write("\n"+r' \textbf{überlagerter Winddruck $ w_{10} $ $\uparrow$ } & \textbf{überlagerter Winddruck $ w_{10} $ $\rightarrow$}\\')
+            fd.write("\n"+r' \textbf{Überlagerter Winddruck $ w_{10} $ $\uparrow$ } & \textbf{Überlagerter Winddruck $ w_{10} $ $\rightarrow$}\\')
         fd.write("\n"+r'$	\begin{aligned}[t]')
         for ind_a, element_a in enumerate(ergebnisse_ueberlagerung_a_b_c_e[ind_list]):
             if ind_a == 3:

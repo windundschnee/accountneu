@@ -1,23 +1,7 @@
 from .models import PultdachSchneeModel
+from allg_berechnungen_app.algemeine_berechnungsfunktionen import liste_runden
+from allg_berechnungen_app.schnee_allg_funktionen import berechnung_mue_wert
 
-def berechnung_mue_wert(self,neigung):
-
-
-    if 0<= neigung <=30:
-        mue_1 = 0.8
-        mue_2 = 0.8+0.8*(neigung/30)
-
-
-    elif 30< neigung <60:
-        mue_1 = 0.8*(60-neigung)/30
-        mue_2 = 1.6
-
-    else:
-        mue_1 = 0
-        mue_2 = 0
-
-    mue_werte = [mue_1,mue_2]
-    return mue_werte
 
 def berechnung_pultdach_schnee(self):
 
@@ -47,4 +31,5 @@ def berechnung_pultdach_schnee(self):
                                     'gesamtschneelast_rounded':gesamtschneelast_rounded,
                                     }
 
-    return ergebnisse_pultdach_schnee
+
+    return liste_runden(ergebnisse_pultdach_schnee)
