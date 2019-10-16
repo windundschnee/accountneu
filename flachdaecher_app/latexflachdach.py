@@ -501,7 +501,7 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'\begin{table}[H]')
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
             fd.write("\n"+r'\rowcolor{Gray}	')
-            fd.write("\n"+r'	\textbf{überlagerter Winddruck $\leftarrow$} & \textbf{überlagerter Winddruck $\uparrow $} & \textbf{überlagerter Winddruck $\rightarrow$} \\')
+            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $\leftarrow$} & \textbf{Überlagerter Winddruck $\uparrow $} & \textbf{Überlagerter Winddruck $\rightarrow$} \\')
             ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd)
         else:
             ueberlagerter_winddruck(self,arg_latex,fd)
@@ -652,7 +652,7 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
             fd.write("\n"+r'\begin{table}[H]')
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
             fd.write("\n"+r'\rowcolor{Gray}	')
-            fd.write("\n"+r'	\textbf{überlagerter Winddruck $\leftarrow$} & \textbf{überlagerter Winddruck $\uparrow $} & \textbf{überlagerter Winddruck $\rightarrow$} \\')
+            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $\leftarrow$} & \textbf{Überlagerter Winddruck $\uparrow $} & \textbf{überlagerter Winddruck $\rightarrow$} \\')
             ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd)
         else:
             ueberlagerter_winddruck(self,arg_latex,fd)

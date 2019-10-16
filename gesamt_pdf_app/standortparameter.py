@@ -122,7 +122,7 @@ def standortparameter_schnee(self,arg_latex,filename):
          fd.write("\n"+r'$	\begin{aligned}[t]')
          fd.write("\n"+r'H &=\lang{'+ str(seehoehe)+r'}')
          fd.write("\n"+r'\\')
-         fd.write("\n"+r's_{k}&=\span{'+ str(schneelast)+r'}')
+         fd.write("\n"+r's_{k}&=\spann{'+ str(schneelast)+r'}')
          fd.write("\n"+r'\end{aligned}$')
          fd.write("\n"+r'\end{tabularx}')
          fd.write("\n"+r'\end{table}')

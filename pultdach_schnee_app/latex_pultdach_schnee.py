@@ -1,14 +1,12 @@
 import os
 import io
-
-
-
-
+from .models import PultdachSchneeModel
 
 
 
 def ergebnisse_angaben_pultdach_schnee(self,arg_latex,filename):
 
+    eingaben_pultdach_schnee = PultdachSchneeModel.objects.get(pk=self.kwargs['pk'])
     bauteilname = self.pultdach_schnee.bautteil_name.bautteil_name
     ergebnisse_pultdach_schnee=arg_latex['ergebnisse_pultdach_schnee']
     mue_1=ergebnisse_pultdach_schnee['mue_1']
@@ -25,6 +23,11 @@ def ergebnisse_angaben_pultdach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'\\')
         fd.write("\n"+r'$s$ & Schneelast auf dem Dach  ')
         fd.write("\n"+r'\end{tabular}')
+        fd.write("\n"+r'\vspace{3 mm}')
+        fd.write("\n"+r'\\')
+        if eingaben_pultdach_schnee.abrutschen_verhindert == True:
+            fd.write("\n"+r'Das Abrutschen des Schnees ist verhindert')
+
         fd.write("\n"+r'\switchcolumn')
 
         #####geometrische geometrische_angaben_Pultdach Schnee
@@ -40,7 +43,7 @@ def ergebnisse_angaben_pultdach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'		\end{aligned}$')
         fd.write("\n"+r'	&')
         fd.write("\n"+r'		$\begin{aligned}[t]')
-        fd.write("\n"+r'		\mu_1 & ='+ str(mue_1)+r'')
+        fd.write("\n"+r'		\mu_1 & =\num{'+ str(mue_1)+r'}')
         fd.write("\n"+r'		\\')
 
         fd.write("\n"+r'		\end{aligned}$')
@@ -62,12 +65,6 @@ def bilder_pultdach_schnee(self,arg_latex,filename):
     hoehe_2=1.8
     breite=3
     with io.open(filename,'w', encoding="UTF8") as fd:
-        ##Margin
-        fd.write("\n"+r'\switchcolumn*')
-        fd.write("\n"+r'alle Werte in $[m]$')
-        fd.write("\n"+r'\switchcolumn')
-        ##############
-        ####Bild zusammenfügen
         fd.write("\n"+r'\begin{figure}[H]')
         fd.write("\n"+r'\centering')
         fd.write("\n"+r'\begin{tikzpicture}')
@@ -88,21 +85,12 @@ def bilder_pultdach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'\draw[line width=0.25mm]  (na) -- (nb) -- (nc) -- (nd) -- cycle;')
 
         #Winkelbemassung links
-        fd.write("\n"+r'\draw[dashed, line width=0.13mm]  (nd) -- +(1.6,0);')
+        fd.write("\n"+r'\draw[ line width=0.13mm]  (nd) -- +(1.6,0);')
         fd.write("\n"+r'\tkzMarkAngle[size=1.4cm](ndc,nd,nc)')
-        fd.write("\n"+r'\tkzLabelAngle[pos=1.7](ndc,nd,nc){\tiny{\num{'+ str(neigung)+r'}}}')
+        fd.write("\n"+r'\tkzLabelAngle[pos=1.7](ndc,nd,nc){\tiny{\ang{'+ str(neigung)+r'}}}')
 
-        fd.write("\n"+r'\def\lastschnee[#1][#2][#3][#4]{')
-        fd.write("\n"+r'\filldraw[fill=gray!30, draw=black, line width=0.13mm]  #1 -- #2 -- ($#2 + (0,#3)$) -- ($#1 + (0,#3)$) --cycle ;')
-
-        fd.write("\n"+r'\node[above] at ($($#1 + (0,#3)$)!0.5!($#2 + (0,#3)$)$) {#4};')
-
-        fd.write("\n"+r'}')
 
         fd.write("\n"+r'\lastschnee[($(nd)+(0,1.3)$)][($(nc)+(0,0.5)$)][0.5][\spann{'+ str(gesamtschneelast)+r'}]')
-
-
-
 
         fd.write("\n"+r'\end{tikzpicture}')
         fd.write("\n"+r'\end{figure}')
