@@ -31,7 +31,7 @@ CHOICES2 = (
 class pdfBearbeitenForm(forms.ModelForm):
     kurz_lang_version = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs={'class': 'form-control-input'}))
     kopfzeilen_art_wahl = forms.ChoiceField(choices=CHOICES2, widget=forms.RadioSelect(attrs={'class': 'form-control-input'}))
-    logo_kopfzeile = forms.ImageField(required=False)
+    
 
     def __init__(self,meinProjekt_pk, next, user, *args, **kwargs):
         super(pdfBearbeitenForm, self).__init__(*args, **kwargs)

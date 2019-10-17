@@ -192,7 +192,7 @@
           </section>
 
 
-
+          {% if gesamtgebaeude %}
           <section id="wand_section">
 
             <div class="card">
@@ -217,25 +217,23 @@
                 <div id="textkoerper_waende">
 
                   <div id="anzahl_streifen_bereich_wind_X">
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
 
-                          <label for="">Fehlende Korrelation berücksichtigen?</label>
+                    <div class="form-group">
 
-                          <div class="form-inline" style="margin-left:20px">
+                      <label for="">Fehlende Korrelation berücksichtigen?</label>
 
-                            <div class="form-check">
-                              {{ form.fehlende_korrelation_beruecksichtigen }}
-                              <label class="form-check-label" for="defaultCheck1">
-                                Fehlende Korrelation
-                              </label>
-                            </div>
+                      <div class="form-inline" style="margin-left:20px">
 
-                            <a style="margin-left:20px" id="info_button_fehlende_korrelation" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
-                          </div>
+                        <div class="form-check">
+                          {{ form.fehlende_korrelation_beruecksichtigen }}
+                          <label class="form-check-label" for="defaultCheck1">
+                            Fehlende Korrelation
+                          </label>
                         </div>
+
+                        <a style="margin-left:20px" id="info_button_fehlende_korrelation" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                       </div>
+
 
                     </div>
                     <div class="row">
@@ -342,7 +340,7 @@
             </div>
 
           </section>
-
+          {% endif %}
           <section id="innendruck_section">
             <div class="card">
               <div class="card-body">
@@ -360,6 +358,11 @@
                     </div>
                     <div class="card-title">
                       <h5> <label class="label" for="id_innendruck"><b>Innendruck</b></label></h5>
+                      {% if gesamtgebaeude %}
+                      {% else %}
+                      <a style="margin-left:20px" id="info_button_empfohleneWerte_einzeln" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      {% endif %}
+
                     </div>
                   </div>
                 </div>
@@ -368,43 +371,36 @@
 
 
 
-                <div class="col">
 
 
 
-                  <div id="inndendruck_bereich" class="innendruckClass">
 
+                <div id="inndendruck_bereich" class="innendruckClass">
 
-                    <div class="form-group">
+                  {% if gesamtgebaeude %}
+                  <div class="form-group">
 
-                      <label for="{{ form.some_field_radio2.id_for_label }}">{{ form.some_field_radio2.label_tag }}</label>
-                      <div class="form-inline" style="margin-left:20px">
-                        <div class="radio">{{ form.some_field_radio2.1 }} </div>
-                        <a style="margin-left:20px" id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
-                      </div>
+                    <label for="{{ form.some_field_radio2.id_for_label }}">{{ form.some_field_radio2.label_tag }}</label>
+                    <div class="form-inline" style="margin-left:20px">
+                      <div class="radio">{{ form.some_field_radio2.1 }} </div>
+                      <a style="margin-left:20px" id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                     </div>
-                    {{ form.some_field_radio2.errors }}
-                    <div class="form-group">
-
-                      <div class="form-inline" style="margin-left:20px">
-                        <div class="radio">{{ form.some_field_radio2.0 }} </div>
-                        <a style="margin-left:20px" id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-
-
-
-
-                      </div>
-                    </div>
-
-
                   </div>
+                  {{ form.some_field_radio2.errors }}
+                  <div class="form-group">
+
+                    <div class="form-inline" style="margin-left:20px">
+                      <div class="radio">{{ form.some_field_radio2.0 }} </div>
+                      <a style="margin-left:20px" id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                    </div>
+                  </div>
+                  {% endif %}
 
 
                 </div>
+
+
+
               </div>
             </div>
           </section>
@@ -476,9 +472,9 @@
             </div>
           </section>
 
-            <button type="submit" value="Submit" id="myDiv" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
+          <button type="submit" value="Submit" id="myDiv" class="btn btn-success" name="button">Bestätigen <i class="fa fa-check square"></i></button>
 
-    </form>
+        </form>
       </div>
 
 
@@ -617,6 +613,20 @@
 
     </div>
     <img class="modal-content" id="korrelation_image" src="{% static 'flachdaecher_app/img/korrelation.JPG' %}" width="100%" alt="Korrelation">
+
+
+  </div>
+</div>
+<div id="myModal9" class="modal6">
+
+  <!-- Modal content -->
+  <div class="card-body_modal6">
+    <div class="modal-header-close">
+      <button type="button" id="close9" class=close data-dismiss="modal9" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <img class="modal-content" id="verfahren_en_image2" src="{% static 'flachdaecher_app/img/empfohleneWerte.JPG' %}" width="100%" alt="Korrelation">
 
 
   </div>
