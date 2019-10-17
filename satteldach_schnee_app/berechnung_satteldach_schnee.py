@@ -1,23 +1,7 @@
 from .models import SatteldachSchneeModel
-
-def berechnung_mue_wert(self,neigung):
-
-
-    if 0<= neigung <=30:
-        mue_1 = 0.8
-        mue_2 = 0.8+0.8*(neigung/30)
-
-
-    elif 30< neigung <60:
-        mue_1 = 0.8*(60-neigung)/30
-        mue_2 = 1.6
-
-    else:
-        mue_1 = 0
-        mue_2 = 0
-
-    mue_werte = [mue_1,mue_2]
-    return mue_werte
+from allg_berechnungen_app.algemeine_berechnungsfunktionen import liste_runden
+from allg_berechnungen_app.schnee_allg_funktionen import berechnung_mue_wert
+import numpy as np
 
 def berechnung_satteldach_schnee(self):
 
@@ -34,32 +18,40 @@ def berechnung_satteldach_schnee(self):
     mue_werte_alpha_1 = berechnung_mue_wert(self, neigung_alpha1)
     mue_werte_alpha_2 = berechnung_mue_wert(self, neigung_alpha2)
 
-    mue_alpha_1 = mue_werte_alpha_1[0]
+    mue_1_alpha_1 = mue_werte_alpha_1[0]
+    mue_1_alpha_2 = mue_werte_alpha_2[0]
+    mue_2_alpha_1 = mue_werte_alpha_1[1]
+    mue_2_alpha_2 = mue_werte_alpha_2[1]
     if eingaben_satteldach_schnee.abrutschen_verhindert == True:
-        mue_alpha_1 = max(mue_werte_alpha_1[0],0.8)
+        mue_1_alpha_1 = max(mue_werte_alpha_1[0],0.8)
+        mue_1_alpha_2 = max(mue_werte_alpha_2[0],0.8)
+        mue_2_alpha_1 = max(mue_werte_alpha_1[1],0.8)
+        mue_2_alpha_2 = max(mue_werte_alpha_2[1],0.8)
 
-    mue_alpha_2 = mue_werte_alpha_2[0]
-    if eingaben_satteldach_schnee.abrutschen_verhindert == True:
-        mue_alpha_2 = max(mue_werte_alpha_2[0],0.8)
+    mue=[mue_1_alpha_1,mue_1_alpha_2,mue_2_alpha_1,mue_2_alpha_2]
+
+    gesammtschneelast=(np.array(mue)*schneeregellast).tolist()
+    gesammtschneelast_halbe=(np.array(mue)*schneeregellast/2).tolist()
 
 
 
-    gesamtschneelast_alpha_1 = mue_alpha_1 *schneeregellast
-    gesamtschneelast_alpha_1_rounded = round(gesamtschneelast_alpha_1,2)
-    gesamtschneelast_alpha_1_halbe = gesamtschneelast_alpha_1/2
-    gesamtschneelast_alpha_2 = mue_alpha_2 *schneeregellast
-    gesamtschneelast_alpha_2_halbe = gesamtschneelast_alpha_2/2
-    gesamtschneelast_alpha_2_rounded = round(gesamtschneelast_alpha_2,2)
+    # gesamtschneelast_mue_1_alpha_1 = mue_1_alpha_1 *schneeregellast
+    # gesamtschneelast_mue_1_alpha_2 = mue_1_alpha_2 *schneeregellast
+    # gesamtschneelast_mue_2_alpha_1 = mue_2_alpha_1 *schneeregellast
+    # gesamtschneelast_mue_2_alpha_2 = mue_2_alpha_2 *schneeregellast
+    # gesamtschneelast_alpha_2_halbe = gesamtschneelast_alpha_2/2
+    # gesamtschneelast_alpha_2_rounded = round(gesamtschneelast_alpha_2,2)
 
-    ergebnisse_pultdach_schnee = {'mue_alpha_1':mue_alpha_1,
-                                    'mue_alpha_2':mue_alpha_2,
+    ergebnisse_schnee = {'mue':mue,
+                                    'gesammtschneelast':gesammtschneelast,
+                                    'gesammtschneelast_halbe':gesammtschneelast_halbe,
                                     'schneeregellast':schneeregellast,
                                     'neigung_alpha1':neigung_alpha1,
                                     'neigung_alpha2':neigung_alpha2,
-                                    'gesamtschneelast_alpha_1_rounded':gesamtschneelast_alpha_1_rounded,
-                                    'gesamtschneelast_alpha_2_rounded':gesamtschneelast_alpha_2_rounded,
-                                    'gesamtschneelast_alpha_1_halbe':gesamtschneelast_alpha_1_halbe,
-                                    'gesamtschneelast_alpha_2_halbe':gesamtschneelast_alpha_2_halbe,
+                                    # 'gesamtschneelast_alpha_1_rounded':gesamtschneelast_alpha_1_rounded,
+                                    # 'gesamtschneelast_alpha_2_rounded':gesamtschneelast_alpha_2_rounded,
+                                    # 'gesamtschneelast_alpha_1_halbe':gesamtschneelast_alpha_1_halbe,
+                                    # 'gesamtschneelast_alpha_2_halbe':gesamtschneelast_alpha_2_halbe,
                                     }
 
-    return ergebnisse_pultdach_schnee
+    return liste_runden(ergebnisse_schnee)

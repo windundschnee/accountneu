@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from gesamt_pdf_app.models import GesamtPdf
 from .flachdachBerechnung import flachdach_berechnung_ablauf
-from gesamtgebaeude_app.models import Gesamtgebaeude
+
 
 
 from django.forms.models import model_to_dict
@@ -53,11 +53,6 @@ class FlachdachUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         context['pk'] = self.kwargs.get('my')
         context['slug'] = self.kwargs.get('slug')
-
-        gesamtgebaeude= None
-        if Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.object.bautteil_name.id).exists():
-            gesamtgebaeude = Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.object.bautteil_name.id)
-        context['gesamtgebaeude'] = gesamtgebaeude
         return context
 class FlachdachCreateView(LoginRequiredMixin, CreateView):
     model = FlachdachModel
@@ -82,11 +77,6 @@ class FlachdachCreateView(LoginRequiredMixin, CreateView):
 
         context['pk'] = self.kwargs.get('my')
         context['slug'] = self.kwargs.get('slug')
-
-        gesamtgebaeude= None
-        if Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.kwargs.get('pk')).exists():
-            gesamtgebaeude = Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.kwargs.get('pk'))
-        context['gesamtgebaeude'] = gesamtgebaeude
         return context
 
 class FlachdachDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
@@ -96,10 +86,6 @@ class FlachdachDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         context = super().get_context_data(**kwargs)
         #pk vom allgEingaben (Projekts) Model um pk´s anzuzeigen
         allgEingaben2 = allgEingaben.objects.filter(user=self.request.user).values('projekt_name')
-        gesamtgebaeude= None
-        if Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.object.bautteil_name.id).exists():
-            gesamtgebaeude = Gesamtgebaeude.objects.filter(user=self.request.user, projekt_id=self.kwargs.get('my'),bautteil_name_id=self.object.bautteil_name.id)
-        context['gesamtgebaeude'] = gesamtgebaeude
         #pk vom allgEingaben (Projekts) Model um pk´s anzuzeigen
         if allgEingaben2.exists() == True:
             context['allgEingaben_bearbeitet'] = get_object_or_404(allgEingaben,user=self.request.user, id=self.kwargs['my'])
@@ -109,9 +95,9 @@ class FlachdachDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         pdf_bearbeitet = GesamtPdf.objects.filter(user=self.request.user, projekt_id=meinProjekt_pk).exists()
         context['pdf_bearbeitet'] = pdf_bearbeitet
         print(self.kwargs['my'])
-        pdfbearbeiten = GesamtPdf.objects.filter(user=self.request.user,projekt_id=self.kwargs['my'])
+        pdfbearbeiten = GesamtPdf.objects.filter(projekt_id=self.kwargs['my'])
         if pdfbearbeiten.exists() == True:
-            pdf_bearbeiten_object = get_object_or_404(GesamtPdf,user=self.request.user, projekt_id=self.kwargs['my'])
+            pdf_bearbeiten_object = get_object_or_404(GesamtPdf, projekt_id=self.kwargs['my'])
             print(pdf_bearbeiten_object)
             context['pdf_bearbeiten_object'] = pdf_bearbeiten_object
         #pk von flachdach model
@@ -159,11 +145,14 @@ class PdfCreateRedirectView(RedirectView):
         pk_projekt_name = self.kwargs.get('my')
         #Wenn bereits ein Objekt in pdfBearbeiten erstellt wurde
         pdf_bearbeitet = GesamtPdf.objects.filter(user=self.request.user, projekt_id=pk_projekt_name).exists()
+        user = User.objects.filter(email=self.request.user)
+
 
         args_latex = {
                     #'output_margin_ergebnisse':output_margin_ergebnisse,
                     'ergebnisse_berechnung':ergebnisse_berechnung,
                     'pdf_bearbeitet':pdf_bearbeitet,
+                    'user':user,
                     }
         #Pdf erzeugen!!
         pdferzeugen = flachdach_pdferzeugen(self, args_latex)

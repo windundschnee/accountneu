@@ -177,6 +177,7 @@ class PdfCreateRedirectViewAnzeigetafeln(RedirectView):
             eingaben_pdfbearbeiten = {}
 
 
+        user = User.objects.filter(email=self.request.user)
 
 
 
@@ -185,11 +186,12 @@ class PdfCreateRedirectViewAnzeigetafeln(RedirectView):
                     'foldername':foldername,
                     'ergebnisse_anzeigetafeln':ergebnisse_anzeigetafeln,
                     'eingaben_pdfbearbeiten':eingaben_pdfbearbeiten,
+                    'user':user,
 
 
                     }
 
-        print(args_latex)
+
         #Pdf erzeugen!!
         pdferzeugen = anzeigetafeln_pdferzeugen(self, args_latex)
 

@@ -9,6 +9,7 @@ import os.path as path
 from django.views.generic.base import RedirectView
 from django.forms.models import model_to_dict
 from .berechnung_satteldach_schnee import berechnung_satteldach_schnee
+from .latex_ablauf_satteldach_schnee import satteldach_schnee_pdferzeugen
 #Classbased views
 from django.utils import timezone
 from django.urls import reverse_lazy
@@ -169,16 +170,15 @@ class PdfCreateRedirectViewSatteldachSchnee(RedirectView):
 
         arg_latex_list = [user_has_free_account,foldername,ergebnisse_satteldach_schnee,allgeingaben]
 
-
         args_latex = {'user_has_free_account': user_has_free_account,
                     'foldername':foldername,
-                    'ergebnisse_satteldach_schnee':ergebnisse_satteldach_schnee,
+                    'ergebnisse_schnee':ergebnisse_satteldach_schnee,
 
 
                     }
 
         #Pdf erzeugen!!
-        #pdferzeugen = satteldach_schnee_pdferzeugen(self, args_latex)
+        pdferzeugen = satteldach_schnee_pdferzeugen(self, args_latex)
 
 
 

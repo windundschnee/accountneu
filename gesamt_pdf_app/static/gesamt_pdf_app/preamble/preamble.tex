@@ -28,13 +28,14 @@
 
 %%%#### textbreite=13.4cm #####
 
-\geometry{left=1.3cm,right=0.8cm,top=0.75cm,bottom=2.2cm,marginparwidth=0cm, headsep=0.5cm,includehead}%
+\geometry{left=1.3cm,right=0.8cm,top=0.70cm,bottom=2.2cm,marginparwidth=0cm , includehead}%
 
 %Gibt die Spaltenbreite an links ist der Haupttext rechts sind die bemerkungen
 \setcolumnwidth{120mm,30mm}
 
 %%%%##Kopfzeileneinstellungen
-\setlength{\headheight}{1.8cm}%Increase the size of the header to accommodate meta-information
+\setlength{\headheight}{1.7cm}%Increase the size of the header to accommodate meta-information
+\setlength{\headsep}{0.6cm}
 \pagestyle{fancy}\fancyhf{}%Use the custom header specified below
 \renewcommand{\headrulewidth}{0pt}%Remove the default horizontal rule under the header
 
@@ -58,9 +59,9 @@
 
 %%%%%%%##Ramenlinien
 \newcommand\BackgroundStructure{%Command to specify the background of each page
-\setlength{\unitlength}{1mm}%Set the unit length to millimeters Koordinatenursprung ist links unten
-\put(13, 269){\line(1,0){192}}%Horizontale linie unter der Kopfzeile
-\put(163, 8){\line(0,1){258.0}}%Vertikale linie links von margin
+	\setlength{\unitlength}{1mm}%Set the unit length to millimeters Koordinatenursprung ist links unten
+	\put(13, 269.5){\line(1,0){188}}%Horizontale linie unter der Kopfzeile
+	\put(163, 8){\line(0,1){259.0}}%Vertikale linie links von margin
 }%schließt BackgroundStructure
 \definecolor{Gray}{gray}{0.9}%definiert die Farbe grau
 \newcommand{\spann}[1]{\SI{#1}{\kilo\newton\per\square\meter}}%definiert die Spannungseinheit
@@ -75,34 +76,34 @@
 \DeclareFontFamily{U}{abxarrows}{}%
 \DeclareFontShape{U}{abxarrows}{m}{n}{   <-5.5> matha5  <5.5-6.5> matha6  <6.5-7.5> matha7  <7.5-8.5> matha8  <8.5-9.5> matha9  <9.5-11> matha10  <11-> matha12}{}%
 \newcommand{\NSOWarrow}{%
-\raisebox{0.5\depth}{%
-\usefont{U}{abxarrows}{m}{n}%
-\ooalign{%
-\hidewidth\symbol{"D2}\hidewidth\cr%
-\symbol{"D0}\cr%
-\symbol{"D1}\cr%
-\hidewidth\symbol{"D3}\hidewidth\cr%
+	\raisebox{0.5\depth}{%
+		\usefont{U}{abxarrows}{m}{n}%
+		\ooalign{%
+			\hidewidth\symbol{"D2}\hidewidth\cr%
+			\symbol{"D0}\cr%
+			\symbol{"D1}\cr%
+			\hidewidth\symbol{"D3}\hidewidth\cr%
 }  } }%
 %%%%%%%%%%%%Tikz
 \usetikzlibrary{arrows,calc,decorations.markings,patterns}%Libary
 \tikzset{>=latex}%Bestimmt die Standrat Pfeilart
 \tikzset{ %
-%%Windrose
-compass/.pic = {%
-\foreach[count=\i,evaluate={\m=div(\i-1,4);\a=90*\i-90}] \d in {E,N,W,S}{ %
-\filldraw[pic actions,rotate=\a,scale=.7+.3*\m] (0,0) -- (45:0.3)--(0:1) node[transform shape,rotate=-90,above]{\d}; %
-\filldraw[pic actions,fill=white,rotate=\a,scale=.7+.3*\m] (0,0) -- (-45:0.3)--(0:1)--cycle; %
-};  } }%
+	%%Windrose
+	compass/.pic = {%
+		\foreach[count=\i,evaluate={\m=div(\i-1,4);\a=90*\i-90}] \d in {E,N,W,S}{ %
+			\filldraw[pic actions,rotate=\a,scale=.7+.3*\m] (0,0) -- (45:0.3)--(0:1) node[transform shape,rotate=-90,above]{\d}; %
+			\filldraw[pic actions,fill=white,rotate=\a,scale=.7+.3*\m] (0,0) -- (-45:0.3)--(0:1)--cycle; %
+		};  } }%
 %%Bemasungslinien
 \pgfarrowsdeclarecombine{dimarrow}{dimarrow}{latex}{latex}{}{}%
 %Vertikale Bemasungslinien
 \def\DimlineV[#1][#2][#3][#4]{%
-\draw[|-|,%
-decoration={markings,%
-mark=at position 0 with {\arrowreversed[scale=0.9]{dimarrow}};,%
-mark=at position .5 with {\node[rotate=90] at (0,0.2)%
-{\scriptsize{#4}};},%
-	mark=at position 1 with {\arrow[scale=0.9]{dimarrow}};,%
+	\draw[|-|,%
+	decoration={markings,%
+		mark=at position 0 with {\arrowreversed[scale=0.9]{dimarrow}};,%
+		mark=at position .5 with {\node[rotate=90] at (0,0.2)%
+			{\scriptsize{#4}};},%
+		mark=at position 1 with {\arrow[scale=0.9]{dimarrow}};,%
 	},%
 	postaction=decorate] ($(#1)+(#3,0)$) -- ($(#2)+(#3,0)$) ;%
 }%
@@ -122,38 +123,40 @@ mark=at position .5 with {\node[rotate=90] at (0,0.2)%
 }
 %node in der Mitte von zwei nodes
 \tikzset{%
-between/.style args={#1 and #2}{%
-at = ($(#1)!0.5!(#2)$)%
-	} }%
+	between/.style args={#1 and #2}{%
+		at = ($(#1)!0.5!(#2)$)%
+} }%
 %%Windrichtung Pfeile
 \tikzset{%
-windrichtung/.pic = {%
-\draw [->,line width=0.35mm] (0,-1.0)%
-node[above,rotate=90]{\footnotesize{Wind}} -- (0,0) ;%
-\draw [->,line width=0.35mm] (-0.9,-1) -- (-0.2,0);%
-\draw [->,line width=0.35mm] (0.9,-1) -- (0.2,0);%
+	windrichtung/.pic = {%
+		\draw [->,line width=0.35mm] (0,-1.0)%
+		node[above,rotate=90]{\footnotesize{Wind}} -- (0,0) ;%
+		\draw [->,line width=0.35mm] (-0.9,-1) -- (-0.2,0);%
+		\draw [->,line width=0.35mm] (0.9,-1) -- (0.2,0);%
 }}%
+
+
+
+
 %ab hier beginnt der dynamische teil der nicht im mft format enthalten ist
 \csname endofdump\endcsname
 
-\fancyhead[L]{\begin{tabular}{l r | l r}%
-	\textbf{Projekt}%
- &  &%
-\textbf{Seite} & \thepage/\pageref{LastPage}%
-\\[-4pt]%
-\textbf{Bauteil}   & Wand%
-&%
-\textbf{Datum} & \today%
-\\[-4pt]%
-\textbf{Bauteilart} & Freistehende Wand%
-&%
-\textbf{Firma} & Musterman GMBH%
-\\[-4pt]%
-&  &%
-\textbf{Bearbeiter} & James Smith%
-\end{tabular}}%
+\fancyhead[L]{\begin{tabular}{l r | l r}
+		\textbf{Windlasten Flachdächer} & 
+		&
+		\textbf{Seite} & \thepage
+		\\[-4pt]
+		\textbf{Projekt}
+		& Mein Projekt 1 &
+		\textbf{Datum} & \today
+		\\[-4pt]
+		\textbf{Bauteil}   & wand
+		&
+		\textbf{Firma} & 
+	\end{tabular}}
 %
 \begin{document}%
+	\AddToShipoutPicture{\BackgroundStructure}
 Das ist die Statische preamble wenn ich in der preamble etwas ändern will muss ich es hier hinzufügen aund dann eine .fmt datei erzeugen
 
 https://web.archive.org/web/20160712215709/http://www.howtotex.com:80/tips-tricks/faster-latex-part-iv-use-a-precompiled-preamble/

@@ -23,7 +23,19 @@ def preamble_static_latex(self,fd):
     preamble_filename_latex=preamble_filename_python.replace("\\", "/")
     fd.write(r'%&'+preamble_filename_latex)
     #fd.write("\n"+r'%&latex')
+
     fd.write("\n"+r'\csname endofdump\endcsname') #Bestimmt das ende der Statischen Preamble
+
+    # Schnelast Rechteck
+    #1 Angfangskoordinate
+    #2 Endkoordinate
+    #3 Höhe
+    #4 Last
+    fd.write("\n"+r'\def\lastschnee[#1][#2][#3][#4]{')
+    fd.write("\n"+r'\filldraw[fill=gray!30, draw=black, line width=0.13mm]  #1 -- #2 -- ($#2 + (0,#3)$) -- ($#1 + (0,#3)$) --cycle ;')
+    fd.write("\n"+r'\node[above] at ($($#1 + (0,#3)$)!0.5!($#2 + (0,#3)$)$) {#4};')
+    fd.write("\n"+r'}')
+    
     fd.write("\n"+r'\pdfcompresslevel=0') #Macht das compilieren schneller erzeugt jedoch ein größeres pdf
     fd.write("\n"+r'\pdfobjcompresslevel=0') #Macht das compilieren schneller erzeugt jedoch ein größeres pdf
     fd.write("\n"+r'\setlength\intextsep{2.0mm}')
@@ -43,59 +55,6 @@ def beginn_latex_format(fd,):
 
 
 
-
-
-
-
-
-def kopfundfusszeile_einzeln(fd,arg_latex):
-    fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
-    fd.write("\n"+r' &  &')
-    fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bauteil}   & Wand') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bauteilart} & Freistehende Wand') # eintrag 5 Bauteilart
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Firma} & Musterman GMBH')  # eintrag 6 Bauteilart
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'&  &')#eintrag 7 nichts
-    fd.write("\n"+r'\textbf{Bearbeiter} & James Smith')#eintrag 8 Bearbeiter
-    fd.write("\n"+r'\end{tabular}}')
-
-def kopfundfusszeile(fd,arg_latex):
-    fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
-    fd.write("\n"+r' &  &')
-    fd.write("\n"+r'\textbf{Seite} & \thepage/\pageref{LastPage}') # eintrag 2 Seitenzahl
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bauteil}   & Wand') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bauteilart} & Freistehende Wand') # eintrag 5 Bauteilart
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Firma} & Musterman GMBH')  # eintrag 6 Bauteilart
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'&  &')#eintrag 7 nichts
-    fd.write("\n"+r'\textbf{Bearbeiter} & James Smith')#eintrag 8 Bearbeiter
-    fd.write("\n"+r'\end{tabular}}')
-
-def kopfundfusszeile_1(fd,arg_latex):
-    fd.write("\n"+r'\fancyhead[L]{\begin{tabular}{l r | l r}')
-    fd.write("\n"+r'	\textbf{Projekt}') # eintrag 1
-    fd.write("\n"+r' & Beispielprojekt &')
-    fd.write("\n"+r'\textbf{Seite} & \thepage') # eintrag 2 Seitenzahl
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Firma}   & Musterman GMBH') #eintrag 3 Bauteil
-    fd.write("\n"+r'&')
-    fd.write("\n"+r'\textbf{Datum} & \today') # eintrag 4 Datum
-    fd.write("\n"+r'\\[-4pt]')
-    fd.write("\n"+r'\textbf{Bearbeiter} & James Smith') # eintrag 5 Bauteilart
-    fd.write("\n"+r'\end{tabular}}')
 
 
 
@@ -120,19 +79,3 @@ def compiling(self,media_path,my_path_ausdruckprotokoll):
     # my_path_aux=my_path_ausdruckprotokoll[:-3]+'aux'
     # os.remove(my_path_log)
     # os.remove(my_path_aux)
-
-def reibung_margin_tab(self,reibung_beruecksichtigen,fd):
-    if reibung_beruecksichtigen==True:
-        fd.write("\n"+r' $c_{fr}$ & Reibungsbeiwert')
-        fd.write("\n"+r'\\')
-        fd.write("\n"+r' $w_{fr}$ & Reibungsdruck')
-        fd.write("\n"+r'\\')
-
-def reibung_margin_vernachlaessigen(self,reibung_vernachlaessigt,fd):
-    windrichtung=['Norden und Süden', 'Osten und Westen']
-    if all(element==True for element in reibung_vernachlaessigt )==True:
-        fd.write("\n"+r' Die Reibung darf für alle Windrichtungen vernachlassigt werden. \\')
-    else:
-        for ind, element in enumerate(reibung_vernachlaessigt):
-            if element == True:
-                fd.write("\n"+r' Die Reibung darf für die Windrichtungen '+ windrichtung[ind]+r' vernachlassigt werden. \\')
