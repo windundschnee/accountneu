@@ -34,6 +34,8 @@ class FlachdachModel(models.Model):
 
     some_field = models.CharField(max_length=80, blank=False)
     some_field_radio2 = models.CharField(max_length=80, blank=True, null=True, default=1)
+    cpe_wahl = models.CharField(max_length=80, blank=True, null=True, default=1)
+    cpe_1_einflussflaeche = models.CharField(max_length=80, blank=True, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
     flachdach_eingegeben = models.BooleanField(blank=False)
     edited_date = models.DateTimeField(blank=True, null=True)

@@ -1,0 +1,40 @@
+{% block js %}
+<script language="javascript">
+  var gesamtgebauede_radio = document.getElementById("id_bemessungsart_wind_schnee_2");
+  var id_gesamtgebaeude_dachart = document.getElementById("id_gesamtgebaeude_dachart");
+  var id_gesamtgebaeude_dachart_0 = document.getElementById("id_gesamtgebaeude_dachart_0");
+  var id_gesamtgebaeude_dachart_1 = document.getElementById("id_gesamtgebaeude_dachart_1");
+  var id_gesamtgebaeude_dachart_2 = document.getElementById("id_gesamtgebaeude_dachart_2");
+  gesamtgebauede_radio.onchange = mygesamtgebauedeFunction;
+
+
+
+  $(function(){
+    $('input[type="radio"]').click(  function mygesamtgebauedeFunction() {
+
+        var x = document.getElementById("dachart_block");
+        if (gesamtgebauede_radio.checked == false) {
+          x.style.display = "none";
+          id_gesamtgebaeude_dachart_0.required = "";
+
+
+        } else {
+          x.style.display = "block";
+          id_gesamtgebaeude_dachart_0.required = "required";
+
+        }
+      });
+  });
+  function mygesamtgebauedeFunction() {
+
+    var x = document.getElementById("dachart_block");
+    if (gesamtgebauede_radio.checked == false) {
+      x.style.display = "none";
+      gesamtgebaeude_dachart.required = "";
+    } else {
+      x.style.display = "block";
+      gesamtgebaeude_dachart.required = "required";
+    }
+  }
+</script>
+{% endblock %}

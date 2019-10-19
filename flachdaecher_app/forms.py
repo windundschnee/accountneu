@@ -19,6 +19,10 @@ anzahl_streifen_wahl = (
 
 
 )
+CHOICESCPEWAHL=(
+('CPE10',mark_safe('c<sub>pe,10</sub>')),
+('CPE1',mark_safe('c<sub>pe,1</sub>')),
+)
 CHOICES = (
 
     # First one is the value of select option and second is the displayed value in option
@@ -62,7 +66,7 @@ class flachdaecherForm(forms.ModelForm):
             "hoehe": "Höhe h [m]:",
             "breite_x":  mark_safe('Länge l<sub>Westen</sub> [m]'),
             "breite_y":  mark_safe('Länge l<sub>Süd</sub> [m]'),
-
+            "cpe_1_einflussflaeche":"Einflussfläche [m²]:",
             "some_field": "Berechnungsverfahren:",
             "some_field_radio2": "Berechnungsverfahren",
 
@@ -135,6 +139,9 @@ class flachdaecherForm(forms.ModelForm):
 
 
                                                                             }),
+            'cpe_wahl': forms.RadioSelect(choices=CHOICESCPEWAHL, attrs={'class': 'form-control-input',
+
+                                                                            }),
             'oeffnungen_beruecksichtigen': forms.CheckboxInput(attrs={'class': 'onoffswitch-checkbox',
 
 
@@ -182,6 +189,9 @@ class flachdaecherForm(forms.ModelForm):
 
 
             'reibbeiwert_waende': forms.NumberInput(attrs={'class': 'form-control',
+                                                              'step': 0.01,
+                                                              'type': 'number', }),
+            'cpe_1_einflussflaeche': forms.NumberInput(attrs={'class': 'form-control',
                                                               'step': 0.01,
                                                               'type': 'number', }),
 

@@ -13,3 +13,11 @@ a.popover_me.popover:hover{
 a.popover.fade.bs-popover-bottom.show:hover{
   width: 20px;
 }
+#dachart_block{
+  padding-left: 95px;
+
+}
+ul{
+
+  list-style-type: none;
+}

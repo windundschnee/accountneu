@@ -10,7 +10,11 @@ gk = (
         ('III', 'III'),
         ('IV', 'IV'),
         )
-
+SAMPLE_CHOICES_DACHART=(
+        ('FLACHDACH', 'Flachdach'),
+        ('SATTELDACH', 'Satteldach'),
+        ('PULTDACH', 'Pultdach'),
+        )
 class RegCarForm(forms.ModelForm):
     def clean_basiswinddruck(self):
 
@@ -144,12 +148,22 @@ class WindbemessungForm(forms.ModelForm):
         widget = forms.RadioSelect,
 
 )
+    gesamtgebaeude_dachart = forms.ChoiceField(
+        label='Dachart:',
+        choices = (SAMPLE_CHOICES_DACHART),
+        required=True,
+        widget = forms.RadioSelect,
 
+)
 
+    def __init__(self, *args, **kwargs):
+        super(WindbemessungForm, self).__init__(*args, **kwargs)
+        # Making location required
+        self.fields['gesamtgebaeude_dachart'].required = False
 
     class Meta:
         model = Bauteil
-        fields = ['bautteil_name', 'bemessungsart_wind_schnee' ,]
+        fields = ['bautteil_name', 'bemessungsart_wind_schnee' ,'gesamtgebaeude_dachart']
 
 
 

@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 import uuid
 from flachdaecher_app.models import FlachdachModel
-
+from core.models import Bauteil
 
 SAMPLE_CHOICES2=(
 ( 'Freistehende Wände','Freistehende Wände'),
@@ -19,16 +19,23 @@ SAMPLE_CHOICES2=(
 
 
 
+DEFAULT_EXAM_ID = 1
 
 
 class Gesamtgebaeude(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dach_wahl = models.CharField(max_length=100, null=False, default="Dachwahl")
 
-    projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE, null=True)
+
+
+    
+    bautteil_name = models.ForeignKey(
+        Bauteil,
+        on_delete=models.CASCADE, default=1)
+    projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE)
     app_wahl = models.CharField(max_length=100, null=False)
     edited_date = models.DateTimeField(blank=True, null=True)
-
+    gesamtgebaeude_eingegeben = models.BooleanField(default=False)
 
 
     def save(self, *args, **kwargs):
@@ -36,7 +43,11 @@ class Gesamtgebaeude(models.Model):
         super(Gesamtgebaeude, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.user
+        return str(self.id)
 
-    def get_absolute_url(self):
+
+    def get_absolute_url2(self):
+        return reverse('gesamtgebaeude_app:gesamtgebaeude_update', kwargs={'slug': self.projekt.slug,'my': self.projekt.pk,'pk': self.pk})
+
+    def get_absolute_url3(self):
         return reverse('gesamtgebaeude_app:gesamtgebaeude_detail', kwargs={'slug': self.projekt.slug,'my': self.projekt.pk,'pk': self.pk})
