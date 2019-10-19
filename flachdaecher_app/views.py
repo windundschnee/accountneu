@@ -53,7 +53,18 @@ class FlachdachUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         context['pk'] = self.kwargs.get('my')
         context['slug'] = self.kwargs.get('slug')
+        print(self.object)
+        print(self.object)
+        print(self.object)
+        print(self.object)
+        print(self.object)
+        print(self.object)
+
+        context['gesamtgebaeude'] = True
         return context
+
+
+
 class FlachdachCreateView(LoginRequiredMixin, CreateView):
     model = FlachdachModel
     form_class = flachdaecherForm
@@ -74,6 +85,13 @@ class FlachdachCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(FlachdachCreateView, self).get_context_data(**kwargs)
+        meinbauteil = get_object_or_404(Bauteil, pk=self.kwargs['pk'])
+
+        if meinbauteil.bemessungsart_wind_schnee == 'Windlasten Gesamtgebaeude':
+            context['gesamtgebaeude'] = True
+        else:
+            context['gesamtgebaeude'] = False
+
 
         context['pk'] = self.kwargs.get('my')
         context['slug'] = self.kwargs.get('slug')

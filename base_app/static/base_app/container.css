@@ -15,3 +15,16 @@ a:hover {
     color: #0056b3;
     text-decoration: none;
 }
+
+
+.form-inline{
+  padding-bottom:10px;
+  margin-left:20px;
+}
+#info_symbol.fa {
+    padding-left: 20px;
+}
+.card-header.form-inline{
+  margin:0px;
+
+}

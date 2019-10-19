@@ -21,7 +21,7 @@
     <li class="breadcrumb-item active" aria-current="page">Flachdach</li>
   </ol>
 </nav>
-<div class="card">
+<div id="hauptcard" class="card">
   <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdächer"> Flachdächer</h3>
   <div class="card-body">
     <div class="row">
@@ -52,11 +52,57 @@
           {% endif %}
 
           {{ form.non_field_errors }}
+          <section id="cpe_wahl_section">
+            <div class="card">
 
+              <div class="card-body">
+                <div class="card-title">
+                  <h5><label for="{{ form.cpe_wahl.id_for_label }}"><b>Aussendruckbeiwerte c<sub>pe</sub></b></label></h5>
+                </div>
+                <div class="row">
+                  <div class="col">
+
+
+
+                    <div class="form-group">
+                      <div class="form-inline" >
+                        <div class="radio">{{ form.cpe_wahl.0 }} </div>
+                        <a  id="info_button_cpe10" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                      <div class="form-inline" >
+                        <div class="radio">
+                          {{ form.cpe_wahl.1 }}
+                        </div>
+                        <a  id="info_button_cpe1" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      </div>
+                    </div>
+                    {{ form.cpe_wahl.errors }}
+
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+
+                      <label for="{{ form.cpe_1_einflussflaeche.id_for_label }}">{{ form.cpe_1_einflussflaeche.label_tag }}</label>
+
+                        {{ form.cpe_1_einflussflaeche }}
+
+                    </div>
+                    {{ form.cpe_1_einflussflaeche.errors }}
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </section>
 
           <section id="berechnungsverfahren_section">
             <div class="card">
               <div class="card-body">
+                <div class="card-title">
+                  <h5><label for="{{ form.some_field.id_for_label }}"><b>Berechnungsverfahren</b></label></h5>
+                </div>
                 <div class="row">
                   <div class="col">
 
@@ -66,18 +112,16 @@
 
 
 
-                      <div class="card-title">
-                        <h5><label for="{{ form.some_field.id_for_label }}"><b>Berechnungsverfahren</b></label></h5>
-                      </div>
-                      <div class="form-inline" style="margin-left:20px">
+
+                      <div class="form-inline" >
                         <div class="radio">{{ form.some_field.0 }} </div>
-                        <a style="margin-left:20px" id="info_button1" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                        <a  id="info_button1" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                       </div>
-                      <div class="form-inline" style="margin-left:20px">
+                      <div class="form-inline" >
                         <div class="radio">
                           {{ form.some_field.1 }}
                         </div>
-                        <a style="margin-left:20px" id="info_button3" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                        <a  id="info_button3" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                       </div>
                     </div>
                     {{ form.some_field.errors }}
@@ -96,19 +140,19 @@
           <section id="geometrie_section">
             <div class="card">
               <div class="card-body">
-
+                <div class="card-title">
+                  <h5><label for=""><b>Geometrie</b></label></h5>
+                </div>
                 <div class="row">
                   <div class="col">
-                    <div class="card-title">
-                      <h5><label for=""><b>Geometrie</b></label></h5>
-                    </div>
+
                     <div id="bereich_vereinfachtesverfahren" class="form-group">
 
 
 
 
                       <label id="label_traufenbereich" for="{{ form.art_traufenbereich.id_for_label }}">{{ form.art_traufenbereich.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+                      <div class="" >
                         {{ form.art_traufenbereich }}
                       </div>
                     </div>
@@ -122,9 +166,9 @@
                     <div class="form-group">
 
                       <label for="{{ form.hoehe.id_for_label }}">{{ form.hoehe.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.hoehe }}
-                      </div>
+
                     </div>
                     {{ form.hoehe.errors }}
                   </div>
@@ -134,25 +178,25 @@
                     <div id="id_label_hoehe_attika" class="form-group">
 
                       <label for="{{ form.hoehe_attika.id_for_label }}">{{ form.hoehe_attika.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.hoehe_attika }}
-                      </div>
+
                     </div>
                     {{ form.hoehe_attika.errors }}
                     <div id="label_alpha" class="form-group">
 
                       <label for="{{ form.alpha.id_for_label }}">{{ form.alpha.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.alpha }}
-                      </div>
+
                     </div>
                     {{ form.alpha.errors }}
                     <div id="id_label_radius" class="form-group">
 
                       <label for="{{ form.radius.id_for_label }}">{{ form.radius.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.radius }}
-                      </div>
+
                     </div>
                     {{ form.radius.errors }}
                   </div>
@@ -165,9 +209,9 @@
                     <div class="form-group">
 
                       <label for="{{ form.breite_x.id_for_label }}">{{ form.breite_x.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.breite_x }}
-                      </div>
+
                     </div>
                     {{ form.breite_x.errors }}
                   </div>
@@ -175,9 +219,9 @@
                     <div class="form-group">
 
                       <label for="{{ form.breite_y.id_for_label }}">{{ form.breite_y.label_tag }}</label>
-                      <div class="" style="margin-left:20px">
+
                         {{ form.breite_y }}
-                      </div>
+
                     </div>
                     {{ form.breite_y.errors }}
 
@@ -194,6 +238,7 @@
 
             <div class="card">
               <div class="card-body">
+
                 <div class="form-group">
                   <div class="form-inline">
                     <div class="onoffswitch">
@@ -219,7 +264,7 @@
 
                       <label for="">Fehlende Korrelation berücksichtigen?</label>
 
-                      <div class="form-inline" style="margin-left:20px">
+                      <div class="form-inline" >
 
                         <div class="form-check">
                           {{ form.fehlende_korrelation_beruecksichtigen }}
@@ -228,7 +273,7 @@
                           </label>
                         </div>
 
-                        <a style="margin-left:20px" id="info_button_fehlende_korrelation" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                        <a  id="info_button_fehlende_korrelation" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                       </div>
 
 
@@ -246,11 +291,11 @@
 
 
 
-                          <div class="form-inline" style="margin-left:20px">
+                          <div class="form-inline" >
                             {{ form.anzahl_streifen }}
 
 
-                            <a style="margin-left:20px" id="info_button_anzahl_streifen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                            <a  id="info_button_anzahl_streifen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                           </div>
                         </div>
                         {{ form.anzahl_streifen_wind_x.errors }}
@@ -274,7 +319,7 @@
                       <div class="card-title">
                         <h5> <label class="label" for="id_oeffnungen_beruecksichtigen"><b>Öffnungen</b></label></h5>
                       </div>
-                      <a style="margin-left:20px" id="info_button_oeffnungen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      <a  id="info_button_oeffnungen" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                     </div>
 
 
@@ -342,26 +387,29 @@
             <div class="card">
               <div class="card-body">
 
-                <div class="form-group">
-                  <div class="form-inline">
-                    <div class="onoffswitch">
-                      {{ form.innendruck }}
 
-                      <label class="onoffswitch-label" for="id_innendruck">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
+                <div class="form-inline">
 
-                      </label>
-                    </div>
-                    <div class="card-title">
-                      <h5> <label class="label" for="id_innendruck"><b>Innendruck</b></label></h5>
-                      {% if gesamtgebaeude %}
-                      {% else %}
-                      <a style="margin-left:20px" id="info_button_empfohleneWerte_einzeln" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
-                      {% endif %}
+                  <div class="onoffswitch">
+                    {{ form.innendruck }}
 
-                    </div>
+                    <label class="onoffswitch-label" for="id_innendruck">
+                      <span class="onoffswitch-inner"></span>
+                      <span class="onoffswitch-switch"></span>
+
+                    </label>
+
                   </div>
+                  <div class="card-title">
+                    <h5><b>Innendruck</b></h5>
+                  </div>
+                  {% if gesamtgebaeude %}
+                  {% else %}
+                  <a  id="info_button_empfohleneWerte_einzeln" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                  {% endif %}
+
+
+
                 </div>
 
 
@@ -378,17 +426,17 @@
                   <div class="form-group">
 
                     <label for="{{ form.some_field_radio2.id_for_label }}">{{ form.some_field_radio2.label_tag }}</label>
-                    <div class="form-inline" style="margin-left:20px">
+                    <div class="form-inline" >
                       <div class="radio">{{ form.some_field_radio2.1 }} </div>
-                      <a style="margin-left:20px" id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      <a  id="info_button_empfohleneWerte" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                     </div>
                   </div>
                   {{ form.some_field_radio2.errors }}
                   <div class="form-group">
 
-                    <div class="form-inline" style="margin-left:20px">
+                    <div class="form-inline" >
                       <div class="radio">{{ form.some_field_radio2.0 }} </div>
-                      <a style="margin-left:20px" id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
+                      <a  id="info_button_dominant" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
                     </div>
                   </div>
                   {% endif %}
@@ -406,6 +454,7 @@
           <section id="reibung_section">
             <div class="card">
               <div class="card-body">
+
                 <div class="row">
 
                   <div class="col-md-6">
@@ -443,18 +492,18 @@
                       <div class="form-group">
 
                         <label for="{{ form.reibbeiwert_dach.id_for_label }}">{{ form.reibbeiwert_dach.label_tag }}</label>
-                        <div class="" style="margin-left:20px">
+
                           {{ form.reibbeiwert_dach }}
-                        </div>
+
                       </div>
                       {{ form.reibbeiwert_dach.errors }}
 
                       <div class="form-group">
 
                         <label for="{{ form.reibbeiwert_waende.id_for_label }}">{{ form.reibbeiwert_waende.label_tag }}</label>
-                        <div class="" style="margin-left:20px">
+
                           {{ form.reibbeiwert_waende }}
-                        </div>
+
                       </div>
                       {{ form.reibbeiwert_waende.errors }}
 

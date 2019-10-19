@@ -108,6 +108,13 @@ class WindbemessungCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.projekt_id = self.kwargs.get('pk')
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
+        print(form.instance.gesamtgebaeude_dachart)
         print(form.cleaned_data['bemessungsart_wind_schnee'])
         print(form.cleaned_data['bemessungsart_wind_schnee'])
         print(form.cleaned_data['bemessungsart_wind_schnee'][:4])
@@ -138,7 +145,12 @@ class WindbemessungCreateView(LoginRequiredMixin, CreateView):
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Kehldächer':
             return reverse_lazy('kehldach_schnee_app:kehldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
         elif self.object.bemessungsart_wind_schnee ==  'Windlasten Gesamtgebaeude':
-            return reverse_lazy('gesamtgebaeude_app:gesamtgebaeude_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+            if self.object.gesamtgebaeude_dachart == 'FLACHDACH':
+                return reverse_lazy('flachdaecher_app:flachdach_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+            elif self.object.gesamtgebaeude_dachart == 'SATTELDACH':
+                return reverse_lazy('gesamtgebaeude_app:gesamtgebaeude_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+
+
         elif self.object.bemessungsart_wind_schnee ==  'Schneelasten Satteldächer':
             print('jhkjhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
             return reverse_lazy('satteldach_schnee_app:satteldach_schnee_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
