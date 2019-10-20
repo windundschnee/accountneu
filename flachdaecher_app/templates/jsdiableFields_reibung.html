@@ -1,11 +1,50 @@
 {% block js %}
 <script language="javascript">
   var id_reibung_beruecksichtigen = document.getElementById("id_reibung_beruecksichtigen");
+  var reibbeiwert_dach_benutzerdef = document.getElementById("id_reibbeiwert_dach_benutzerdef");
+  var reibbeiwert_waende_benutzerdef = document.getElementById("id_reibbeiwert_waende_benutzerdef");
   id_reibung_beruecksichtigen.onclick = ausblende_winddruck_reibung;
+  reibbeiwert_waende_benutzerdef.onclick = benutzerdefiniert_reibung_waende;
+  reibbeiwert_dach_benutzerdef.onclick = benutzerdefiniert_reibung_dach;
   var reibungs_bereich = document.getElementById("reibungs_bereich");
   var id_reibbeiwert_dach = document.getElementById("id_reibbeiwert_dach");
   var id_reibbeiwert_waende = document.getElementById("id_reibbeiwert_waende");
   var checkBox_waende = document.getElementById("id_waende_beruecksichtigen");
+  var reibbeiwerte_waende_wahl = document.getElementById("id_reibbeiwerte_waende_wahl");
+  var reibbeiwerte_dach_wahl = document.getElementById("id_reibbeiwerte_dach_wahl");
+  function benutzerdefiniert_reibung_waende() {
+
+
+
+    if (reibbeiwert_waende_benutzerdef.checked == false) {
+      id_reibbeiwert_waende.style.display = 'none';
+      id_reibbeiwert_waende.required = false;
+      reibbeiwerte_waende_wahl.style.display = 'block';
+    } else {
+      id_reibbeiwert_waende.style.display = 'block';
+      id_reibbeiwert_waende.required = true;
+      reibbeiwerte_waende_wahl.style.display = 'none';
+
+    }
+
+  };
+  function benutzerdefiniert_reibung_dach() {
+
+
+
+    if (reibbeiwert_dach_benutzerdef.checked == false) {
+      id_reibbeiwert_dach.style.display = 'none';
+      id_reibbeiwert_dach.required = false;
+      reibbeiwerte_dach_wahl.style.display = 'block';
+    } else {
+      id_reibbeiwert_dach.style.display = 'block';
+      id_reibbeiwert_dach.required = true;
+      reibbeiwerte_dach_wahl.style.display = 'none';
+
+    }
+
+  };
+
   function ausblende_winddruck_reibung() {
 
 
@@ -17,14 +56,14 @@
       id_reibbeiwert_dach.required = true;
 
 
-      if (checkBox_waende.checked == true){
+      if (checkBox_waende.checked == true) {
         id_reibbeiwert_waende.required = true;
         id_reibbeiwert_waende.disabled = false;
       } else {
         id_reibbeiwert_waende.required = false;
         id_reibbeiwert_waende.disabled = true;
 
-}
+      }
 
 
 

@@ -47,7 +47,11 @@ class FlachdachModel(models.Model):
     oeffnung_west_flaeche = models.DecimalField(decimal_places=1, max_digits=7, blank=True, null=False, default=0)
     reibung_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
     reibbeiwert_dach = models.DecimalField(decimal_places=2,default=0, max_digits=7, blank=True, null=True)
+    reibbeiwert_dach_benutzerdef = models.BooleanField(blank=True, null=True, default=True)
+    reibbeiwerte_dach_wahl = models.CharField(max_length=80, blank=False, default='test')
+    reibbeiwert_waende_benutzerdef = models.BooleanField(blank=True, null=True, default=True)
     reibbeiwert_waende = models.DecimalField(decimal_places=2,default=0, max_digits=7, blank=True, null=True)
+    reibbeiwerte_waende_wahl = models.CharField(max_length=80, blank=False, default='test')
     anzahl_streifen = models.CharField(max_length=80, blank=True, null=True, default=2)
     fehlende_korrelation_beruecksichtigen = models.BooleanField(blank=True, null=True, default=False)
 
