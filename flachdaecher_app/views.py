@@ -53,14 +53,14 @@ class FlachdachUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         context['pk'] = self.kwargs.get('my')
         context['slug'] = self.kwargs.get('slug')
-        print(self.object)
-        print(self.object)
-        print(self.object)
-        print(self.object)
-        print(self.object)
-        print(self.object)
 
-        context['gesamtgebaeude'] = True
+
+        meinbauteil = get_object_or_404(Bauteil, pk=self.object.bautteil_name.id)
+
+        if meinbauteil.bemessungsart_wind_schnee == 'Windlasten Gesamtgebaeude':
+            context['gesamtgebaeude'] = True
+        else:
+            context['gesamtgebaeude'] = False
         return context
 
 
@@ -131,7 +131,12 @@ class FlachdachDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         else:
             context['filename_pdf_anzeigen'] = ''
             context['existiert_pdf'] = False
+        meinbauteil = get_object_or_404(Bauteil, pk=self.object.bautteil_name.id)
 
+        if meinbauteil.bemessungsart_wind_schnee == 'Windlasten Gesamtgebaeude':
+            context['gesamtgebaeude'] = True
+        else:
+            context['gesamtgebaeude'] = False
         return context
 
     def test_func(self):

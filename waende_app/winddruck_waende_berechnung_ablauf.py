@@ -16,6 +16,11 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 	innendruck_verfahren_wahl = eingaben_waende_berechnung['innendruck_verfahren_wahl']
 	fehlende_korrelation_beruecksichtigen=eingaben_waende_berechnung['fehlende_korrelation_beruecksichtigen']
 	reibung_beruecksichtigen=eingaben_waende_berechnung['reibung_beruecksichtigen']
+	print(eingaben_waende_berechnung)
+	print(eingaben_waende_berechnung)
+	print(eingaben_waende_berechnung)
+	print(eingaben_waende_berechnung)
+
 	reibbeiwert_waende=eingaben_waende_berechnung['reibbeiwert_waende']
 	oeffnung_nord_flaeche=eingaben_waende_berechnung['oeffnung_nord_flaeche']
 	oeffnung_ost_flaeche=eingaben_waende_berechnung['oeffnung_ost_flaeche']

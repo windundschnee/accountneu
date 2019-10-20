@@ -26,7 +26,7 @@
     <li class="breadcrumb-item"><a href="{% url 'base_app:home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'core:allgEingaben_list' %}">Projekte</a></li>
     <li class="breadcrumb-item"><a href="{% url 'core:windbemessung_list' object.projekt.slug object.projekt.pk %}">Bauteile</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Flachdach</li>
+    <li class="breadcrumb-item active" aria-current="page">{% if gesamtgebaeude %} Gesamtgebäude{% else %}Flachdach{% endif %}</li>
   </ol>
 </nav>
 <div class="row">
@@ -50,7 +50,11 @@
   <br>
   <div class="col">
     <div class="card">
+      {% if gesamtgebaeude %}
+      <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Gesamtgebäude"> Gesamtgebäude</h3>
+      {% else %}
       <h3 class="card-header form-inline"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdächer"> Flachdächer</h3>
+      {% endif %}
       <div class="card-body">
         <table class="table table-hover">
 

@@ -15,6 +15,7 @@
 
   var anzahl_streifen_bereich_wind_X = document.getElementById("anzahl_streifen_bereich_wind_X");
   var id_reibbeiwert_waende = document.getElementById("id_reibbeiwert_waende");
+  var reibbeiwert_waende_benutzerdef = document.getElementById("id_reibbeiwert_waende_benutzerdef");
   var oeffnungen_bereich = document.getElementById("oeffnungen_bereich");
 
 
@@ -32,6 +33,7 @@
       innendruck_empfohlene_werte.checked = true;
       innendruck_dominante_flaeche.checked = false;
       id_reibbeiwert_waende.disabled = false;
+      reibbeiwert_waende_benutzerdef.disabled = false;
       id_reibbeiwert_waende.required = true;
 
 
@@ -61,7 +63,7 @@
       innendruck_dominante_flaeche.disabled = true;
       anzahl_streifen_bereich_wind_X.style.display = 'none';
       id_anzahl_streifen.style.display = 'none';
-
+      reibbeiwert_waende_benutzerdef.disabled = true;
 
       oeffnungen_bereich.style.display = 'none';
       id_reibbeiwert_waende.disabled = true;
