@@ -155,8 +155,10 @@
 
 
 
+                      <div id="label_traufenbereich">
+                        {{ form.art_traufenbereich.label_tag }}
+                      </div>
 
-                      {{ form.art_traufenbereich.label_tag }}
                       <div class="">
                         {{ form.art_traufenbereich }}
                       </div>
@@ -223,7 +225,7 @@
                   <div class="col">
                     <div class="form-group">
 
-                    {{ form.breite_y.label_tag }}
+                      {{ form.breite_y.label_tag }}
 
                       {{ form.breite_y }}
 
@@ -513,7 +515,7 @@
                         {{form.reibbeiwerte_waende_wahl}}
                         {{ form.reibbeiwert_waende }}
                         <a id="info_button_reibbeiwert_wand" type="button" class="myownclass" name="button"><i id="info_symbol" class="fa fa-info-circle"></i></a>
-  {{ form.reibbeiwert_waende_benutzerdef }} benutzerdefiniert
+                        {{ form.reibbeiwert_waende_benutzerdef }} benutzerdefiniert
                       </div>
                       {{ form.reibbeiwert_waende.errors }}
 
