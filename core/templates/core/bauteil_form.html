@@ -64,9 +64,9 @@
               <h2><i class="fas fa-wind" aria-hidden="true"></i> Windlasten:</h2>
               <div class="" style="margin-left:20px">
                 <div class="radio">
-                  <a class="popover_me" href="{% static 'freistehende_waende_app/img/freistehendewaende_gesamt.JPG' %}" data-toggle="popover-hover" data-img="{% static 'freistehende_waende_app/img/freistehendewaende_gesamt.JPG' %}">
+
                     <img class="icon" src="{% static 'core/img/icon.JPG' %}" alt="icon Freistehende Wand">
-                    </a>
+
                   {{ form.bemessungsart_wind_schnee.0 }}
                 </div>
 
@@ -74,9 +74,28 @@
                   {{ form.bemessungsart_wind_schnee.1 }}
                  </div>
 
-                <div class="radio"><img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Gesamtgebäude">
+                <div class="radio">
+
+                  <img class="icon" src="{% static 'core/img/gesamtgebauede.JPG' %}" alt="icon Gesamtgebäude">
                   {{ form.bemessungsart_wind_schnee.2 }}
+
+                  <div id="dachart_block">
+
+
+
+
+
+                      {{ form.gesamtgebaeude_dachart.label_tag }}
+
+                      {{ form.gesamtgebaeude_dachart }}
+
+
+
+                  </div>
+
                 </div>
+
+
                 <div class="radio"><img class="icon" src="{% static 'core/img/flachdach.JPG' %}" alt="icon Flachdach">
                   {{ form.bemessungsart_wind_schnee.3 }}
                 </div>
@@ -133,7 +152,7 @@
 {% endblock %}
 
 {% block js %}
-
+{% include "js_dachart.html" %}
 {% include "js_hover_icon.html" %}
 {% include "js_loader.html" %}
 {% include "js_updateview.html" %}

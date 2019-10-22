@@ -10,7 +10,7 @@ arten_traufbereich = (
      'mansardenartig abgeschrägter Traufbereich'),
 )
 anzahl_streifen_wahl = (
-
+    (1, '1'),
     (2, '2'),
     (3, '3'),
     (4, '4'),
@@ -19,6 +19,10 @@ anzahl_streifen_wahl = (
 
 
 )
+CHOICESCPEWAHL=(
+('CPE10',mark_safe('c<sub>pe,10</sub>')),
+('CPE1',mark_safe('c<sub>pe,1</sub>')),
+)
 CHOICES = (
 
     # First one is the value of select option and second is the displayed value in option
@@ -26,6 +30,17 @@ CHOICES = (
      'Vereinfachtes Verfahren gemäß ÖNORM B 1991-1-4, Abschnitt 9.2.3.1'),
     ('Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3',
      ' Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3'),
+
+)
+CHOICES_REIBBEIWERTE = (
+
+    # First one is the value of select option and second is the displayed value in option
+    ('GLATT',
+     'Glatt'),
+    ('RAUH',
+     'Rauh'),
+     ('SEHR RAUH',
+      'Sehr rauh'),
 
 )
 CHOICES2 = (
@@ -48,6 +63,10 @@ class flachdaecherForm(forms.ModelForm):
         arten_traufbereich), label='Art des Traufenbereichs:', widget=forms.Select(attrs={'class': 'form-control', 'onclick': 'bildLaden()'}))
     anzahl_streifen = forms.ChoiceField(required=False, choices=(
         anzahl_streifen_wahl), label='Anzahl der Streifen', widget=forms.Select(attrs={'class': 'form-control', }))
+    reibbeiwerte_dach_wahl = forms.ChoiceField(required=False, choices=(
+        CHOICES_REIBBEIWERTE), widget=forms.Select(attrs={'class': 'form-control', }))
+    reibbeiwerte_waende_wahl = forms.ChoiceField(required=False, choices=(
+        CHOICES_REIBBEIWERTE),  widget=forms.Select(attrs={'class': 'form-control', }))
 
     class Meta:
 
@@ -62,7 +81,7 @@ class flachdaecherForm(forms.ModelForm):
             "hoehe": "Höhe h [m]:",
             "breite_x":  mark_safe('Länge l<sub>Westen</sub> [m]'),
             "breite_y":  mark_safe('Länge l<sub>Süd</sub> [m]'),
-
+            "cpe_1_einflussflaeche":"Einflussfläche [m²]:",
             "some_field": "Berechnungsverfahren:",
             "some_field_radio2": "Berechnungsverfahren",
 
@@ -135,6 +154,9 @@ class flachdaecherForm(forms.ModelForm):
 
 
                                                                             }),
+            'cpe_wahl': forms.RadioSelect(choices=CHOICESCPEWAHL, attrs={'class': 'form-control-input',
+
+                                                                            }),
             'oeffnungen_beruecksichtigen': forms.CheckboxInput(attrs={'class': 'onoffswitch-checkbox',
 
 
@@ -180,11 +202,20 @@ class flachdaecherForm(forms.ModelForm):
                                                               'step': 0.01,
                                                               'type': 'number', }),
 
+            'reibbeiwert_dach_benutzerdef': forms.CheckboxInput(attrs={'class': 'form-check-input',
 
+
+                                                                                }),
             'reibbeiwert_waende': forms.NumberInput(attrs={'class': 'form-control',
                                                               'step': 0.01,
                                                               'type': 'number', }),
+            'cpe_1_einflussflaeche': forms.NumberInput(attrs={'class': 'form-control',
+                                                              'step': 0.01,
+                                                              'type': 'number', }),
+            'reibbeiwert_waende_benutzerdef': forms.CheckboxInput(attrs={'class': 'form-check-input',
 
+
+                                                                                }),
 
 
         }

@@ -5,7 +5,7 @@ from gesamt_pdf_app.models import GesamtPdf
 from django.forms.models import model_to_dict
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .forms import GesamtgebauedeForm
+from .forms import GesamtgebauedeForm,SpecialForm
 from .models import Gesamtgebaeude
 from django.utils import timezone
 from core.models import allgEingaben, Bauteil
@@ -15,10 +15,11 @@ from django.shortcuts import get_object_or_404
 import os.path as path
 from pathlib import Path
 import os
+from django.urls import reverse_lazy
 # Create your views here.
 class GesamtgebaeudeCreateView(LoginRequiredMixin, CreateView):
     model = Gesamtgebaeude
-    form_class = GesamtgebauedeForm
+    form_class = SpecialForm
 
 
     def form_valid(self, form):
@@ -42,7 +43,17 @@ class GesamtgebaeudeCreateView(LoginRequiredMixin, CreateView):
         context['slug'] = self.kwargs.get('slug')
         return context
 
+    def get_success_url(self):
+        if self.object.dach_wahl ==  'Flachdach':
+            return reverse_lazy('flachdaecher_app:flachdach_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+        elif self.object.dach_wahl ==  'Satteldach':
+            return reverse_lazy('flachdaecher_app:flachdach_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
+        elif self.object.dach_wahl ==  'Pultdach':
+            return reverse_lazy('flachdaecher_app:flachdach_create', args=(self.kwargs.get('slug'), self.kwargs.get('pk'), self.object.id))
 
+        else:
+            print('Errrrrööööööööööööööööööööööööööööööööööööööööööööööööööör')
+            return reverse_lazy('core:allgEingaben_list')
 
 class GesamtgebaeudeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Gesamtgebaeude
@@ -98,3 +109,32 @@ class GesamtgebaeudeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailVi
         if self.request.user == post.user:
             return True
         return False
+
+
+class GesamtgebaeudeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Gesamtgebaeude
+    form_class = SpecialForm
+
+
+    def form_valid(self, form):
+        form.instance.gesamtgebaeude_eingegeben = True
+        #checkbox, dass der user ein flachdach Model Objekt eingegeben hat
+        form.instance.edited_date = timezone.now()
+        #die entsprechende Zeit hinzufügen zum Objekt
+        form.instance.user = self.request.user
+        #Den entsprechenden User speichern
+
+        return super().form_valid(form)
+
+    def test_func(self):
+        #Diese Funktion dient zur überprüfun, ob der registrierte User auch er ist
+        post = self.get_object()
+        if self.request.user == post.user:
+            return True
+        return False
+    def get_context_data(self, **kwargs):
+        context = super(GesamtgebaeudeUpdateView, self).get_context_data(**kwargs)
+
+        context['pk'] = self.kwargs.get('my')
+        context['slug'] = self.kwargs.get('slug')
+        return context

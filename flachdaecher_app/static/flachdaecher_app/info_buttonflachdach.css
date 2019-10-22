@@ -192,6 +192,36 @@
     text-decoration: none;
     cursor: pointer;
 }
+#close8 {
+
+  z-index:100;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+#close8:hover,
+#close8:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#close9 {
+
+  z-index:100;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+#close9:hover,
+#close9:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 #myModal1{
   padding-top: 70px;
 }
@@ -207,6 +237,12 @@
   padding-top: 70px;
 }
 #myModal6{
+  padding-top: 70px;
+}
+#myModal7{
+  padding-top: 70px;
+}
+#myModal8{
   padding-top: 70px;
 }
 #verfahren_vereifacht_image{
@@ -227,8 +263,17 @@
 
 
 }
+#verfahren_en_image2{
+  width: auto ;
+  max-width: 100% ;
+  height: auto ;
+  margin-bottom: 100px;
+  border-radius: 8px;
+
+
+}
 #streifen_image{
-  
+
   max-width: 100% ;
   height: auto ;
   margin-bottom: 100px;

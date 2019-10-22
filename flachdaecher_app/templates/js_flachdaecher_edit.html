@@ -20,11 +20,17 @@
     }
   }
   window.onload = function() {
-    myFunction_winddruck_waende();
+
     vereinfachtesVerfahren();
-    ausblende_winddruck_oeffnungen();
+    benutzerdefiniert_reibung_waende();
+    benutzerdefiniert_reibung_dach();
     ausblende_winddruck_reibung();
+
     ausblende_innendruck();
+
+    myFunction_winddruck_waende();
+    ausblende_winddruck_oeffnungen();
+
 
   }
   var modal = document.getElementById('myModal_flachdaecher');
@@ -316,5 +322,6 @@
   span8.onclick = function() {
     modal8.style.display = "none";
   };
+
 </script>
 {% endblock %}

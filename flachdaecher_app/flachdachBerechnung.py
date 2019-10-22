@@ -18,8 +18,34 @@ def flachdach_berechnung_ablauf(self):
 	innendruck_verfahren_wahl = self.flachdach.some_field_radio2
 	fehlende_korrelation_beruecksichtigen=self.flachdach.fehlende_korrelation_beruecksichtigen
 	reibung_beruecksichtigen=self.flachdach.reibung_beruecksichtigen
-	reibbeiwert_dach=self.flachdach.reibbeiwert_dach
-	reibbeiwert_waende=self.flachdach.reibbeiwert_waende
+	#ab hier hab ich was neues eingefügt
+	reibbeiwert_dach_benutzerdef = self.flachdach.reibbeiwert_dach_benutzerdef
+
+	if reibbeiwert_dach_benutzerdef == True:
+		reibbeiwert_dach=self.flachdach.reibbeiwert_dach
+	else:
+		if self.flachdach.reibbeiwerte_dach_wahl == 'GLATT':
+			reibbeiwert_dach=float(0.01)
+		elif self.flachdach.reibbeiwerte_dach_wahl == 'RAUH':
+			reibbeiwert_dach=float(0.02)
+		elif self.flachdach.reibbeiwerte_dach_wahl == 'SEHR RAUH':
+			reibbeiwert_dach=float(0.04)
+
+
+
+	reibbeiwert_dach_benutzerdef = self.flachdach.reibbeiwert_dach_benutzerdef
+	reibbeiwert_waende_benutzerdef=self.flachdach.reibbeiwert_waende_benutzerdef
+	if reibbeiwert_waende_benutzerdef == True:
+		reibbeiwert_waende=self.flachdach.reibbeiwert_waende
+	else:
+		if self.flachdach.reibbeiwerte_waende_wahl == 'GLATT':
+			reibbeiwert_waende=float(0.02)
+		elif self.flachdach.reibbeiwerte_waende_wahl == 'RAUH':
+			reibbeiwert_waende=float(0.02)
+		elif self.flachdach.reibbeiwerte_waende_wahl == 'SEHR RAUH':
+			reibbeiwert_waende=float(0.04)
+
+	#Bis hier hab ich was neues eingefügt
 	oeffnung_nord_flaeche=self.flachdach.oeffnung_nord_flaeche
 	oeffnung_ost_flaeche=self.flachdach.oeffnung_ost_flaeche
 	oeffnung_sued_flaeche=self.flachdach.oeffnung_sued_flaeche

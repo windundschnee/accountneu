@@ -68,8 +68,8 @@ class Bauteil(models.Model):
     projekt = models.ForeignKey(allgEingaben, on_delete=models.CASCADE)
 
     bautteil_name = models.CharField(max_length=100,)
-    bemessungsart_wind_schnee = models.CharField(max_length=85, default='', null=True, blank=True)
-
+    bemessungsart_wind_schnee = models.CharField(max_length=185, default='', null=True, blank=True)
+    gesamtgebaeude_dachart = models.CharField(max_length=185, default='', null=True, blank=True)
     wind = models.BooleanField(default=False)
     schnee = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
