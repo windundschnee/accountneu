@@ -89,6 +89,34 @@ def bilder_satteldach_schnee(self,arg_latex,filename):
     hoehe_2=1.9
     breite=5
     mitte=2
+    if gesammtschneelast[0]==gesammtschneelast[1]:
+        h_fall_1_a1=0.5
+        h_fall_1_a2=0.5
+        h_fall_2_a1=0.35
+        h_fall_2_a2=0.7
+        h_fall_3_a1=0.7
+        h_fall_3_a2=0.35
+    else:
+        if neigung_alpha1<neigung_alpha2:
+            h_fall_1_a1=0.5
+            h_fall_1_a2=0.4
+        else:
+            h_fall_1_a1=0.4
+            h_fall_1_a2=0.5
+        if gesammtschneelast_halbe[2]<gesammtschneelast[3]:
+            h_fall_2_a1=0.4
+            h_fall_2_a2=0.6
+        else:
+            h_fall_2_a1=0.6
+            h_fall_2_a2=0.4
+        if gesammtschneelast[2]<gesammtschneelast_halbe[3]:
+            h_fall_3_a1=0.4
+            h_fall_3_a2=0.6
+        else:
+            h_fall_3_a1=0.6
+            h_fall_3_a2=0.4
+
+
     with io.open(filename,'w', encoding="UTF8") as fd:
         fd.write("\n"+r'\begin{figure}[H]')
         fd.write("\n"+r'\centering')
@@ -121,16 +149,16 @@ def bilder_satteldach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'\tkzMarkAngle[size=0.6cm](nd,nc,ne)')
         fd.write("\n"+r'\tkzLabelAngle[pos=1.1](nd,nc,ne){\tiny{\ang{'+ str(neigung_alpha2)+r'}}}')
         #Fall 1
-        fd.write("\n"+r'\lastschnee[($(neo)+(0,0.3)$)][($(nd)+(0,0.3)$)][0.3][\spann{'+ str(gesammtschneelast[0])+r'}]')
-        fd.write("\n"+r'\lastschnee[($(nd)+(0,0.3)$)][($(nco)+(0,0.3)$)][0.5][\spann{'+ str(gesammtschneelast[1])+r'}]')
+        fd.write("\n"+r'\lastschnee[($(neo)+(0,0.3)$)][($(nd)+(0,0.3)$)]['+ str(h_fall_1_a1)+r'][\spann{'+ str(gesammtschneelast[0])+r'}][$\mu_{1(\alpha 1)}$]')
+        fd.write("\n"+r'\lastschnee[($(nd)+(0,0.3)$)][($(nco)+(0,0.3)$)]['+ str(h_fall_1_a2)+r'][\spann{'+ str(gesammtschneelast[1])+r'}][$\mu_{1(\alpha 2)}$]')
         fd.write("\n"+r'\node at (-0.7,'+ str(hoehe_2+0.55)+r')  {(\romannumeral 1)};')
         #Fall 2
-        fd.write("\n"+r'\lastschnee[($(neo)+(0,1.5)$)][($(nd)+(0,1.5)$)][0.2][\spann{'+ str(gesammtschneelast_halbe[2])+r'}]')
-        fd.write("\n"+r'\lastschnee[($(nd)+(0,1.5)$)][($(nco)+(0,1.5)$)][0.7][\spann{'+ str(gesammtschneelast[3])+r'}]')
+        fd.write("\n"+r'\lastschnee[($(neo)+(0,1.5)$)][($(nd)+(0,1.5)$)]['+ str(h_fall_2_a1)+r'][\spann{'+ str(gesammtschneelast_halbe[2])+r'}][$0,5\mu_{2(\alpha 1)}$]')
+        fd.write("\n"+r'\lastschnee[($(nd)+(0,1.5)$)][($(nco)+(0,1.5)$)]['+ str(h_fall_2_a2)+r'][\spann{'+ str(gesammtschneelast[3])+r'}][$\mu_{2(\alpha 2)}$]')
         fd.write("\n"+r'\node at (-0.7,'+ str(hoehe_2+1.85)+r')  {(\romannumeral 2)};')
         #Fall 3
-        fd.write("\n"+r'\lastschnee[($(neo)+(0,2.9)$)][($(nd)+(0,2.9)$)][0.7][\spann{'+ str(gesammtschneelast[2])+r'}]')
-        fd.write("\n"+r'\lastschnee[($(nd)+(0,2.9)$)][($(nco)+(0,2.9)$)][0.3][\spann{'+ str(gesammtschneelast_halbe[3])+r'}]')
+        fd.write("\n"+r'\lastschnee[($(neo)+(0,2.9)$)][($(nd)+(0,2.9)$)]['+ str(h_fall_3_a1)+r'][\spann{'+ str(gesammtschneelast[2])+r'}][$\mu_{2(\alpha 1)}$]')
+        fd.write("\n"+r'\lastschnee[($(nd)+(0,2.9)$)][($(nco)+(0,2.9)$)]['+ str(h_fall_3_a2)+r'][\spann{'+ str(gesammtschneelast_halbe[3])+r'}][$0,5\mu_{2(\alpha 2)}$]')
         fd.write("\n"+r'\node at (-0.7,'+ str(hoehe_2+3.25)+r')  {(\romannumeral 3)};')
 
         fd.write("\n"+r'\end{tikzpicture}')

@@ -8,6 +8,7 @@ from allg_berechnungen_app.reibung import reibung
 
 def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 	einflussflaeche=eingaben_waende_berechnung['einflussflaeche']
+	cpe_wahl=eingaben_waende_berechnung['cpe_wahl']
 	hoehe = eingaben_waende_berechnung['hoehe']
 	b_sued = eingaben_waende_berechnung['b_sued']
 	b_west = eingaben_waende_berechnung['b_west']
@@ -16,10 +17,7 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 	innendruck_verfahren_wahl = eingaben_waende_berechnung['innendruck_verfahren_wahl']
 	fehlende_korrelation_beruecksichtigen=eingaben_waende_berechnung['fehlende_korrelation_beruecksichtigen']
 	reibung_beruecksichtigen=eingaben_waende_berechnung['reibung_beruecksichtigen']
-	print(eingaben_waende_berechnung)
-	print(eingaben_waende_berechnung)
-	print(eingaben_waende_berechnung)
-	print(eingaben_waende_berechnung)
+
 
 	reibbeiwert_waende=eingaben_waende_berechnung['reibbeiwert_waende']
 	oeffnung_nord_flaeche=eingaben_waende_berechnung['oeffnung_nord_flaeche']
@@ -27,8 +25,8 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 	oeffnung_sued_flaeche=eingaben_waende_berechnung['oeffnung_sued_flaeche']
 	oeffnung_west_flaeche=eingaben_waende_berechnung['oeffnung_west_flaeche']
 	## Ausendruck Berechnen
-	ergebnisse_aussen_nord_sued=aussenwinddruck_waende_berechnung(self,hoehe,b_west,b_sued,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche)
-	ergebnisse_aussen_ost_west=aussenwinddruck_waende_berechnung(self,hoehe,b_sued,b_west,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche)
+	ergebnisse_aussen_nord_sued=aussenwinddruck_waende_berechnung(self,hoehe,b_west,b_sued,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche,cpe_wahl)
+	ergebnisse_aussen_ost_west=aussenwinddruck_waende_berechnung(self,hoehe,b_sued,b_west,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche,cpe_wahl)
 	ausenwindruecke_d=[ergebnisse_aussen_nord_sued['aussenwinddruck_d'],ergebnisse_aussen_ost_west['aussenwinddruck_d'],ergebnisse_aussen_nord_sued['aussenwinddruck_d'],ergebnisse_aussen_ost_west['aussenwinddruck_d']]
 	ausenwindruecke_a_b_c_e=[ergebnisse_aussen_nord_sued['aussenwinddruck_a_b_c_e'],ergebnisse_aussen_ost_west['aussenwinddruck_a_b_c_e'],ergebnisse_aussen_nord_sued['aussenwinddruck_a_b_c_e'],ergebnisse_aussen_ost_west['aussenwinddruck_a_b_c_e']]
 	cpe_nord_sued=ergebnisse_aussen_nord_sued['cpe_waende']
@@ -57,9 +55,9 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 		for ind in range(len(innendruck)):
 			ueberlagert=ueberlagerung_EN(self,innendruck[ind],ausenwindruecke_d[ind])
 			ergebnisse_ueberlagerung_d.append(ueberlagert)
-			for ind in range(len(innendruck)):
-				ueberlagert=ueberlagerung_EN(self,innendruck[ind],ausenwindruecke_a_b_c_e[ind])
-				ergebnisse_ueberlagerung_a_b_c_e.append(ueberlagert)
+		for ind in range(len(innendruck)):
+			ueberlagert=ueberlagerung_EN(self,innendruck[ind],ausenwindruecke_a_b_c_e[ind])
+			ergebnisse_ueberlagerung_a_b_c_e.append(ueberlagert)
 
 		gibt_es_eine_dominante_seite=ergebnisse_innendruck['gibt_es_eine_dominante_seite']
 		#innendruck_verfahren_wahl =='Innendruckbeiwerte mittels empfohlener Werte nach Abschnitt 9.2.10'
@@ -81,13 +79,6 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
 	cpi=ergebnisse_innendruck['cpi']
 	index_dominante_seite=ergebnisse_innendruck['index_dominante_seite']
 
-	#Einflussfläche 1
-	cpe_nord_sued_1=ergebnisse_aussen_nord_sued['cpe_1_waende']
-	cpe_ost_west_1=ergebnisse_aussen_ost_west['cpe_1_waende']
-
-	#Einflussfläche A
-	cpe_nord_sued_A=ergebnisse_aussen_nord_sued['cpe_A_waende']
-	cpe_ost_west_A=ergebnisse_aussen_ost_west['cpe_A_waende']
 
 
 	#Reibung Wand
@@ -116,12 +107,6 @@ def winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung):
                         'geometrie_waende_norden':geometrie_waende_norden,
                         'geometrie_waende_westen':geometrie_waende_westen,
                         'hoehe':hoehe,
-						'cpe_1':[cpe_nord_sued_1,cpe_ost_west_1],
-						'ausenwindruecke_1_d':[ergebnisse_aussen_nord_sued['aussenwinddruck_1_d'],ergebnisse_aussen_ost_west['aussenwinddruck_1_d']],
-                        'ausenwindruecke_1_a_b_c_e':[ergebnisse_aussen_nord_sued['aussenwinddruck_1_a_b_c_e'],ergebnisse_aussen_ost_west['aussenwinddruck_1_a_b_c_e']],
-						'cpe_A':[cpe_nord_sued_A,cpe_ost_west_A],
-						'ausenwindruecke_A_d':[ergebnisse_aussen_nord_sued['aussenwinddruck_A_d'],ergebnisse_aussen_ost_west['aussenwinddruck_A_d']],
-                        'ausenwindruecke_A_a_b_c_e':[ergebnisse_aussen_nord_sued['aussenwinddruck_A_a_b_c_e'],ergebnisse_aussen_ost_west['aussenwinddruck_A_a_b_c_e']],
 
                         }
 

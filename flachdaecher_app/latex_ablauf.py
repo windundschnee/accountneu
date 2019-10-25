@@ -58,7 +58,8 @@ def flachdach_pdferzeugen(self, arg_latex):
                         'breite_sued':self.flachdach.breite_x,
                         'breite_west':self.flachdach.breite_y,
                         'anzahl_streifen':int(self.flachdach.anzahl_streifen),
-                        'einflussflaeche':5
+                        'einflussflaeche':self.flachdach.cpe_1_einflussflaeche,
+                        'cpe_wahl':self.flachdach.cpe_wahl,
                         }
 
     #Kopfzeile eingaben
@@ -96,11 +97,13 @@ def flachdach_pdferzeugen(self, arg_latex):
         latex_waende_ergebniss(self,arg_latex,latex_waende_list,my_path_ergebnisse_waende)
         bilder_waende(self,arg_latex,latex_waende_list,my_path_bilder_waende)
         #Falls bereits wände vorhanden sind werden die dateien gelöscht so werden die Wände nur angezeigt wenn sie da sind
-    elif os.path.exists(my_path_ergebnisse_waende):
-        os.remove(my_path_cpe_waende)
-        os.remove(my_path_cpe_1_waende)
-        os.remove(my_path_ergebnisse_waende)
-        os.remove(my_path_bilder_waende)
+    else:
+        if os.path.exists(my_path_ergebnisse_waende):
+            os.remove(my_path_ergebnisse_waende)
+        if os.path.exists(my_path_cpe_waende):
+            os.remove(my_path_cpe_waende)
+        if os.path.exists(my_path_cpe_waende):
+            os.remove(my_path_bilder_waende)
 
 
 

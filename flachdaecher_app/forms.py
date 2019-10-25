@@ -35,12 +35,9 @@ CHOICES = (
 CHOICES_REIBBEIWERTE = (
 
     # First one is the value of select option and second is the displayed value in option
-    ('GLATT',
-     'Glatt'),
-    ('RAUH',
-     'Rauh'),
-     ('SEHR RAUH',
-      'Sehr rauh'),
+    ('GLATT', mark_safe('Glatt c<sub>fr</sub> = 001')),
+    ('RAUH', 'Rauh (0,02)'),
+     ('SEHR RAUH', 'Sehr rauh (0,04)'),
 
 )
 CHOICES2 = (

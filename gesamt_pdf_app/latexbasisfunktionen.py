@@ -31,11 +31,12 @@ def preamble_static_latex(self,fd):
     #2 Endkoordinate
     #3 Höhe
     #4 Last
-    fd.write("\n"+r'\def\lastschnee[#1][#2][#3][#4]{')
+    fd.write("\n"+r'\def\lastschnee[#1][#2][#3][#4][#5]{')
     fd.write("\n"+r'\filldraw[fill=gray!30, draw=black, line width=0.13mm]  #1 -- #2 -- ($#2 + (0,#3)$) -- ($#1 + (0,#3)$) --cycle ;')
     fd.write("\n"+r'\node[above] at ($($#1 + (0,#3)$)!0.5!($#2 + (0,#3)$)$) {#4};')
+    fd.write("\n"+r'\node at ($#1!0.5!($#2 + (0,#3)$)$) {\scriptsize{#5}};')
     fd.write("\n"+r'}')
-    
+
     fd.write("\n"+r'\pdfcompresslevel=0') #Macht das compilieren schneller erzeugt jedoch ein größeres pdf
     fd.write("\n"+r'\pdfobjcompresslevel=0') #Macht das compilieren schneller erzeugt jedoch ein größeres pdf
     fd.write("\n"+r'\setlength\intextsep{2.0mm}')

@@ -43,7 +43,7 @@ def ergebnisse_angaben_pultdach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'		\end{aligned}$')
         fd.write("\n"+r'	&')
         fd.write("\n"+r'		$\begin{aligned}[t]')
-        fd.write("\n"+r'		\mu_1 & =\num{'+ str(mue_1)+r'}')
+        fd.write("\n"+r'		\mu_{1(\alpha)} & =\num{'+ str(mue_1)+r'}')
         fd.write("\n"+r'		\\')
 
         fd.write("\n"+r'		\end{aligned}$')
@@ -90,7 +90,7 @@ def bilder_pultdach_schnee(self,arg_latex,filename):
         fd.write("\n"+r'\tkzLabelAngle[pos=1.7](ndc,nd,nc){\tiny{\ang{'+ str(neigung)+r'}}}')
 
 
-        fd.write("\n"+r'\lastschnee[($(nd)+(0,1.3)$)][($(nc)+(0,0.5)$)][0.5][\spann{'+ str(gesamtschneelast)+r'}]')
+        fd.write("\n"+r'\lastschnee[($(nd)+(0,1.3)$)][($(nc)+(0,0.5)$)][0.5][\spann{'+ str(gesamtschneelast)+r'}][$\mu1(\alpha)$]')
 
         fd.write("\n"+r'\end{tikzpicture}')
         fd.write("\n"+r'\end{figure}')

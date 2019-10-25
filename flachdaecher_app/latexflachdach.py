@@ -233,6 +233,13 @@ def innenwinddruck(self,arg_latex,fd):
 def ueberlagerter_winddruck(self,arg_latex,fd):
     ergebnisse_berechnung=arg_latex['ergebnisse_berechnung']
     ergebnisse_ueberlagerung_dach=ergebnisse_berechnung['ergebnisse_ueberlagerung_dach']
+    cpe_wahl=self.flachdach.cpe_wahl
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
 
 
 
@@ -242,29 +249,29 @@ def ueberlagerter_winddruck(self,arg_latex,fd):
     vereinfachtes_verfahren = self.flachdach.some_field
     art_traufenbereich = self.flachdach.art_traufenbereich
     fd.write("\n"+r'		$\begin{aligned}[t]')
-    fd.write("\n"+r'		w_{F}&= \SI{'+ str(w_f)+r'}{\kilo\newton\per\square\meter} \\')
-    fd.write("\n"+r'	w_{G}&=\SI{'+ str(w_g)+r'}{\kilo\newton\per\square\meter}  \\')
+    fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',F}&= \SI{'+ str(w_f)+r'}{\kilo\newton\per\square\meter} \\')
+    fd.write("\n"+r'	w_{'+ str(einflussflaeche)+r',G}&=\SI{'+ str(w_g)+r'}{\kilo\newton\per\square\meter}  \\')
     if vereinfachtes_verfahren == 'Vereinfachtes Verfahren gemäß ÖNORM B 1991-1-4, Abschnitt 9.2.3.1':
         w_h_druck=ergebnisse_ueberlagerung_dach[0][2]
         w_i_druck=ergebnisse_ueberlagerung_dach[0][4]
         w_h_sog=ergebnisse_ueberlagerung_dach[0][3]
         w_i_sog=ergebnisse_ueberlagerung_dach[0][5]
-        fd.write("\n"+r'		w_{H}&=\SI{'+ str(w_h_druck)+r'}{\kilo\newton\per\square\meter}  \\')
-        fd.write("\n"+r'		w_{H}&=\SI{'+ str(w_h_sog)+r'}{\kilo\newton\per\square\meter} \\')
-        fd.write("\n"+r'		w_{I}&=\SI{'+ str(w_i_druck)+r'}{\kilo\newton\per\square\meter} \\')
-        fd.write("\n"+r'		w_{I}&=\SI{'+ str(w_i_sog)+r'}{\kilo\newton\per\square\meter} ')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',H}&=\SI{'+ str(w_h_druck)+r'}{\kilo\newton\per\square\meter}  \\')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',H}&=\SI{'+ str(w_h_sog)+r'}{\kilo\newton\per\square\meter} \\')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',I}&=\SI{'+ str(w_i_druck)+r'}{\kilo\newton\per\square\meter} \\')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',I}&=\SI{'+ str(w_i_sog)+r'}{\kilo\newton\per\square\meter} ')
     else:
         w_h=ergebnisse_ueberlagerung_dach[0][2]
         w_i_druck=ergebnisse_ueberlagerung_dach[0][3]
         w_i_sog=ergebnisse_ueberlagerung_dach[0][4]
-        fd.write("\n"+r'		w_{H}&=\SI{'+ str(w_h)+r'}{\kilo\newton\per\square\meter}  \\')
-        fd.write("\n"+r'		w_{I}&=\SI{'+ str(w_i_druck)+r'}{\kilo\newton\per\square\meter} \\')
-        fd.write("\n"+r'		w_{I}&=\SI{'+ str(w_i_sog)+r'}{\kilo\newton\per\square\meter} ')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',H}&=\SI{'+ str(w_h)+r'}{\kilo\newton\per\square\meter}  \\')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',I}&=\SI{'+ str(w_i_druck)+r'}{\kilo\newton\per\square\meter} \\')
+        fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',I}&=\SI{'+ str(w_i_sog)+r'}{\kilo\newton\per\square\meter} ')
         if art_traufenbereich=="mansardenartig abgeschrägter Traufbereich":
             w_auf_mans_sog=ergebnisse_ueberlagerung_dach[0][6]
             w_auf_mans_druck=ergebnisse_ueberlagerung_dach[0][5]
-            fd.write("\n"+r'	\\	w_{Mansarde}&=\SI{'+ str(w_auf_mans_sog)+r'}{\kilo\newton\per\square\meter}  \\')
-            fd.write("\n"+r'		w_{Mansarde}&=\SI{'+ str(w_auf_mans_druck)+r'}{\kilo\newton\per\square\meter} ')
+            fd.write("\n"+r'	\\	w_{'+ str(einflussflaeche)+r',Mansarde}&=\SI{'+ str(w_auf_mans_sog)+r'}{\kilo\newton\per\square\meter}  \\')
+            fd.write("\n"+r'		w_{'+ str(einflussflaeche)+r',Mansarde}&=\SI{'+ str(w_auf_mans_druck)+r'}{\kilo\newton\per\square\meter} ')
         else:
             print('Fehler in Latex mansardenartige we werte, Flachdächer')
     fd.write("\n"+r'		\end{aligned}		$')
@@ -274,17 +281,23 @@ def ueberlagerter_winddruck_norden(self,arg_latex,fd):
     ergebnisse_ueberlagerung_dach=ergebnisse_berechnung['ergebnisse_ueberlagerung_dach']
     vereinfachtes_verfahren = self.flachdach.some_field
     art_traufenbereich = self.flachdach.art_traufenbereich
+    cpe_wahl=self.flachdach.cpe_wahl
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
 
     fd.write("\n"+r'		$\begin{aligned}[t]')
     if vereinfachtes_verfahren == 'Vereinfachtes Verfahren gemäß ÖNORM B 1991-1-4, Abschnitt 9.2.3.1':
         bezeichnung=['F','G','H','H','I','I']
-        fd.write("\n"+r'		w_{I,x}&=\SI{'+ str(w_i_sog_x)+r'}{\kilo\newton\per\square\meter} \\')
     else:
         bezeichnung=['F','G','H','I','I']
         if art_traufenbereich=="mansardenartig abgeschrägter Traufbereich":
             bezeichnung=['F','G','H','I','I','Mansarde','Mansarde']
     for ind, element in enumerate(ergebnisse_ueberlagerung_dach[0]):
-        fd.write("\n"+r'w_{'+ bezeichnung[ind]+r'}&=\spann{'+ str(element)+r'}  \\')
+        fd.write("\n"+r'w_{'+ str(einflussflaeche)+r','+ bezeichnung[ind]+r'}&=\spann{'+ str(element)+r'}  \\')
     fd.write("\n"+r'		\end{aligned}		$')
 
 def ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd):
@@ -292,10 +305,17 @@ def ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd):
     ergebnisse_ueberlagerung_dach=ergebnisse_berechnung['ergebnisse_ueberlagerung_dach']
     vereinfachtes_verfahren = self.flachdach.some_field
     art_traufenbereich = self.flachdach.art_traufenbereich
+    cpe_wahl=self.flachdach.cpe_wahl
+
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
 
     if vereinfachtes_verfahren == 'Vereinfachtes Verfahren gemäß ÖNORM B 1991-1-4, Abschnitt 9.2.3.1':
         bezeichnung=['F','G','H','H','I','I']
-        fd.write("\n"+r'		w_{I,x}&=\SI{'+ str(w_i_sog_x)+r'}{\kilo\newton\per\square\meter} \\')
     else:
         bezeichnung=['F','G','H','I','I']
         if art_traufenbereich=="mansardenartig abgeschrägter Traufbereich":
@@ -304,7 +324,7 @@ def ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd):
     for ind_windrichtung, element_Windrichtung in enumerate([1,2,3]):
         fd.write("\n"+r'		$\begin{aligned}[t]')
         for ind, element in enumerate(ergebnisse_ueberlagerung_dach[element_Windrichtung]):
-            fd.write("\n"+r'w_{'+ bezeichnung[ind]+r'}&=\spann{'+ str(element)+r'}  \\')
+            fd.write("\n"+r'w_{'+ str(einflussflaeche)+r','+ bezeichnung[ind]+r'}&=\spann{'+ str(element)+r'}  \\')
         fd.write("\n"+r'		\end{aligned}		$')
         if element_Windrichtung != 3:
             fd.write("\n"+r'		&		')
@@ -316,8 +336,8 @@ def reibung_latex(self,arg_latex,fd):
     ergebnisse_waende=ergebnisse_berechnung['ergebnisse_waende']
     w_cfr_dach=ergebnisse_berechnung['w_cfr_dach']
     reibung_vernachlaessigt=ergebnisse_berechnung['reibung_vernachlaessigt']
-    reibbeiwert_dach=self.flachdach.reibbeiwert_dach
-    reibbeiwert_waende=self.flachdach.reibbeiwert_waende
+    reibbeiwert_dach=ergebnisse_berechnung['reibbeiwert_dach']
+    reibbeiwert_waende=ergebnisse_berechnung['reibbeiwert_waende']
 
     w_cfr_wand=ergebnisse_waende['w_cfr_wand']
 
@@ -344,6 +364,15 @@ def nur_aussendruckergebnisse_flachdach(self,arg_latex,filename):
     reibung_vernachlaessigt=ergebnisse_berechnung['reibung_vernachlaessigt']
     cpe_dach=ergebnisse_berechnung['cpe_dach']
     aussenwinddruck_dach=ergebnisse_berechnung['aussenwinddruck_dach']
+    cpe_wahl=self.flachdach.cpe_wahl
+
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
+
     with io.open(filename,'w', encoding="UTF8") as fd:
         #Margin
         #Margin
@@ -383,12 +412,12 @@ def nur_aussendruckergebnisse_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1}  }')
         fd.write("\n"+r'\rowcolor{Gray}	')
         if reibung_beruecksichtigen==True:
-            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,10}$ \NSOWarrow} & \textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Reibung} \\')
+            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Reibung} \\')
         else:
-            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,10}$ \NSOWarrow} & \textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} \\')
-        aussendruckbeiwerte(self,arg_latex,cpe_dach,10,fd)
+            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} \\')
+        aussendruckbeiwerte(self,arg_latex,cpe_dach,einflussflaeche,fd)
         fd.write("\n"+r'	&')
-        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,10,fd)
+        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,einflussflaeche,fd)
         if reibung_beruecksichtigen==True:
             fd.write("\n"+r'	&')
             reibung_latex(self,arg_latex,fd)
@@ -413,6 +442,15 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
     reibung_vernachlaessigt=ergebnisse_berechnung['reibung_vernachlaessigt']
     cpe_dach=ergebnisse_berechnung['cpe_dach']
     aussenwinddruck_dach=ergebnisse_berechnung['aussenwinddruck_dach']
+    cpe_wahl=self.flachdach.cpe_wahl
+
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
+
     with io.open(filename,'w', encoding="UTF8") as fd:
 
         #Margin
@@ -462,19 +500,19 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
         fd.write("\n"+r'\rowcolor{Gray}	')
         if some_field_radio2 == 'Innendruckbeiwerte mittels dominanter Fläche nach Abschnitt 7.2.9':
-            fd.write("\n"+r'	\textbf{Außendruckbeiwert $c_{pe,10}$ \NSOWarrow} & \textbf{Innendruckbeiwert} & ')
+            fd.write("\n"+r'	\textbf{Außendruckbeiwert $c_{pe,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innendruckbeiwert} & ')
             if reibung_beruecksichtigen==True:
                 fd.write("\n"+r'\textbf{Reibung} \\')
             else:
                 fd.write("\n"+r'\textbf{} \\')
 
         else:
-            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,10}$ \NSOWarrow} & \textbf{Innendruckbeiwerte \NSOWarrow} & ')
+            fd.write("\n"+r'	\textbf{Außendruckbeiwerte $c_{pe,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innendruckbeiwerte \NSOWarrow} & ')
             if reibung_beruecksichtigen==True:
                 fd.write("\n"+r'\textbf{Reibung} \\')
             else:
                 fd.write("\n"+r'\textbf{} \\')
-        aussendruckbeiwerte(self,arg_latex,cpe_dach,10,fd)
+        aussendruckbeiwerte(self,arg_latex,cpe_dach,einflussflaeche,fd)
         fd.write("\n"+r'	&')
         innendruckbeiwerte(self,arg_latex,fd)
         fd.write("\n"+r'	& ')
@@ -486,10 +524,10 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
         fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
         fd.write("\n"+r'\rowcolor{Gray}	')
         if some_field_radio2 == 'Innendruckbeiwerte mittels dominanter Fläche nach Abschnitt 7.2.9':
-            fd.write("\n"+r'	\textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck $\downarrow$} \\')
+            fd.write("\n"+r'	\textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innenwinddruck } & \textbf{überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\downarrow$} \\')
         else:
-            fd.write("\n"+r' 	\textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck \NSOWarrow} \\')
-        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,10,fd)
+            fd.write("\n"+r' 	\textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ \NSOWarrow} \\')
+        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,einflussflaeche,fd)
         fd.write("\n"+r'	&')
 
         innenwinddruck(self,arg_latex,fd)
@@ -501,7 +539,7 @@ def aussendruck_und_innendruckergebnisse_flachdach(self,arg_latex,filename):
             fd.write("\n"+r'\begin{table}[H]')
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
             fd.write("\n"+r'\rowcolor{Gray}	')
-            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $\leftarrow$} & \textbf{Überlagerter Winddruck $\uparrow $} & \textbf{Überlagerter Winddruck $\rightarrow$} \\')
+            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\leftarrow$} & \textbf{Überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\uparrow $} & \textbf{Überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\rightarrow$} \\')
             ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd)
         else:
             ueberlagerter_winddruck(self,arg_latex,fd)
@@ -520,6 +558,15 @@ def nur_aussendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filename):
     reibung_beruecksichtigen=self.flachdach.reibung_beruecksichtigen
     reibung_vernachlaessigt=ergebnisse_berechnung['reibung_vernachlaessigt']
     aussenwinddruck_dach=ergebnisse_berechnung['aussenwinddruck_dach']
+    cpe_wahl=self.flachdach.cpe_wahl
+
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
+
     with io.open(filename,'w', encoding="UTF8") as fd:
         #Margin
         #Margin
@@ -559,10 +606,10 @@ def nur_aussendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filename):
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1}  }')
         fd.write("\n"+r'\rowcolor{Gray}	')
         if reibung_beruecksichtigen==True:
-            fd.write("\n"+r'	  \textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Reibung} \\')
+            fd.write("\n"+r'	  \textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Reibung} \\')
         else:
-            fd.write("\n"+r'	 \textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} \\')
-        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,10,fd)
+            fd.write("\n"+r'	 \textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} \\')
+        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,einflussflaeche,fd)
         if reibung_beruecksichtigen==True:
             fd.write("\n"+r'	&')
             reibung_latex(self,arg_latex,fd)
@@ -580,6 +627,16 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
     anteil_f_und_g_y = sonstige_werte_berechnet['anteil_f_und_g_west']
     reibung_vernachlaessigt=ergebnisse_berechnung['reibung_vernachlaessigt']
     aussenwinddruck_dach=ergebnisse_berechnung['aussenwinddruck_dach']
+
+    cpe_wahl=self.flachdach.cpe_wahl
+
+    if cpe_wahl == 'CPE10':
+        einflussflaeche=10
+    elif cpe_wahl == 'CPE1':
+        einflussflaeche=1
+    else:
+        einflussflaeche=self.flachdach.cpe_1_einflussflaeche
+
     with io.open(filename,'w', encoding="UTF8") as fd:
 
         #Margin
@@ -637,10 +694,10 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
         fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
         fd.write("\n"+r'\rowcolor{Gray}	')
         if some_field_radio2 == 'Innendruckbeiwerte mittels dominanter Fläche nach Abschnitt 7.2.9':
-            fd.write("\n"+r'	\textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck $\downarrow$} \\')
+            fd.write("\n"+r'	\textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\downarrow$} \\')
         else:
-            fd.write("\n"+r' 	\textbf{Außenwinddruck $w_{e,10}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck \NSOWarrow} \\')
-        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,10,fd)
+            fd.write("\n"+r' 	\textbf{Außenwinddruck $w_{e,'+ str(einflussflaeche)+r'}$ \NSOWarrow} & \textbf{Innenwinddruck \NSOWarrow} & \textbf{überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ \NSOWarrow} \\')
+        aussenwinddruck(self,arg_latex,aussenwinddruck_dach,einflussflaeche,fd)
         fd.write("\n"+r'	&')
 
         innenwinddruck(self,arg_latex,fd)
@@ -652,7 +709,7 @@ def aussendruck_und_innendruckergebnisse_flachdach_ohne_cp(self,arg_latex,filena
             fd.write("\n"+r'\begin{table}[H]')
             fd.write("\n"+r'	\begin{tabularx}{1\columnwidth}{ B{1} B{1} B{1} }')
             fd.write("\n"+r'\rowcolor{Gray}	')
-            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $\leftarrow$} & \textbf{Überlagerter Winddruck $\uparrow $} & \textbf{überlagerter Winddruck $\rightarrow$} \\')
+            fd.write("\n"+r'	\textbf{Überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\leftarrow$} & \textbf{Überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\uparrow $} & \textbf{überlagerter Winddruck $w_{'+ str(einflussflaeche)+r'}$ $\rightarrow$} \\')
             ueberlagerter_winddruck_ost_sued_west(self,arg_latex,fd)
         else:
             ueberlagerter_winddruck(self,arg_latex,fd)
