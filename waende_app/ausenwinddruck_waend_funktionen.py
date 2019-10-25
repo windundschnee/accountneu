@@ -60,7 +60,7 @@ def boeengeschwindigkeitsdruck(self,hoehe,breite,dicke,anzahl_streifen):
     list=[z_hoehe,qp]
     return list
 
-def aussenwinddruck_waende_berechnung(self,hoehe,breite,dicke,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche):
+def aussenwinddruck_waende_berechnung(self,hoehe,breite,dicke,anzahl_streifen,fehlende_korrelation_beruecksichtigen,einflussflaeche,cpe_wahl):
     d_zu_b=dicke/breite
     h_zu_b=hoehe/breite
     h_zu_d=hoehe/dicke
@@ -76,47 +76,50 @@ def aussenwinddruck_waende_berechnung(self,hoehe,breite,dicke,anzahl_streifen,fe
     cpe_d=0.8*korrelation_beiwert
     cpe_e=cpe_interpolation_e(d_zu_b,h_zu_b)*korrelation_beiwert
     #schreibt die cpe werte in eine liste
-    cpe_waende=[cpe_a,cpe_b,cpe_c,cpe_d,cpe_e]
+    cpe_10_waende=[cpe_a,cpe_b,cpe_c,cpe_d,cpe_e]
     #berechnet die qp werte und gibt eine liste der qp werte aus entschprechend der Höhe
     qp_waende=boeengeschwindigkeitsdruck(self,hoehe,breite,dicke,anzahl_streifen)[1]
     #berechnet die höhenund gibt eine liste mit den höhen aus
     z_hoehe=boeengeschwindigkeitsdruck(self,hoehe,breite,dicke,anzahl_streifen)[0]
-    #cpe werte werden in einen Spaltenvektor transponiert
-    cpe_waende_vektor=np.reshape(cpe_waende, (len(cpe_waende), 1))
-    #qp werte werden in einen Zeilenvektor transponiert
-    qp_waende_vektor=np.reshape(qp_waende, (1,(len(qp_waende))))
-    #Vektormultiplikation ergibt matrix mit den Aussenwinddrücken wo Spaltenweisen die Streifen Stehen links ist unten  und Zeilenweise die Flächenbereiche A-E von oben nach unten
-    # ausenwinddruck_waende_matrix= cpe_waende_vektor @ qp_waende_vektor
 
-    aussenwinddruck_d=qp_waende_vektor*cpe_d
-    # cpe_ohne_d=alle_anderen_seiten=np.delete(cpe_waende_vektor, 3, axis=0)
-    aussenwinddruck_a_b_c_e=qp_waende[-1]*cpe_waende_vektor
+    #Transformation in Vektoren
+    cpe_10_waende_vektor=np.array(cpe_10_waende)
+    qp_waende_vektor=np.array(qp_waende)
 
     #cp1 werte
-    cpe_1_waende=cpe_waende_vektor*1.25
-    aussenwinddruck_1_d=aussenwinddruck_d*1.25
-    aussenwinddruck_1_a_b_c_e=aussenwinddruck_a_b_c_e*1.25
+    cpe_1_waende=cpe_10_waende_vektor*1.25
 
-    #cpe mit einflussfläche zwischen 10 und 1
-    cpe_A=cpe_zwischen_1_und_10(self,cpe_waende,cpe_1_waende.reshape(-1),einflussflaeche)
-    aussenwinddruck_A_d=qp_waende_vektor*cpe_A[3]
-    aussenwinddruck_A_a_b_c_e=qp_waende[-1]*np.array(cpe_A)
+    print(cpe_wahl)
+    print(cpe_wahl)
+    print(cpe_wahl)
+    print(cpe_wahl)
+    print(cpe_wahl)
+    if cpe_wahl=='CPE10':
+        cpe_waende=cpe_10_waende
+        cpe_waende_vektor=cpe_10_waende_vektor
+    elif cpe_wahl=='CPE1':
+        cpe_waende=cpe_1_waende.tolist()
+        cpe_waende_vektor=cpe_1_waende
+    else:
+        #cpe mit einflussfläche zwischen 10 und 1
+        cpe_waende=cpe_zwischen_1_und_10(self,cpe_10_waende,cpe_1_waende,einflussflaeche)
+        cpe_waende_vektor=np.array(cpe_waende)
 
+
+
+    #Aussenwinddruck Berechnen
+    aussenwinddruck_d=qp_waende_vektor*cpe_waende[3]
+    # cpe_ohne_d=alle_anderen_seiten=np.delete(cpe_10_waende_vektor, 3, axis=0)
+    aussenwinddruck_a_b_c_e=qp_waende[-1]*cpe_waende_vektor
 
 
 
     list={'cpe_waende':cpe_waende,
     'z_hoehe':z_hoehe,
     'qp_waende':qp_waende,
-    'aussenwinddruck_d':aussenwinddruck_d.reshape(-1).tolist(),
-    'aussenwinddruck_a_b_c_e':aussenwinddruck_a_b_c_e.reshape(-1).tolist(), #hatt auch d Dabei
+    'aussenwinddruck_d':aussenwinddruck_d.tolist(),
+    'aussenwinddruck_a_b_c_e':aussenwinddruck_a_b_c_e.tolist(), #hatt auch d Dabei
     'korrelation_beiwert':korrelation_beiwert,
-    'cpe_1_waende':cpe_1_waende.reshape(-1).tolist(),
-    'aussenwinddruck_1_d':aussenwinddruck_1_d.reshape(-1).tolist(),
-    'aussenwinddruck_1_a_b_c_e':aussenwinddruck_1_a_b_c_e.reshape(-1).tolist(), #hatt auch d Dabei
-    'cpe_A_waende':cpe_A,
-    'aussenwinddruck_A_d':aussenwinddruck_A_d.reshape(-1).tolist(),
-    'aussenwinddruck_A_a_b_c_e':aussenwinddruck_A_a_b_c_e.tolist(), #hatt auch d Dabei
 
     }
     return list

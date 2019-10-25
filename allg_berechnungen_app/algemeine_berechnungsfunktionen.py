@@ -77,13 +77,11 @@ def liste_runden_1(inputdict):
 def ueberlagerung_empfohlen(self,innendruck,aussendruck):
 	#Überlagert innendruck aus den empfohlenen werten mit dem Aussendruck
 	#Es gibt eine liste in einer liste aus beim indexen muss man daher aufpassen vieleicht gibt es noch eine lösung
-	wi_druck=innendruck[1]
-	wi_sog=innendruck[0]
+	wi_druck=innendruck[0]
+	wi_sog=innendruck[1]
 
 
 	windruck_gesamt=[]
-	print(aussendruck)
-	print(innendruck)
 	for ind, element in enumerate(aussendruck):
 		if element > 0:
 			w_ges=element+wi_druck

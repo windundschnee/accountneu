@@ -18,7 +18,8 @@ def flachdach_berechnung_ablauf(self):
 	innendruck_verfahren_wahl = self.flachdach.some_field_radio2
 	fehlende_korrelation_beruecksichtigen=self.flachdach.fehlende_korrelation_beruecksichtigen
 	reibung_beruecksichtigen=self.flachdach.reibung_beruecksichtigen
-	#ab hier hab ich was neues eingefügt
+
+	#Reibbeiwert Dach
 	reibbeiwert_dach_benutzerdef = self.flachdach.reibbeiwert_dach_benutzerdef
 
 	if reibbeiwert_dach_benutzerdef == True:
@@ -30,10 +31,7 @@ def flachdach_berechnung_ablauf(self):
 			reibbeiwert_dach=float(0.02)
 		elif self.flachdach.reibbeiwerte_dach_wahl == 'SEHR RAUH':
 			reibbeiwert_dach=float(0.04)
-
-
-
-	reibbeiwert_dach_benutzerdef = self.flachdach.reibbeiwert_dach_benutzerdef
+	#Reibbeiwert Wand
 	reibbeiwert_waende_benutzerdef=self.flachdach.reibbeiwert_waende_benutzerdef
 	if reibbeiwert_waende_benutzerdef == True:
 		reibbeiwert_waende=self.flachdach.reibbeiwert_waende
@@ -45,20 +43,21 @@ def flachdach_berechnung_ablauf(self):
 		elif self.flachdach.reibbeiwerte_waende_wahl == 'SEHR RAUH':
 			reibbeiwert_waende=float(0.04)
 
-	#Bis hier hab ich was neues eingefügt
+
 	oeffnung_nord_flaeche=self.flachdach.oeffnung_nord_flaeche
 	oeffnung_ost_flaeche=self.flachdach.oeffnung_ost_flaeche
 	oeffnung_sued_flaeche=self.flachdach.oeffnung_sued_flaeche
 	oeffnung_west_flaeche=self.flachdach.oeffnung_west_flaeche
 	vereinfachtes_verfahren = self.flachdach.some_field
-	einflussflaeche=float(5)
+	einflussflaeche=float(self.flachdach.cpe_1_einflussflaeche)
+	cpe_wahl=self.flachdach.cpe_wahl
 
 
 	if vereinfachtes_verfahren=='Verfahren gemäß ÖNORM EN 1991-1-4, Abschnitt 7.2.3':
 		#cpe werte und Höhe berechnen
 		#scharfkantiger Traufenbereich
 		if art_traufenbereich=="scharfkantiger Traufbereich":
-			cpe_dach = scharfkantiger_traufbereich()
+			cpe_dach_10 = scharfkantiger_traufbereich()
 			cpe_dach_1 = scharfkantiger_traufbereich_1()
 			hoehe_qp=hoehe
 
@@ -67,7 +66,7 @@ def flachdach_berechnung_ablauf(self):
 		elif art_traufenbereich=="mit Attika":
 			hoehe_attika = float(self.flachdach.hoehe_attika)
 			hp_zu_h = hoehe_attika/hoehe
-			cpe_dach = mit_attika(hp_zu_h)
+			cpe_dach_10 = mit_attika(hp_zu_h)
 			cpe_dach_1 = mit_attika_1(hp_zu_h)
 			hoehe_qp = hoehe + hoehe_attika
 
@@ -75,14 +74,14 @@ def flachdach_berechnung_ablauf(self):
 		elif art_traufenbereich=="abgerundeter Traufbereich":
 			radius = float(self.flachdach.radius)
 			r_zu_h = radius/hoehe
-			cpe_dach = abgerundeter_traufbereich(r_zu_h)
+			cpe_dach_10 = abgerundeter_traufbereich(r_zu_h)
 			cpe_dach_1 = abgerundeter_traufbereich_1(r_zu_h)
 			hoehe_qp=hoehe
 
 		#mansadenartiger Traufenbereich
 		elif art_traufenbereich=="mansardenartig abgeschrägter Traufbereich":
 			alpha = float(self.flachdach.alpha)
-			cpe_dach = mansarde(alpha)
+			cpe_dach_10 = mansarde(alpha)
 			cpe_dach_1 = mansarde_1(alpha)
 			hoehe_qp=hoehe
 
@@ -105,11 +104,19 @@ def flachdach_berechnung_ablauf(self):
 		cp_h_sog_1=-1.2
 		cp_i_sog_1=-1.2
 
-		cpe_dach=[cp_f,cp_g,cp_h_druck,cp_h_sog,cp_i_druck,cp_i_sog]
+		cpe_dach_10=[cp_f,cp_g,cp_h_druck,cp_h_sog,cp_i_druck,cp_i_sog]
 		cpe_dach_1=[cp_f_1,cp_g_1,cp_h_druck_1,cp_h_sog_1,cp_i_druck_1,cp_i_sog_1]
 		hoehe_qp=hoehe
-	#cpe mit einflussfläche zwischen 10 und 1
-	cpe_dach_A=cpe_zwischen_1_und_10(self,cpe_dach,cpe_dach_1,einflussflaeche)
+
+	if cpe_wahl == 'CPE10':
+		cpe_dach=cpe_dach_10
+	elif cpe_wahl == 'CPE1':
+		cpe_dach=cpe_dach_1
+	else:
+		cpe_dach=cpe_zwischen_1_und_10(self,cpe_dach,cpe_dach_1,einflussflaeche)
+
+
+
 
 
 	#qp berechnen
@@ -118,8 +125,7 @@ def flachdach_berechnung_ablauf(self):
 
 	#aussenwindrücke berechnen
 	aussenwinddruck_dach=windruck_berechnen(self,qp,cpe_dach)
-	aussenwinddruck_dach_1=windruck_berechnen(self,qp,cpe_dach_1)
-	aussenwinddruck_dach_A=windruck_berechnen(self,qp,cpe_dach_A)
+
 
 
 	#Berechnung der Wände und des Innendrucks
@@ -138,6 +144,7 @@ def flachdach_berechnung_ablauf(self):
 						'oeffnung_sued_flaeche':oeffnung_sued_flaeche,
 						'oeffnung_west_flaeche':oeffnung_west_flaeche,
 						'einflussflaeche':einflussflaeche,
+						'cpe_wahl':cpe_wahl,
 						}
 
 	ergebnisse_waende=winddruck_waende_berechnung_ablauf(self,eingaben_waende_berechnung)
@@ -175,15 +182,14 @@ def flachdach_berechnung_ablauf(self):
 	'ergebnisse_waende':ergebnisse_waende,
 	'ergebnisse_ueberlagerung_dach':ergebnisse_ueberlagerung_dach,
 	'aussenwinddruck_dach':aussenwinddruck_dach,
-	'aussenwinddruck_dach_1':aussenwinddruck_dach_1,
-	'aussenwinddruck_dach_A':aussenwinddruck_dach_A,
 	'cpe_dach':cpe_dach,
-	'cpe_dach_1':cpe_dach_1,
-	'cpe_dach_A':cpe_dach_A,
 	'geometrische_werte_flachdach':geometrische_werte_flachdach,
 	'w_cfr_dach':w_cfr_dach,
 	'reibung_vernachlaessigt':reibung_vernachlaessigt,
-	'qp':qp
+	'qp':qp,
+	'reibbeiwert_dach':reibbeiwert_dach,
+	'reibbeiwert_waende':reibbeiwert_waende,
+
 											}
 	print(ergebnisse_flachdach)
 	print(liste_runden(ergebnisse_flachdach))
